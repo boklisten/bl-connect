@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HttpClient} from "@angular/common/http";
 import {ApiService} from "../api/api.service";
+import {ItemService} from "../item/item.service";
 
 @NgModule({
 	imports: [
@@ -10,7 +11,8 @@ import {ApiService} from "../api/api.service";
 	declarations: [],
 	providers: [
 		HttpClient,
-		ApiService
+		ApiService,
+		ItemService
 	]
 })
 export class BlConnectModule {
