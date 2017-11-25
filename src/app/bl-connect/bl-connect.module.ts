@@ -4,6 +4,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {ApiService} from "../api/api.service";
 import {ItemService} from "../item/item.service";
 import {BranchService} from "../branch/branch.service";
+import {OpeningHourService} from "../opening-hour/opening-hour.service";
 
 @NgModule({
 	imports: [
@@ -14,7 +15,8 @@ import {BranchService} from "../branch/branch.service";
 	providers: [
 		ApiService,
 		ItemService,
-		BranchService
+		BranchService,
+		OpeningHourService
 	]
 })
 export class BlConnectModule {
