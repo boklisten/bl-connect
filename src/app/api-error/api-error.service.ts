@@ -10,7 +10,6 @@ export class ApiErrorService {
 	
 	
 	public handleError(error: HttpErrorResponse): ApiErrorResponse {
-		console.log('error', error);
 		
 		if (error.status >= 0) {
 			switch (error.status) {
