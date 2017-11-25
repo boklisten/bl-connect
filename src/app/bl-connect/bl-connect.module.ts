@@ -5,6 +5,7 @@ import {ApiService} from "../api/api.service";
 import {ItemService} from "../item/item.service";
 import {BranchService} from "../branch/branch.service";
 import {OpeningHourService} from "../opening-hour/opening-hour.service";
+import {ApiErrorService} from "../api-error/api-error.service";
 
 @NgModule({
 	imports: [
@@ -14,6 +15,7 @@ import {OpeningHourService} from "../opening-hour/opening-hour.service";
 	declarations: [],
 	providers: [
 		ApiService,
+		ApiErrorService,
 		ItemService,
 		BranchService,
 		OpeningHourService

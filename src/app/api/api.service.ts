@@ -4,12 +4,13 @@ import {ApiErrorResponse} from "./api-error-response";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {BL_CONFIG} from "../bl-connect/bl-config";
 import {BlapiResponse} from "bl-model";
+import {ApiErrorService} from "../api-error/api-error.service";
 
 
 @Injectable()
 export class ApiService {
 	
-	constructor(private http: HttpClient) {
+	constructor(private http: HttpClient, private apiErrorService: ApiErrorService) {
 	
 	}
 	
@@ -68,7 +69,7 @@ export class ApiService {
 	
 	
 	private handleError(error: HttpErrorResponse): Promise<ApiErrorResponse> {
-		return Promise.reject(new ApiErrorResponse(error.name, error.status, error.message));
+		return Promise.reject(this.apiErrorService.handleError(error));
 	}
 	
 	private apiPath(collection: string, query?: string): string {
