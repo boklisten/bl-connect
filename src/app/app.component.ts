@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ItemService} from "./item/item.service";
-import {ApiService} from "./api/api.service";
+import {OpeningHour} from "bl-model";
 
 @Component({
 	selector: 'app-root',
@@ -10,19 +9,7 @@ import {ApiService} from "./api/api.service";
 export class AppComponent implements OnInit {
 	title = 'app';
 	
-	constructor(private itemService: ItemService, private apiService: ApiService) {
+	constructor() {}
 	
-	}
-	
-	ngOnInit() {
-	/*
-		this.apiService.get('something').then(
-			(response: any) => {
-				console.log('the response', response);
-			},
-			(error: any) => {
-				console.log('error from apiService', error);
-			});
-			*/
-	}
+	ngOnInit() {}
 }
