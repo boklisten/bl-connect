@@ -84,5 +84,39 @@ getById(id: string): Promise<Branch>
 ```typescript
 getById(id: string): Promise<OpeningHour>
 ```
-	
+<br>
+
+## Error handling
+When you use a service and that service throws an error you get a object of the type ***ApiErrorResponse***
+
+The *ApiErrorResponse* looks like this:
+```typescript
+class ApiErrorResponse {
+	msg: string;
+	code: number;
+	data: any;
+}
+```
+
+> Example of error handling:
+```typescript
+myMethod() {
+	this.itemService.get().then(
+		(items: Item[]) => {
+			...
+		},
+		(error: ApiErrorResponse) => {
+			// handle the error here
+		}
+}
+```
+#### status code
+
+The *code* field can be used to determine what to do with the error i.e. what type of info to display to the user. The different codes are based on the standard HTTP status codes. 
+
+As of now the codes are:
+>	**0**: No internet connection or Server is down
+>	**404**: page or collection not found
+
+
 
