@@ -2,19 +2,19 @@
 	"name": "bl-connect",
 	"version": "0.3.7",
 	"license": "MIT",
-	"main": "./dist/bl-connect.js",
-	"typings": "./dist/bl-connect.d.ts",
+	"main": "dist/bl-connect.js",
+	"typings": "dist/bl-connect.d.ts",
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
-		"prepare": "npm run pkg",
+		"prepare": "npm run build",
 		"build": "ng-packagr -p ng-package.json",
 		"pkg": "npm run build && cd dist/ && npm pack && cd .."
 	},
-	"private": true,
+	"private": false,
 	"peerDependencies": {
 		"@angular/animations": "^5.0.0",
 		"@angular/common": "^5.0.0",
@@ -55,7 +55,6 @@
 		"karma-coverage-istanbul-reporter": "^1.2.1",
 		"karma-jasmine": "~1.1.0",
 		"karma-jasmine-html-reporter": "^0.2.2",
-		"ng-packagr": "^1.6.0",
 		"protractor": "~5.1.2",
 		"rxjs": "^5.4.2",
 		"ts-node": "~3.2.0",
@@ -64,6 +63,7 @@
 		"zone.js": "^0.8.14"
 	},
 	"dependencies": {
-		"bl-model": "^0.2.2"
+		"bl-model": "^0.2.2",
+		"ng-packagr": "^1.6.0"
 	}
 }
