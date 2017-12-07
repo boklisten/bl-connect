@@ -1,6 +1,6 @@
 {
 	"name": "bl-connect",
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"license": "MIT",
 	"main": "./dist/bl-connect.js",
 	"typings": "./dist/bl-connect.d.ts",
