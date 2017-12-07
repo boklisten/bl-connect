@@ -2,14 +2,17 @@
 	"name": "bl-connect",
 	"version": "0.3.6",
 	"license": "MIT",
+	"main": "./dist/bl-connect.js",
+	"typings": "./dist/bl-connect.d.ts",
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
-		"build": "ng build",
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
-		"pkg": "ng-packagr -p ng-package.json && cd dist/ && npm pack && cd .."
+		"prepare": "npm run pkg",
+		"build": "ng-packagr -p ng-package.json",
+		"pkg": "npm run build && cd dist/ && npm pack && cd .."
 	},
 	"private": true,
 	"peerDependencies": {
@@ -61,6 +64,6 @@
 		"zone.js": "^0.8.14"
 	},
 	"dependencies": {
-		"bl-model": "^0.2.1"
+		"bl-model": "^0.2.2"
 	}
 }
