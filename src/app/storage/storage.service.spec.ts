@@ -1,9 +1,7 @@
-import {TestBed, inject} from '@angular/core/testing';
 
 import {StorageService} from './storage.service';
 import {LocalStorageService} from "angular-2-local-storage";
-import {CookieOptionsProvider, CookieService} from "ngx-cookie";
-import {Injector} from "@angular/core";
+import {CookieService} from "ngx-cookie";
 
 
 
