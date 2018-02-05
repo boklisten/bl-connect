@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiResponse} from "./api-response";
 import {ApiErrorResponse} from "./api-error-response";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {BL_CONFIG} from "../bl-connect/bl-config";
 import {BlapiResponse} from "bl-model";
 import {ApiErrorService} from "../api-error/api-error.service";
@@ -15,7 +15,7 @@ export class ApiService {
 	}
 	
 	public get(collection: string, query?: string): Promise<ApiResponse> {
-		return this.http.get(this.apiPath(collection, query))
+		return this.http.get(this.apiPath(collection, query), {headers: this.getHeaders()})
 			.toPromise()
 			.then((res: BlapiResponse) => {
 				return this.handleResponse(res);
@@ -24,7 +24,8 @@ export class ApiService {
 	}
 	
 	public getById(collection: string, id: string): Promise<ApiResponse> {
-		return this.http.get(this.apiPathWithId(collection, id))
+		
+		return this.http.get(this.apiPathWithId(collection, id), {headers: this.getHeaders()})
 			.toPromise()
 			.then((res: BlapiResponse) => {
 				return this.handleResponse(res);
@@ -33,7 +34,7 @@ export class ApiService {
 	}
 	
 	public add(collection: string, data: any): Promise<any> {
-		return this.http.post(this.apiPath(collection), data)
+		return this.http.post(this.apiPath(collection), data, {headers: this.getHeaders()})
 			.toPromise()
 			.then((res: BlapiResponse) => {
 				this.handleResponse(res);
@@ -42,7 +43,7 @@ export class ApiService {
 	}
 	
 	public update(collection: string, id: string, data: any): Promise<ApiResponse> {
-		return this.http.patch(this.apiPathWithId(collection, id), data)
+		return this.http.patch(this.apiPathWithId(collection, id), data, {headers: this.getHeaders()})
 			.toPromise()
 			.then((res: BlapiResponse) => {
 				return this.handleResponse(res);
@@ -51,7 +52,7 @@ export class ApiService {
 	}
 	
 	public delete(collection: string, id: string): Promise<ApiResponse> {
-		return this.http.delete(this.apiPathWithId(collection, id))
+		return this.http.delete(this.apiPathWithId(collection, id), {headers: this.getHeaders()})
 			.toPromise()
 			.then((res: BlapiResponse) => {
 				return this.handleResponse(res);
@@ -95,5 +96,10 @@ export class ApiService {
 		return this.apiPath(collection) + '/' + id;
 	}
 	
-	
+	private getHeaders(authToken?: string): HttpHeaders {
+		if (!authToken) {
+			return new HttpHeaders({'Content-Type': 'application/json'});
+		}
+		return new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken});
+	}
 }
