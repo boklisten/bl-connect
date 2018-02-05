@@ -39,6 +39,7 @@ export class BranchService {
 					}
 				},
 				(error: ApiErrorResponse) => {
+					
 					reject(error);
 				});
 		});

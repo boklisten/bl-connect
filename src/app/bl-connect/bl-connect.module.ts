@@ -6,6 +6,7 @@ import {ItemService} from "../item/item.service";
 import {BranchService} from "../branch/branch.service";
 import {OpeningHourService} from "../opening-hour/opening-hour.service";
 import {ApiErrorService} from "../api-error/api-error.service";
+import {UserDetailService} from "../user-detail/user-detail.service";
 
 @NgModule({
 	imports: [
@@ -18,7 +19,8 @@ import {ApiErrorService} from "../api-error/api-error.service";
 		ApiErrorService,
 		ItemService,
 		BranchService,
-		OpeningHourService
+		OpeningHourService,
+		UserDetailService
 	]
 })
 export class BlConnectModule {
