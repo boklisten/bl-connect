@@ -14,10 +14,13 @@ export class StorageService {
 			try {
 				this.storeCookie(key, val);
 			} catch (err) {
+				console.log('the error', err);
 				return false;
 			}
 			return true;
 		}
+		localStorage.setItem(key, val);
+		return true;
 	}
 	
 	public get(key: string): string {
@@ -47,11 +50,19 @@ export class StorageService {
 		return true;
 	}
 	
+	public removeAll(): void {
+		if (!this._localStorage.isSupported) {
+			this._cookieService.removeAll();
+			return;
+		}
+		localStorage.clear();
+	}
+	
 	private storeCookie(key: string, val: string) {
 		try {
 			this._cookieService.put(key, val);
 		} catch (err) {
-			throw new Error('could not store cookie');
+			throw new Error('could not store cookie: ' + err);
 		}
 		return true;
 	}

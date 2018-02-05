@@ -15,11 +15,36 @@ export class TokenService {
 		this._refreshTokenName = BL_CONFIG.token.refreshToken;
 	}
 	
+	public getAccessToken(): string {
+		return this._storageService.get(this._accessTokenName);
+	}
+	
+	public addAccessToken(val: string) {
+		this._storageService.add(this._accessTokenName, val);
+	}
+	
+	public getRefreshToken(): string {
+		return this._storageService.get(this._refreshTokenName);
+	}
+	
+	public addRefreshToken(val: string) {
+		this._storageService.add(this._refreshTokenName, val);
+	}
+	
 	public isAccessTokenValid(): boolean {
 		try {
 			this._jwtHelper.isTokenExpired(this.getAccessToken());
 		} catch (err) {
-			throw new Error('the token is not valid: ' + err);
+			return false;
+		}
+		return true;
+	}
+	
+	public isRefreshTokenValid(): boolean {
+		try {
+			this._jwtHelper.isTokenExpired(this.getRefreshToken());
+		} catch (err) {
+			return false;
 		}
 		return true;
 	}
@@ -31,10 +56,6 @@ export class TokenService {
 		} catch (err) {
 			throw new Error('could not decode accessToken: ' + err);
 		}
-	}
-	
-	public getAccessToken(): string {
-		return this._storageService.get(this._accessTokenName);
 	}
 	
 	public accessTokenPermission(): UserPermission {
