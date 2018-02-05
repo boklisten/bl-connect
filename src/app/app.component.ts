@@ -11,12 +11,7 @@ import {ApiErrorResponse} from "./api/api-error-response";
 export class AppComponent implements OnInit {
 	title = 'app';
 	
-	constructor(private userDetailService: UserDetailService) {
-		this.userDetailService.getById('abc').then((userDetail: UserDetail) => {
-			console.log('the res', userDetail);
-		}).catch((error: ApiErrorResponse) => {
-			console.log('the error::', error);
-		});
+	constructor() {
 	}
 	
 	ngOnInit() {}

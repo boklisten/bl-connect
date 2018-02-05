@@ -16,6 +16,10 @@ export const BL_CONFIG = {
 			version: 'v1'
 		}
 	},
+	token: {
+		accessToken: 'bl-access-token',
+		refreshToken: 'bl-refresh-token'
+	},
 	collection: {
 		item: 'items',
 		branch: 'branches',

@@ -2,6 +2,7 @@ import {TestBed, inject} from '@angular/core/testing';
 
 import {ApiService} from './api.service';
 import {HttpClientModule} from "@angular/common/http";
+import {ApiErrorService} from "../api-error/api-error.service";
 
 describe('ApiService', () => {
 	beforeEach(() => {
@@ -9,7 +10,7 @@ describe('ApiService', () => {
 			imports: [
 				HttpClientModule
 			],
-			providers: [ApiService]
+			providers: [ApiService, ApiErrorService]
 		});
 	});
 	
