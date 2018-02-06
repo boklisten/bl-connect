@@ -3,120 +3,184 @@ import {ApiResponse} from "./api-response";
 import {ApiErrorResponse} from "./api-error-response";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {BL_CONFIG} from "../bl-connect/bl-config";
-import {BlapiErrorResponse, BlapiResponse} from "bl-model";
+import {BlapiErrorResponse, BlapiResponse, BlApiError, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "bl-model";
 import {ApiErrorService} from "../api-error/api-error.service";
 import {TokenService} from "../token/token.service";
+import {reject} from "q";
 
 
 @Injectable()
 export class ApiService {
-	
+	private _accessTokenInvalidCode: number;
 	constructor(private _http: HttpClient, private _apiErrorService: ApiErrorService, private _tokenService: TokenService) {
-	
+		this._accessTokenInvalidCode = 910;
 	}
 	
 	public get(collection: string, query?: string): Promise<ApiResponse> {
 		return new Promise((resolve, reject) => {
-			const headers = this.getHeaders();
-				
-				this._http.get(this.apiPath(collection, query), {headers: headers})
-					.toPromise().then((res: BlapiResponse) => {
+			this._http.get(this.apiPath(collection, query), {headers: this.getHeaders()}).toPromise().then((res: BlapiResponse) => {
+				resolve(this.handleResponse(res));
+			}).catch((httpError: HttpErrorResponse) => {
+				this.fetchTokensAndGet(collection, httpError, query).then((res: BlapiResponse) => {
+					resolve(this.handleResponse(res));
+				}).catch((blApiErr: BlApiError) => {
+					reject(blApiErr);
+				});
+			});
+		});
+	}
+	
+	private fetchTokensAndGet(collection: string, httpError: HttpErrorResponse, query?: string): Promise<BlapiResponse> {
+		return new Promise((resolve, reject) => {
+			
+			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
+				this.fetchNewTokens().then((accessToken) => {
+					this._http.get(this.apiPath(collection, query), {headers: this.createHeaders(accessToken)}).toPromise().then((res: BlapiResponse) => {
 						resolve(this.handleResponse(res));
-					}).catch((httpError: HttpErrorResponse) => {
-						const blapiResponseError = this._apiErrorService.handleError(httpError);
-						
-						if (blapiResponseError.code === 910) { // accessToken invalid
-							this.fetchNewTokens().then((accessToken) => {
-								this._http.get(this.apiPath(collection, query), {headers: this.createHeaders(accessToken)})
-									.toPromise().then((res: BlapiResponse) => {
-										resolve(this.handleResponse(res));
-								}).catch((err) => {
-									this.handleError(err);
-								});
-							});
-						} else {
-							return reject(blapiResponseError);
-						}
+					}).catch((blApiErr: BlApiError) => {
+						this.handleError(blApiErr);
 					});
+				});
+			} else {
+				return reject(this._apiErrorService.handleError(httpError));
+			}
 		});
 	}
-	
-	private fetchNewTokenAndRetryRequest(callback) {
-		this.fetchNewTokens().then(() => {
-		
-		}).catch(() => {
-		
-		
-		});
-	}
-	
+
 	public getById(collection: string, id: string): Promise<ApiResponse> {
 		return new Promise((resolve, reject) => {
 			const headers = this.getHeaders();
 			
-			this._http.get(this.apiPathWithId(collection, id), {headers: headers})
-				.toPromise().then((res: BlapiResponse) => {
+			this._http.get(this.apiPathWithId(collection, id), {headers: headers}).toPromise().then((res: BlapiResponse) => {
+				resolve(this.handleResponse(res));
+			}).catch((httpError: HttpErrorResponse) => {
+				this.fetchTokensAndGetById(collection, id, httpError).then((res: BlapiResponse) => {
 					resolve(this.handleResponse(res));
-				}).catch((httpError: HttpErrorResponse) => {
-					console.log('there was an error from api', httpError.error);
-					const blapiResponseError = this._apiErrorService.handleError(httpError);
-					
-					if (blapiResponseError.code === 910) { // accessToken invalid
-						console.log('the accessToken was invalid, must try to get a new one with refreshToken');
-						this.fetchNewTokens().then((accessToken) => {
-							console.log('got accessToken by providing refreshToken, trying to fetch the doc again');
-							this._http.get(this.apiPathWithId(collection, id), {headers: this.createHeaders(accessToken)})
-								.toPromise().then((res: BlapiResponse) => {
-									console.log('we got the doc!');
-									resolve(this.handleResponse(res));
-							}).catch((err) => {
-								console.log('could not get accessToken, something wrong with fetching of new tokens', err);
-								return this.handleError(err);
-							});
-						}).catch((err) => {
-							console.log('could not fetch new tokens, the err: ', err);
-						});
-					} else {
-						return reject(blapiResponseError);
-					}
+				}).catch((blApiErr: BlApiError) => {
+					reject(blApiErr);
 				});
+			});
 		});
-		/*
-		return this._http.get(this.apiPathWithId(collection, id))
-			.toPromise()
-			.then((res: BlapiResponse) => {
-				return this.handleResponse(res);
-			})
-			.catch(e => this.handleError(e));
-			*/
 	}
 	
-	public add(collection: string, data: any): Promise<any> {
-		return this._http.post(this.apiPath(collection), data)
-			.toPromise()
-			.then((res: BlapiResponse) => {
-				this.handleResponse(res);
-			})
-			.catch(e => this.handleError(e));
+	private fetchTokensAndGetById(collection: string, id: string, httpError: HttpErrorResponse): Promise<BlapiResponse> {
+		return new Promise((resolve, reject) => {
+			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
+				this.fetchNewTokens().then(() => { // try to get new tokens
+					
+					this._http.get(this.apiPathWithId(collection, id), {headers: this.getHeaders()}).toPromise().then((res: BlapiResponse) => {
+						resolve(res);
+					}).catch((blApiErr: BlApiError) => {
+						return reject(blApiErr);
+					});
+					
+				}).catch((blApiErr: BlApiError) => {
+					return reject(blApiErr);
+				});
+			} else {
+				return reject(this._apiErrorService.handleError(httpError));
+			}
+		});
+	}
+	
+	
+	public add(collection: string, data: any): Promise<ApiResponse> {
+		return new Promise((resolve, reject) => {
+			this._http.post(this.apiPath(collection), data, {headers: this.getHeaders()}).toPromise().then((res: BlapiResponse) => {
+				resolve(this.handleResponse(res));
+			}).catch((httpError: HttpErrorResponse) => {
+				this.fetchTokensAndAdd(collection, data, httpError).then((res: BlapiResponse) => {
+					resolve(this.handleResponse(res));
+				}).catch((blApiErr: BlApiError) => {
+					reject(blApiErr);
+				});
+			});
+		});
+	}
+	
+	private fetchTokensAndAdd(collection: string, data: any, httpError: HttpErrorResponse): Promise<BlapiResponse> {
+		return new Promise((resolve, reject) => {
+			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
+				this.fetchNewTokens().then(() => { // try to get new tokens
+					this._http.post(this.apiPath(collection), data, {headers: this.getHeaders()}).toPromise().then((res: BlapiResponse) => {
+						resolve(res);
+					}).catch((blApiErr: BlApiError) => {
+						return reject(blApiErr);
+					});
+					
+				}).catch((blApiErr: BlApiError) => {
+					return reject(blApiErr);
+				});
+			} else {
+				return reject(this._apiErrorService.handleError(httpError));
+			}
+		});
 	}
 	
 	public update(collection: string, id: string, data: any): Promise<ApiResponse> {
-		return this._http.patch(this.apiPathWithId(collection, id), data)
-			.toPromise()
-			.then((res: BlapiResponse) => {
-				return this.handleResponse(res);
-			})
-			.catch(e => this.handleError(e));
+		return new Promise((resolve, reject) => {
+			this._http.patch(this.apiPathWithId(collection, id), data).toPromise().then((res: BlapiResponse) => {
+				resolve(this.handleResponse(res));
+			}).catch((httpError: HttpErrorResponse) => {
+				this.fetchTokensAndUpdate(collection, id, data, httpError).then((res: BlapiResponse) => {
+					resolve(this.handleResponse(res));
+				}).catch((blApiErr: BlApiError) => {
+					reject(blApiErr);
+				});
+			});
+		});
 	}
 	
-	public delete(collection: string, id: string): Promise<ApiResponse> {
-		
-		return this._http.delete(this.apiPathWithId(collection, id))
-			.toPromise()
-			.then((res: BlapiResponse) => {
-				return this.handleResponse(res);
-			});
+	private fetchTokensAndUpdate(collection: string, id: string, data: any, httpError: HttpErrorResponse): Promise<BlapiResponse> {
+		return new Promise((resolve, reject) => {
+			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
+				this.fetchNewTokens().then(() => { // try to get new tokens
+					this._http.patch(this.apiPathWithId(collection, id), data, {headers: this.getHeaders()}).toPromise().then((res: BlapiResponse) => {
+						resolve(res);
+					}).catch((blApiErr: BlApiError) => {
+						return reject(blApiErr);
+					});
+				}).catch((blApiErr: BlApiError) => {
+					return reject(blApiErr);
+				});
+			} else {
+				return reject(this._apiErrorService.handleError(httpError));
+			}
+		});
 	}
+	
+	public remove(collection: string, id: string): Promise<ApiResponse> {
+		return new Promise((resolve, reject) => {
+			this._http.delete(this.apiPathWithId(collection, id)).toPromise().then((res: BlapiResponse) => {
+				resolve(this.handleResponse(res));
+			}).catch((httpError: HttpErrorResponse) => {
+				this.fetchTokensAndRemove(collection, id, httpError).then((res: BlapiResponse) => {
+					resolve(this.handleResponse(res));
+				}).catch((blApiErr: BlApiError) => {
+					reject(blApiErr);
+				});
+			});
+		});
+	}
+	
+	private fetchTokensAndRemove(collection: string, id: string, httpError: HttpErrorResponse): Promise<BlapiResponse> {
+		return new Promise((resolve, reject) => {
+			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
+				this.fetchNewTokens().then(() => { // try to get new tokens
+					this._http.delete(this.apiPathWithId(collection, id), {headers: this.getHeaders()}).toPromise().then((res: BlapiResponse) => {
+						resolve(res);
+					}).catch((blApiErr: BlApiError) => {
+						return reject(blApiErr);
+					});
+				}).catch((blApiErr: BlApiError) => {
+					return reject(blApiErr);
+				});
+			} else {
+				return reject(this._apiErrorService.handleError(httpError));
+			}
+		});
+	}
+	
 	
 	private handleResponse(res: BlapiResponse): ApiResponse | Promise<any> {
 		for (let i = 0; i < res.data.length; i++) {
@@ -128,8 +192,8 @@ export class ApiService {
 	}
 	
 	
-	private handleError(error: any): Promise<BlapiErrorResponse> {
-		return Promise.reject(this._apiErrorService.handleError(error));
+	private handleError(error: any): BlApiError {
+		return this._apiErrorService.handleError(error);
 	}
 	
 	private apiPath(collection: string, query?: string): string {
@@ -163,13 +227,13 @@ export class ApiService {
 						this._tokenService.addRefreshToken(tokens.refreshToken);
 						resolve(tokens.accessToken);
 					} catch (err) {
-						return reject('could not get tokens');
+						return reject(new BlApiLoginRequiredError());
 					}
 				}).catch((err) => {
-					return reject('LoginRequiredError: ' + err);
+					return reject(new BlApiLoginRequiredError());
 				});
 			} else {
-				return reject('does not have refreshToken');
+				return reject(new BlApiLoginRequiredError());
 			}
 		});
 	}
