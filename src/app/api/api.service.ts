@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
 import {ApiResponse} from "./api-response";
-import {ApiErrorResponse} from "./api-error-response";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {BL_CONFIG} from "../bl-connect/bl-config";
-import {BlapiErrorResponse, BlapiResponse, BlApiError, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "bl-model";
+import {BlapiResponse, BlApiError, BlApiLoginRequiredError} from "bl-model";
 import {ApiErrorService} from "../api-error/api-error.service";
 import {TokenService} from "../token/token.service";
-import {reject} from "q";
 
 
 @Injectable()

@@ -20,6 +20,11 @@ export const BL_CONFIG = {
 		accessToken: 'bl-access-token',
 		refreshToken: 'bl-refresh-token'
 	},
+	login: {
+		local: {
+			url: 'auth/login/local'
+		}
+	},
 	collection: {
 		item: 'items',
 		branch: 'branches',

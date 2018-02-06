@@ -93,6 +93,47 @@ export class TokenService {
 		return this._jwtHelper.decodeToken(this.getRefreshToken());
 	}
 	
+	public parseTokensFromResponseDataAndStore(responseData: any): boolean {
+		let refreshToken = '';
+		let accessToken = '';
+		
+		if (!responseData.data) {
+			throw new Error('responseData.data is not defined');
+		}
+		
+		if (Object.prototype.toString.call(responseData.data) !== '[object Array]') {
+			throw new Error('responseData.data is not an array');
+		}
+		
+		const data = responseData.data;
+		
+		for (const d of data) {
+			if (!d.data || d.data.length <= 0) {
+				throw new Error('data of refreshToken is not defined');
+			}
+			
+			if (!d.documentName) {
+				throw new Error('documentName is missing on return data');
+			}
+			
+			if (d.documentName === 'refreshToken') {
+				refreshToken = d.data;
+			} else if (d.documentName === 'accessToken') {
+				accessToken = d.data;
+			}
+		}
+		
+		if (!accessToken || accessToken.length <= 0 || !refreshToken || refreshToken.length <= 0) {
+			throw new Error('tokens or one of the tokens are not defined');
+		}
+		
+		
+		this.addAccessToken(accessToken);
+		this.addRefreshToken(refreshToken);
+		
+		return true;
+	}
+	
 	private isTokenValid(token: string): boolean {
 		try {
 			this._jwtHelper.decodeToken(token);

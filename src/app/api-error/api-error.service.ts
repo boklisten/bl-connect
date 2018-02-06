@@ -21,9 +21,11 @@ export class ApiErrorService {
 		}
 		
 		switch (httpError.error.code) {
-			case 904: return new BlApiPermissionDeniedError();
-			case 911: return new BlApiLoginRequiredError();
-			case 909: return new BlApiLoginRequiredError();
+			case 901: return new BlApiPermissionDeniedError(); // wrong password
+			case 904: return new BlApiPermissionDeniedError(); // does not have the right permission
+			case 908: return new BlApiPermissionDeniedError(); // username or password incorrect
+			case 909: return new BlApiLoginRequiredError(); // refreshToken invalid
+			case 911: return new BlApiLoginRequiredError(); //no authToken in request
 			default: return new BlApiError();
 		}
 	}

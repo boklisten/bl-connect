@@ -11,6 +11,7 @@ import {TokenService} from "../token/token.service";
 import {StorageService} from "../storage/storage.service";
 import {LocalStorageModule} from "angular-2-local-storage";
 import {CookieModule} from "ngx-cookie";
+import {LoginService} from "../login/login.service";
 
 @NgModule({
 	imports: [
@@ -28,7 +29,8 @@ import {CookieModule} from "ngx-cookie";
 		OpeningHourService,
 		UserDetailService,
 		TokenService,
-		StorageService
+		StorageService,
+		LoginService
 	]
 })
 export class BlConnectModule {
