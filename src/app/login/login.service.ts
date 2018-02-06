@@ -16,6 +16,7 @@ export class LoginService {
 		const loginData = {username: username, password: password};
 		return new Promise((resolve, reject) => {
 			this._apiService.add(BL_CONFIG.login.local.url, loginData).then((apiRes: ApiResponse) => {
+				
 				try {
 					this._tokenService.parseTokensFromResponseDataAndStore(apiRes);
 					return resolve(true);

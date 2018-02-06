@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
 
 	*/
 	
-		this._loginService.login('a@b.com', 'passwor').then(() => {
+		this._loginService.login('a@b.com', 'password').then(() => {
 			console.log('we are logged in!!');
 			
 			this._userDetailService.getById(validUserDetailId).then((userDetail: UserDetail) => {

@@ -22,7 +22,7 @@ export const BL_CONFIG = {
 	},
 	login: {
 		local: {
-			url: 'auth/login/local'
+			url: 'auth/local/login'
 		}
 	},
 	collection: {

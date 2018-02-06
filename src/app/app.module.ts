@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {BlConnectModule} from "./bl-connect/bl-connect.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
 	declarations: [
@@ -10,6 +11,7 @@ import {BlConnectModule} from "./bl-connect/bl-connect.module";
 	],
 	imports: [
 		BrowserModule,
+		HttpClientModule,
 		BlConnectModule
 	],
 	providers: [],
