@@ -7,11 +7,17 @@ import {BranchService} from "../branch/branch.service";
 import {OpeningHourService} from "../opening-hour/opening-hour.service";
 import {ApiErrorService} from "../api-error/api-error.service";
 import {UserDetailService} from "../user-detail/user-detail.service";
+import {TokenService} from "../token/token.service";
+import {StorageService} from "../storage/storage.service";
+import {LocalStorageModule} from "angular-2-local-storage";
+import {CookieModule} from "ngx-cookie";
 
 @NgModule({
 	imports: [
 		CommonModule,
-		HttpClientModule
+		HttpClientModule,
+		LocalStorageModule.withConfig({prefix: 'bl', storageType: 'sessionStorage'}),
+		CookieModule.forChild()
 	],
 	declarations: [],
 	providers: [
@@ -20,7 +26,9 @@ import {UserDetailService} from "../user-detail/user-detail.service";
 		ItemService,
 		BranchService,
 		OpeningHourService,
-		UserDetailService
+		UserDetailService,
+		TokenService,
+		StorageService
 	]
 })
 export class BlConnectModule {

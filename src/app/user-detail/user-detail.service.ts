@@ -17,10 +17,10 @@ export class UserDetailService {
 	public getById(id: string): Promise<UserDetail> {
 		return new Promise((resolve, reject) => {
 			this._apiService.getById(this._collectionName, id).then((res: ApiResponse) => {
-				if (res.data.length > 1) {
+				if (res.data.length > 1 || !res.data[0].data) {
 					return reject(new ApiErrorResponse('bad data', 500));
 				}
-				resolve(res.data[0] as UserDetail);
+				resolve(res.data[0].data as UserDetail);
 			}).catch((error: ApiErrorResponse) => {
 				reject(error);
 			});

@@ -18,6 +18,24 @@ export class TokenService {
 		
 	}
 	
+	public haveAccessToken(): boolean {
+		try {
+			this._storageService.get(this._accessTokenName);
+			return true;
+		} catch (err) {
+			return false;
+		}
+	}
+	
+	public haveRefreshToken(): boolean {
+		try {
+			this._storageService.get(this._refreshTokenName);
+			return true;
+		} catch (err) {
+			return false;
+		}
+	}
+	
 	public addAccessToken(val: string) {
 		if (!val || val.length <= 0) {
 			throw new Error('provided value is empty or undefined');
