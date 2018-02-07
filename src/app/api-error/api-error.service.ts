@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiErrorResponse} from "../api/api-error-response";
 import {HttpErrorResponse} from "@angular/common/http";
-import {BlApiError, BlapiErrorResponse, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "bl-model";
+import {BlApiError, BlapiErrorResponse, BlApiNotFoundError, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "bl-model";
 
 
 @Injectable()
@@ -30,6 +30,7 @@ export class ApiErrorService {
 		}
 		
 		switch (httpError.error.code) {
+			case 404: return new BlApiNotFoundError();
 			case 901: return new BlApiPermissionDeniedError(); // wrong password
 			case 904: return new BlApiPermissionDeniedError(); // does not have the right permission
 			case 908: return new BlApiPermissionDeniedError(); // username or password incorrect

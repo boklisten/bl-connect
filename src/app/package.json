@@ -1,8 +1,8 @@
 {
 	"$schema": "../../node_modules/ng-packagr/package.schema.json",
 	"name": "bl-connect",
+	"private": false,
 	"version": "0.4.0",
-	"private": true,
 	"peerDependencies": {
 		"@angular/common": "^5.1.0",
 		"@angular/core": "^5.1.0",

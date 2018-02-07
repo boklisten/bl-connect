@@ -14,12 +14,19 @@ export class ApiService {
 		this._accessTokenInvalidCode = 910;
 	}
 	
-	public get(collection: string, query?: string): Promise<ApiResponse> {
+	public get(url: string, query?: string): Promise<ApiResponse> {
+		if (!url || url.length <= 0) {
+			const apiErr = new BlApiError();
+			apiErr.msg = 'url is undefined';
+			return Promise.reject(apiErr);
+		}
+		
 		return new Promise((resolve, reject) => {
-			this._http.get(this.apiPath(collection, query), {headers: this.getHeaders()}).toPromise().then((res: BlapiResponse) => {
+			
+			this._http.get(this.apiPath(url, query), {headers: this.getHeaders()}).toPromise().then((res: BlapiResponse) => {
 				resolve(this.handleResponse(res));
 			}).catch((httpError: HttpErrorResponse) => {
-				this.fetchTokensAndGet(collection, httpError, query).then((res: BlapiResponse) => {
+				this.fetchTokensAndGet(url, httpError, query).then((res: BlapiResponse) => {
 					resolve(this.handleResponse(res));
 				}).catch((blApiErr: BlApiError) => {
 					reject(blApiErr);

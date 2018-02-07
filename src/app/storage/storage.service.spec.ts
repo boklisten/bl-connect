@@ -1,7 +1,7 @@
 
 import {StorageService} from './storage.service';
 import {LocalStorageService} from "angular-2-local-storage";
-import {CookieService} from "ngx-cookie";
+
 
 
 
@@ -9,24 +9,12 @@ const localStorageServiceMock = {
 	isSupported: true
 } as LocalStorageService;
 
-const cookieServiceMock = {
-	put: (key: string, val: string) => {
-		return;
-	},
-	get: (key: string) => {
-		return '';
-	},
-	remove: (key: string) => {
-		return;
-	}
-} as CookieService;
-
 describe('StorageService', () => {
 	let service: StorageService;
 	
 	beforeEach(() => {
 		localStorageServiceMock.isSupported = true;
-		service = new StorageService(localStorageServiceMock, cookieServiceMock);
+		service = new StorageService(localStorageServiceMock);
 		service.removeAll();
 	});
 	

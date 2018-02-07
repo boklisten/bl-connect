@@ -4,7 +4,6 @@ import {TokenService} from './token.service';
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {StorageService} from "../storage/storage.service";
 import {LocalStorageService} from "angular-2-local-storage";
-import {CookieService} from "ngx-cookie";
 import {statsErrorsToString} from "@angular/cli/utilities/stats";
 
 
@@ -37,7 +36,7 @@ describe('TokenService', () => {
 	
 	
 	beforeEach(() => {
-		service = new TokenService(new StorageService({isSupported: true} as LocalStorageService, {} as CookieService));
+		service = new TokenService(new StorageService({isSupported: true} as LocalStorageService));
 		service.removeTokens();
 	});
 	
