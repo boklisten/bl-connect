@@ -11,6 +11,7 @@ import {StorageService} from "../storage/storage.service";
 import {LocalStorageModule} from "angular-2-local-storage";
 import {LoginService} from "../login/login.service";
 import {HttpClientModule} from "@angular/common/http";
+import {RegisterService} from "../register/register.service";
 
 @NgModule({
 	imports: [
@@ -28,7 +29,8 @@ import {HttpClientModule} from "@angular/common/http";
 		UserDetailService,
 		TokenService,
 		StorageService,
-		LoginService
+		LoginService,
+		RegisterService
 	]
 })
 export class BlConnectModule {

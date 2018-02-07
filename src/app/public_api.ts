@@ -9,3 +9,4 @@ export * from "./login/login.service";
 export * from "./user-detail/user-detail.service";
 export * from "./token/token.service";
 export * from "./storage/storage.service";
+export * from "./register/register.service";

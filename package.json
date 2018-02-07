@@ -8,7 +8,8 @@
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
-		"build:lib": "ng-packagr -p src/app/package.json"
+		"build:lib": "ng-packagr -p src/app/package.json",
+		"blink": "npm run build:lib && npm link dist/bl-connect"
 	},
 	"private": false,
 	"devDependencies": {
