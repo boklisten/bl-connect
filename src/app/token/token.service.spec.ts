@@ -104,8 +104,6 @@ describe('TokenService', () => {
 		it('should return false when provided accessToken is expired', () => {
 			service.addAccessToken(expiredCustomerAccessToken);
 			
-			console.log('expired', expiredCustomerAccessToken);
-			
 			expect(service.isAccessTokenValid()).toBeFalsy();
 		});
 	});
