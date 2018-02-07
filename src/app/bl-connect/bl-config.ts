@@ -23,6 +23,23 @@ export const BL_CONFIG = {
 	login: {
 		local: {
 			url: 'auth/local/login'
+		},
+		facebook: {
+			url: 'auth/facebook'
+		},
+		google: {
+			url: 'auth/google'
+		}
+	},
+	register: {
+		local: {
+			url: 'auth/local/register'
+		},
+		facebook: {
+			url: 'auth/facebook'
+		},
+		google: {
+			url: 'auth/google'
 		}
 	},
 	collection: {

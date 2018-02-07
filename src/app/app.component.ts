@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
 
 	*/
 	
-		this._loginService.login('a@b.com', 'password').then(() => {
+		this._loginService.login('a@b.co', 'password').then(() => {
 			console.log('we are logged in!!');
 			
 			this._userDetailService.getById(validUserDetailId).then((userDetail: UserDetail) => {
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
 		} else if (blApiErr instanceof BlApiPermissionDeniedError) {
 			console.log('BlApiPermissionDeniedError');
 		} else {
-			console.log('BlApiError: unknown error');
+			console.log('BlApiError: msg: "' +  blApiErr.msg + '"');
 		}
 	}
 	

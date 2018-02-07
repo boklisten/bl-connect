@@ -12,6 +12,15 @@ export class ApiErrorService {
 	
 	
 	public handleError(httpError: HttpErrorResponse): BlApiError {
+		console.log('the http error:', httpError);
+		
+		if (httpError.status === 0 || httpError.url === null) {
+			const err = new BlApiError();
+			err.msg = 'could not connect';
+			err.code = 0;
+			return err;
+		}
+		
 		if (!httpError.error || !httpError.error.code) {
 			const err = new BlApiError();
 			err.msg = 'unknown error';

@@ -1,22 +1,22 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from "../api/api.service";
-import {ApiResponse} from "../api/api-response";
-import {BlApiError} from "bl-model";
 import {TokenService} from "../token/token.service";
 import {BL_CONFIG} from "../bl-connect/bl-config";
+import {ApiResponse} from "../api/api-response";
+import {ApiErrorService} from "../api-error/api-error.service";
+import {BlApiError} from "bl-model";
 
 @Injectable()
-export class LoginService {
+export class RegisterService {
 	
 	constructor(private _apiService: ApiService, private _tokenService: TokenService) {
-	
 	}
 	
-	public login(username: string, password: string): Promise<boolean> {
-		const loginData = {username: username, password: password};
+	public localRegister(username: string, password: string): Promise<boolean> {
+		const registerData = {username: username, password: password};
+		
 		return new Promise((resolve, reject) => {
-			this._apiService.add(BL_CONFIG.login.local.url, loginData).then((apiRes: ApiResponse) => {
-				
+			this._apiService.add(BL_CONFIG.register.local.url, registerData).then((apiRes: ApiResponse) => {
 				try {
 					this._tokenService.parseTokensFromResponseDataAndStore(apiRes);
 					return resolve(true);
@@ -29,16 +29,15 @@ export class LoginService {
 		});
 	}
 	
-	public facebookLogin(): Promise<boolean> {
-		return this.socialLogin(BL_CONFIG.login.facebook.url);
+	public facebookRegister(): Promise<boolean> {
+		return this.socialRegister(BL_CONFIG.register.facebook.url);
 	}
 	
-	public googleLogin(): Promise<boolean> {
-		return this.socialLogin(BL_CONFIG.login.google.url);
+	public googleRegister(): Promise<boolean> {
+		return this.socialRegister(BL_CONFIG.register.google.url);
 	}
 	
-	
-	private socialLogin(url: string): Promise<boolean> {
+	private socialRegister(url: string): Promise<boolean> {
 		return new Promise((resolve, reject) => {
 			this._apiService.get(url).then((apiRes: ApiResponse) => {
 				try {
