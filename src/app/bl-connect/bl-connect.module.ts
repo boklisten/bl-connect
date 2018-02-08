@@ -12,6 +12,8 @@ import {LocalStorageModule} from "angular-2-local-storage";
 import {LoginService} from "../login/login.service";
 import {HttpClientModule} from "@angular/common/http";
 import {RegisterService} from "../register/register.service";
+import {ApiRequestService} from "../api/api-request.service";
+import {ApiTokenService} from "../api/api-token.service";
 
 @NgModule({
 	imports: [
@@ -23,6 +25,8 @@ import {RegisterService} from "../register/register.service";
 	providers: [
 		ApiService,
 		ApiErrorService,
+		ApiRequestService,
+		ApiTokenService,
 		ItemService,
 		BranchService,
 		OpeningHourService,
