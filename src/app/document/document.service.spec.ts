@@ -3,7 +3,6 @@
 import {ApiService} from "../api/api.service";
 import {BlApiError, Branch} from "bl-model";
 import {DocumentService} from "./document.service";
-
 describe('DocumentService', () => {
 	let service: DocumentService<any>;
 	

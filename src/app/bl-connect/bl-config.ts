@@ -46,7 +46,8 @@ export const BL_CONFIG = {
 		item: 'items',
 		branch: 'branches',
 		openingHour: 'openingHours',
-		userDetail: 'userdetails'
+		userDetail: 'userdetails',
+		customerItem: 'customeritems'
 	}
 };
 
