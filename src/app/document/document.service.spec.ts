@@ -1,10 +1,10 @@
-import {TestBed, inject} from '@angular/core/testing';
 
-import {BranchService} from './branch.service';
+
 import {ApiService} from "../api/api.service";
 import {BlApiError, Branch} from "bl-model";
+import {DocumentService} from "./document.service";
 describe('BranchService', () => {
-	let service: BranchService;
+	let service: DocumentService<any>;
 	
 	const apiServiceMock = {
 		get: (url: string, query?: string) => {},
@@ -12,7 +12,7 @@ describe('BranchService', () => {
 	} as ApiService;
 	
 	beforeEach(() => {
-		service = new BranchService(apiServiceMock);
+		service = new DocumentService('any', apiServiceMock);
 	});
 	
 	
@@ -47,7 +47,7 @@ describe('BranchService', () => {
 			);
 			
 			service.get().catch((blApiError: BlApiError) => {
-				expect(blApiError.msg).toMatch('branch data not valid');
+				expect(blApiError.msg).toMatch('document data not valid');
 				done();
 			});
 		});
