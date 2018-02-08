@@ -54,13 +54,40 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 	
+	public add(data: any): Promise<T> {
+		return new Promise((resolve, reject) => {
+			this._apiService.add(this._collectionName, data).then((res: ApiResponse) => {
+				this.getDocIfValid(res).then((doc: T) => {
+					resolve(doc);
+				}).catch((blApiErr: BlApiError) => {
+					console.log('we got an error: ', blApiErr);
+					reject(blApiErr);
+				});
+			}).catch((blApiErr: BlApiError) => {
+				reject(blApiErr);
+			});
+		});
+	}
+	
+	public remove(id: string): Promise<T> {
+		return new Promise((resolve, reject) => {
+			this._apiService.remove(this._collectionName, id).then((res: ApiResponse) => {
+				this.getDocIfValid(res).then((doc: T) => {
+					resolve(doc);
+				}).catch((blApiErr: BlApiError) => {
+					reject(blApiErr);
+				});
+			}).catch((blApiErr: BlApiError) => {
+				reject(blApiErr);
+			});
+		});
+	}
+	
 	private getDocIfValid(apiRes: ApiResponse): Promise<T> {
 		return new Promise((resolve, reject) => {
 			this.getDocsIfValid(apiRes).then((docs: T[]) => {
 				if (docs.length !== 1) {
-					const blApiErr = new BlApiError();
-					blApiErr.msg = 'there where more than one document in the response';
-					return reject(blApiErr);
+					return reject(new BlApiError('there where more than one document in the response'));
 				}
 				
 				resolve(docs[0]);
@@ -78,19 +105,19 @@ export class DocumentService<T extends BlDocument> {
 				resolve(docs);
 				
 			} catch (err) {
-				const blApiErr = new BlApiError();
-				blApiErr.msg = 'document data not valid';
-				reject(blApiErr);
+				reject(new BlApiError('document data not valid'));
 			}
 		});
 	}
 	
 	private validateAndGetDocs(apiResponse: ApiResponse): T[] {
-		let docs: T[] = [];
 		
 		if (!isArray(apiResponse.data)) {
+			
 			throw new Error('response data is not an array');
 		}
+		
+		const docs: T[] = [];
 		
 		for (const d of apiResponse.data) {
 			docs.push(this.validateAndGetDoc(d));
@@ -104,7 +131,7 @@ export class DocumentService<T extends BlDocument> {
 			throw new Error('response data document does not have documentName');
 		}
 		
-		if (!responseDocument.data || !responseDocument.data.name || !responseDocument.data.id) {
+		if (!responseDocument.data || !responseDocument.data.id) {
 			throw new Error('document does not have the required fields');
 		}
 		
