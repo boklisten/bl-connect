@@ -15,7 +15,6 @@ describe('DocumentService', () => {
 		service = new DocumentService('any', apiServiceMock);
 	});
 	
-	
 	describe('#get()', () => {
 		it('should resolve with a array of valid branches when apiService returns success', (done: DoneFn) => {
 			const branchDoc1 = {documentName: 'branch', data: {name: 'MikkyD', id: 'abc'} as Branch};
@@ -36,7 +35,7 @@ describe('DocumentService', () => {
 			});
 		});
 		
-		it('should reject if the returned ApiService data is not of valid branches', (done: DoneFn) => {
+		it('should reject if the returned ApiService data is not of valid documents', (done: DoneFn) => {
 			const branchDoc1 = {documentName: 'somethingElse', data: {age: 'MikkyD'}};
 			const returnObj = {data: [
 				branchDoc1
@@ -68,7 +67,7 @@ describe('DocumentService', () => {
 	});
 	
 	describe('#getById()', () => {
-		it('should resolve with a branch if apiService returns a valid branch document', (done: DoneFn) => {
+		it('should resolve with a branch if apiService returns a valid document', (done: DoneFn) => {
 			const branchDoc = {documentName: 'branch', data: {name: 'aBranchName', id: 'abc'}};
 			const returnObj = {
 				data: [
@@ -97,6 +96,28 @@ describe('DocumentService', () => {
 			
 			service.getById('abc').catch((apiErr: BlApiError) => {
 				expect(apiErr.msg).toEqual(blApiErr.msg);
+				done();
+			});
+		});
+		
+		it('should reject with BlApiError if the response includes more than one document', (done: DoneFn) => {
+			
+			const branchDoc1 = {documentName: 'branch', data: {name: 'aBranchName', id: 'abc'}};
+			const branchDoc2 = {documentName: 'branch', data: {name: 'anotherBranchName', id: 'abc'}};
+			
+			const returnObj = {
+				data: [
+					branchDoc1,
+					branchDoc2
+				]
+			};
+			
+			spyOn(apiServiceMock, 'getById').and.returnValue(
+				Promise.resolve(returnObj)
+			);
+			
+			service.getById('abc').catch((apiErr: BlApiError) => {
+				expect(apiErr.msg).toMatch('there where more than one document in the response')
 				done();
 			});
 		});

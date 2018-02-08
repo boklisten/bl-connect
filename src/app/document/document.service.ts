@@ -5,23 +5,20 @@ import {isArray} from "util";
 import {ApiService} from "../api/api.service";
 
 @Injectable()
-export class DocumentService<T> {
+export class DocumentService<T extends BlDocument> {
 	
 	constructor(private _collectionName: string, private _apiService: ApiService) {
 	}
 	
-	public get(query?: string): Promise<T[]>	 {
+	public get(query?: string): Promise<T[]> {
 		return new Promise((resolve, reject) => {
 			this._apiService.get(this._collectionName, query).then(
 				(res: ApiResponse) => {
-					try {
-						const docs = this.getDocumentsIfValid(res);
+					this.getDocsIfValid(res).then((docs: T[]) => {
 						resolve(docs);
-					} catch (err) {
-						const blApiError = new BlApiError();
-						blApiError.msg = 'document data not valid';
-						reject(blApiError);
-					}
+					}).catch((blApiErr: BlApiError) => {
+						reject(blApiErr);
+					});
 				}, (error: BlApiError) => {
 					reject(error);
 				});
@@ -31,19 +28,11 @@ export class DocumentService<T> {
 	public getById(id: string): Promise<T> {
 		return new Promise((resolve, reject) => {
 			this._apiService.getById(this._collectionName, id).then((res: ApiResponse) => {
-					try {
-						const docs = this.getDocumentsIfValid(res);
-						
-						if (docs.length !== 1) {
-							return reject(new BlApiError());
-						}
-						
-						resolve(docs[0]);
-					} catch (err) {
-						const blApiError = new BlApiError();
-						blApiError.msg = 'document data not valid';
-						reject(blApiError);
-					}
+					this.getDocIfValid(res).then((doc: T) => {
+						resolve(doc);
+					}).catch((blApiErr: BlApiError) => {
+						reject(blApiErr);
+					});
 				},
 				(error: BlApiError) => {
 					reject(error);
@@ -51,7 +40,52 @@ export class DocumentService<T> {
 		});
 	}
 	
-	private getDocumentsIfValid(apiResponse: ApiResponse): T[] {
+	public update(id: string, data: any): Promise<T> {
+		return new Promise((resolve, reject) => {
+			this._apiService.update(this._collectionName, id, data).then((res: ApiResponse) => {
+				this.getDocIfValid(res).then((doc: T) => {
+					resolve(doc);
+				}).catch((blApiErr: BlApiError) => {
+					reject(blApiErr);
+				});
+			}).catch((blApiErr: BlApiError) => {
+				reject(blApiErr);
+			});
+		});
+	}
+	
+	private getDocIfValid(apiRes: ApiResponse): Promise<T> {
+		return new Promise((resolve, reject) => {
+			this.getDocsIfValid(apiRes).then((docs: T[]) => {
+				if (docs.length !== 1) {
+					const blApiErr = new BlApiError();
+					blApiErr.msg = 'there where more than one document in the response';
+					return reject(blApiErr);
+				}
+				
+				resolve(docs[0]);
+			}).catch((err: BlApiError) => {
+				reject(err);
+			});
+		});
+	}
+	
+	private getDocsIfValid(apiRes: ApiResponse): Promise<T[]> {
+		return new Promise((resolve, reject) => {
+			try {
+				const docs = this.validateAndGetDocs(apiRes);
+				
+				resolve(docs);
+				
+			} catch (err) {
+				const blApiErr = new BlApiError();
+				blApiErr.msg = 'document data not valid';
+				reject(blApiErr);
+			}
+		});
+	}
+	
+	private validateAndGetDocs(apiResponse: ApiResponse): T[] {
 		let docs: T[] = [];
 		
 		if (!isArray(apiResponse.data)) {
@@ -59,13 +93,13 @@ export class DocumentService<T> {
 		}
 		
 		for (const d of apiResponse.data) {
-			docs.push(this.getDocIfValid(d));
+			docs.push(this.validateAndGetDoc(d));
 		}
 		
 		return docs;
 	}
 	
-	private getDocIfValid(responseDocument: any): T {
+	private validateAndGetDoc(responseDocument: any): T {
 		if (!responseDocument.documentName || responseDocument.documentName.length <= 0) {
 			throw new Error('response data document does not have documentName');
 		}

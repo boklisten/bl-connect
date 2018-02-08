@@ -22,16 +22,7 @@ export class UserDetailService {
 	}
 	
 	public update(id: string, data: any): Promise<UserDetail> {
-		return new Promise((resolve, reject) => {
-			this._apiService.update(this._collectionName, id, data).then((res: ApiResponse) => {
-				if (res.data.length > 1 || !res.data[0].data) {
-					return reject(new BlApiError());
-				}
-				resolve(res.data[0].data as UserDetail);
-			}).catch((blApiErr: BlApiError) => {
-				reject(blApiErr);
-			});
-		});
+		return this._documentService.update(id, data);
 	}
 	
 }
