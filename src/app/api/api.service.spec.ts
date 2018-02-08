@@ -53,6 +53,7 @@ describe('ApiService', () => {
 	
 	describe('#get', () => {
 		it('should reject with BlApiError if url is not defined', (done: DoneFn) => {
+			
 			service.get('').catch((err: BlApiError) => {
 				expect(err.msg).toMatch('url is undefined');
 				done();

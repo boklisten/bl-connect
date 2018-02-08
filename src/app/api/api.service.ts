@@ -23,32 +23,37 @@ export class ApiService {
 		}
 		
 		return new Promise((resolve, reject) => {
-			
 			this._http.get(this._apiRequestService.apiPath(url, query),
 				{headers: this._apiRequestService.getHeaders()}).toPromise().then((res: BlapiResponse) => {
 				
-				resolve(this.validateAndReturnResponse(res));
-				
-			}).catch((httpError: HttpErrorResponse) => {
-				this.fetchTokensAndGet(url, httpError, query).then((res: BlapiResponse) => {
-					
-					resolve(this.validateAndReturnResponse(res));
-					
-				}).catch((blApiErr: BlApiError) => {
-					reject(blApiErr);
+				this.validateAndReturnResponse(res).then((apiRes: ApiResponse) => {
+					resolve(apiRes);
+				}).catch((err: BlApiError) => {
+					reject(err);
+				});
+			}).catch((httpErrorResponse: HttpErrorResponse) => {
+				this.fetchTokensAndGet(url, httpErrorResponse, query).then((apiRes: ApiResponse) => {
+					resolve(apiRes);
+				}).catch((apiErr: BlApiError) => {
+					reject(apiErr);
 				});
 			});
 		});
 	}
 	
-	private fetchTokensAndGet(collection: string, httpError: HttpErrorResponse, query?: string): Promise<BlapiResponse> {
+	private fetchTokensAndGet(collection: string, httpError: HttpErrorResponse, query?: string): Promise<ApiResponse> {
 		return new Promise((resolve, reject) => {
 			
 			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
 				this._apiTokenService.fetchNewTokens().then(() => {
 					this._http.get(this._apiRequestService.apiPath(collection, query),
 						{headers: this._apiRequestService.getHeaders()}).toPromise().then((res: BlapiResponse) => {
-						resolve(res);
+						
+						this.validateAndReturnResponse(res).then((apiRes: ApiResponse) => {
+							resolve(apiRes);
+						}).catch((err: BlApiError) => {
+							reject(err);
+						});
 					}).catch((blApiErr: BlApiError) => {
 						this.handleError(blApiErr);
 					});
