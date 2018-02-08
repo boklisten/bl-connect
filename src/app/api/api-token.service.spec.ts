@@ -141,6 +141,23 @@ describe('ApiTokenService', () => {
 			});
 		});
 		
+		it('should reject with error if the HttpResponse is success, but response document is bad formatted', (done: DoneFn) => {
+			const returnData = {
+				aValue: 'this is not a valid response data'
+			};
+			
+			spyOn(httpClientMock, 'post').and.returnValue(
+				Observable.create(observer => {
+					observer.next(returnData);
+					observer.complete();
+				}));
+			
+			service.fetchNewTokens().catch((blApiErr: BlApiError) => {
+				expect(blApiErr.msg).toMatch('unknown error, bad response document');
+				done();
+			});
+		});
+		
 		it('should reject with BlApiLoginRequiredError if request is error and HttpResponseStatus is 401', (done: DoneFn) => {
 			spyOn(httpClientMock, 'post').and.returnValue(
 				Observable.throw({status: 401, error: {code: 401}})
@@ -172,6 +189,16 @@ describe('ApiTokenService', () => {
 				expect(blApiErr.msg).toMatch('unknown error');
 				expect((blApiErr instanceof BlApiLoginRequiredError)).toBeFalsy();
 				expect((blApiErr instanceof BlApiPermissionDeniedError)).toBeFalsy();
+				done();
+			});
+		});
+		
+		
+		it('should reject with BlApiLoginRequiredError if refreshToken is not stored', (done: DoneFn) => {
+			spyOn(tokenServiceMock, 'haveRefreshToken').and.returnValue(false);
+			
+			service.fetchNewTokens().catch((blApiErr: BlApiError) => {
+				expect((blApiErr instanceof BlApiLoginRequiredError)).toBeTruthy();
 				done();
 			});
 		});
