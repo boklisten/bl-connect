@@ -16,26 +16,14 @@ export class BranchService {
 	constructor(private _apiService: ApiService) {
 		this.collectionName = BL_CONFIG.collection.branch;
 		this.documentName = 'branch';
-		this._documentService = new DocumentService(this.collectionName, _apiService);
+		this._documentService = new DocumentService<Branch>(this.collectionName, _apiService);
 	}
 	
 	public get(query?: string): Promise<Branch[]>	 {
-		return new Promise((resolve, reject) => {
-			this._documentService.get(query).then((docs: Branch[]) => {
-				resolve(docs);
-			}).catch((blApiErr: BlApiError) => {
-				reject(blApiErr);
-			});
-		});
+		return this._documentService.get(query);
 	}
 	
 	public getById(id: string): Promise<Branch> {
-		return new Promise((resolve, reject) => {
-			this._documentService.getById(id).then((doc: Branch) => {
-				resolve(doc);
-			}).catch((blApiErr: BlApiError) => {
-				reject(blApiErr);
-			});
-		});
+		return this._documentService.getById(id);
 	}
 }

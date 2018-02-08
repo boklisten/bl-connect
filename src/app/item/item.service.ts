@@ -4,45 +4,24 @@ import {ApiResponse} from "../api/api-response";
 import {ApiErrorResponse} from "../api/api-error-response";
 import {Item} from "bl-model";
 import {BL_CONFIG} from "../bl-connect/bl-config";
+import {DocumentService} from "../document/document.service";
 
 @Injectable()
 export class ItemService {
-	collectionName: string;
+	private _collectionName: string;
+	private _documentService: DocumentService<Item>;
 	
-	constructor(private apiService: ApiService) {
-		this.collectionName = BL_CONFIG.collection.item;
+	constructor(private _apiService: ApiService) {
+		this._collectionName = BL_CONFIG.collection.item;
+		this._documentService = new DocumentService<Item>(this._collectionName, this._apiService);
 	}
 	
 	public get(query?: string): Promise<Item[]> {
-		return new Promise((resolve, reject) => {
-			this.apiService.get(this.collectionName, query).then(
-				(res: ApiResponse) => {
-					const items: Item[] = [];
-					for (const data of res.data) {
-						items.push(data.data);
-					}
-					resolve(items);
-				},
-				(error: ApiErrorResponse) => {
-					reject(error);
-				});
-		});
+		return this._documentService.get(query);
 	}
 	
 	public getById(id: string): Promise<Item> {
-		return new Promise((resolve, reject) => {
-			this.apiService.getById(this.collectionName, id).then(
-				(res: ApiResponse) => {
-					if (res.data.length === 1) {
-						resolve(res.data[0].data);
-					} else {
-						reject(new ApiErrorResponse('bad data', 500));
-					}
-				},
-				(error: ApiErrorResponse) => {
-					reject(error);
-				});
-		});
+		return this._documentService.getById(id);
 	}
 }
 

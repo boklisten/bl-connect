@@ -4,29 +4,20 @@ import {OpeningHour} from "bl-model";
 import {ApiErrorResponse} from "../api/api-error-response";
 import {ApiResponse} from "../api/api-response";
 import {BL_CONFIG} from "../bl-connect/bl-config";
+import {DocumentService} from "../document/document.service";
 
 @Injectable()
 export class OpeningHourService {
-	private collectionName: string;
+	private _collectionName: string;
+	private _documentService: DocumentService<OpeningHour>;
 	
-	constructor(private apiService: ApiService) {
-		this.collectionName = BL_CONFIG.collection.openingHour;
+	constructor(private _apiService: ApiService) {
+		this._collectionName = BL_CONFIG.collection.openingHour;
+		this._documentService = new DocumentService<OpeningHour>(this._collectionName, this._apiService);
 	}
 	
 	public getById(id: string): Promise<OpeningHour> {
-		return new Promise((resolve, reject) => {
-			this.apiService.getById(this.collectionName, id).then(
-				(res: ApiResponse) => {
-					if (res.data && res.data.length === 1) {
-						resolve(res.data[0].data);
-					} else {
-						reject(new ApiErrorResponse('bad data', 500));
-					}
-				},
-				(error: ApiErrorResponse) => {
-					reject(error);
-				});
-		});
+		return this._documentService.getById(id);
 	}
 }
 
