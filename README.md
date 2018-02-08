@@ -24,7 +24,6 @@ npm install bl-model
 
 ## Installation
 
-### bl-connect
 > To install **bl-connect** to your own Angular project. Do the following in a Terminal:
 ```bash
 cd path/to/your/own/angular-project
@@ -114,21 +113,22 @@ myMethod() {
 		//do something	
 		
 	}).catch((apiErr: BlApiError) => {
-        if (apiErr instanceof BlApiLoginRequiredError) {
-        	// do something with login error 
-        }
+		
+		if (apiErr instanceof BlApiLoginRequiredError) {
+			// do something with login error 
+		}
         
-        if (apiErr instanceof BlApiPermissionDeniedError) {
-        	//do something with permission denied error 
-        }
+		if (apiErr instanceof BlApiPermissionDeniedError) {
+			//do something with permission denied error 
+		}
         
-        if (apiErr instanceof BlApiNotFoundError) {
-        	//do something with document not found error 
-        }
+		if (apiErr instanceof BlApiNotFoundError) {
+			//do something with document not found error 
+		}
         
-        if (apiErr instanceof BlApiError) {
-        	// do something with the general error
-        }
+		if (apiErr instanceof BlApiError) {
+			// do something with the general error
+		}
 	}
 }
 
