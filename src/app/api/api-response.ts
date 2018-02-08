@@ -3,13 +3,11 @@
 export class ApiResponse {
 	private _msg: string;
 	private _code: number;
-	private _documentName: string;
 	private _data: any[];
 	
-	constructor(msg: string, code: number, documentName: string, data: any[]) {
+	constructor(msg: string, code: number, data: any[]) {
 		this.msg = msg;
 		this.code = code;
-		this.documentName = documentName;
 		this.data = data;
 	}
 	
@@ -27,14 +25,6 @@ export class ApiResponse {
 	
 	set code(code: number) {
 		this._code = code;
-	}
-	
-	set documentName(dname: string) {
-		this._documentName = dname;
-	}
-	
-	get documentName(): string {
-		return this._documentName;
 	}
 	
 	get data(): any[] {

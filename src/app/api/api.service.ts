@@ -7,6 +7,7 @@ import {ApiErrorService} from "../api-error/api-error.service";
 import {TokenService} from "../token/token.service";
 import {ApiRequestService} from "./api-request.service";
 import {ApiTokenService} from "./api-token.service";
+import {isArray} from "util";
 
 
 @Injectable()
@@ -224,16 +225,12 @@ export class ApiService {
 			throw new Error('BlApiDocumentError: response document is not valid: ' + err);
 		}
 		
-		return new ApiResponse('success', 200, res.documentName, res.data);
+		return new ApiResponse('success', 200, res.data);
 	}
 	
 	private validateResponse(res: any) {
-		if (!res.data) {
-			throw new Error('BlApiDocumentError: mandatory field "data" not defined');
-		}
-		
-		if (!res.documentName || res.documentName.length <= 0) {
-			throw new Error('BlApiDocumentError: mandatory field "documentName" not defined');
+		if (!res.data && !isArray(res.data)) {
+			throw new Error('BlApiDocumentError: mandatory field "data" not defined or is not an array');
 		}
 	}
 	

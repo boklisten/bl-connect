@@ -12,7 +12,6 @@ export class ApiErrorService {
 	
 	
 	public handleError(httpError: HttpErrorResponse): BlApiError {
-		console.log('the http error:', httpError);
 		
 		if (httpError.status === 0 || httpError.url === null) {
 			const err = new BlApiError();
@@ -21,16 +20,19 @@ export class ApiErrorService {
 			return err;
 		}
 		
+		switch (httpError.status) {
+			case 401: return new BlApiLoginRequiredError();
+			case 403: return new BlApiPermissionDeniedError();
+			case 404: return new BlApiNotFoundError();
+		}
+		
 		if (!httpError.error || !httpError.error.code) {
 			const err = new BlApiError();
 			err.msg = 'unknown error';
-			err.code = 500;
-			
 			return err;
 		}
 		
 		switch (httpError.error.code) {
-			case 404: return new BlApiNotFoundError();
 			case 901: return new BlApiPermissionDeniedError(); // wrong password
 			case 904: return new BlApiPermissionDeniedError(); // does not have the right permission
 			case 908: return new BlApiPermissionDeniedError(); // username or password incorrect

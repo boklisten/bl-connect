@@ -62,7 +62,7 @@ describe('ApiService', () => {
 		
 		it('should reject with BlApiNotFoundError when document is not found', (done: DoneFn) => {
 			spyOn(httpClientServiceMock, 'get').and.returnValue(
-				Observable.throw({error: {code: 404}}));
+				Observable.throw({status: 404}));
 			
 			service.get('a/path').catch((err: BlApiError) => {
 				expect((err instanceof BlApiNotFoundError)).toBeTruthy();
@@ -72,14 +72,13 @@ describe('ApiService', () => {
 	});
 	
 	describe('when the httpResponse is success and contains a valid data document', () => {
-		let httpResponseObj: {documentName: string, data: any[]};
+		let httpResponseObj: {data: any[]};
 		
 		beforeEach(() => {
 			httpResponseObj = {
-				documentName: "validDocument",
 				data: [
-					{title: "hello there", price: 100, valid: true},
-					{title: "another Title", price: 400, valid: true}
+					{documentName: 'aDoc', data: {title: "hello there", price: 100, valid: true}},
+					{documentName: 'aDoc', data: {title: "another Title", price: 400, valid: true}}
 				]
 			};
 			
@@ -112,7 +111,6 @@ describe('ApiService', () => {
 		it('#get() should resolve with correct document', (done: DoneFn) => {
 			service.get('this/is/valid').then((apiRes: ApiResponse) => {
 				expect(apiRes.data).toEqual(httpResponseObj.data);
-				expect(apiRes.documentName).toEqual(httpResponseObj.documentName);
 				expect(apiRes.code).toEqual(200);
 				done();
 			});
@@ -121,7 +119,6 @@ describe('ApiService', () => {
 		it('#getById() should resolve with correct document', (done: DoneFn) => {
 			service.getById('this/is/valid', 'abc').then((apiRes: ApiResponse) => {
 				expect(apiRes.data).toEqual(httpResponseObj.data);
-				expect(apiRes.documentName).toEqual(httpResponseObj.documentName);
 				expect(apiRes.code).toEqual(200);
 				done();
 			});
@@ -130,7 +127,6 @@ describe('ApiService', () => {
 		it('#add() should resolve with correct document', (done: DoneFn) => {
 			service.add('this/is/valid', 'anyData').then((apiRes: ApiResponse) => {
 				expect(apiRes.data).toEqual(httpResponseObj.data);
-				expect(apiRes.documentName).toEqual(httpResponseObj.documentName);
 				expect(apiRes.code).toEqual(200);
 				done();
 			});
@@ -139,7 +135,6 @@ describe('ApiService', () => {
 		it('#update() should resolve with correct document', (done: DoneFn) => {
 			service.update('this/is/valid', 'abc', {anyData: 'valid'}).then((apiRes: ApiResponse) => {
 				expect(apiRes.data).toEqual(httpResponseObj.data);
-				expect(apiRes.documentName).toEqual(httpResponseObj.documentName);
 				expect(apiRes.code).toEqual(200);
 				done();
 			});
@@ -148,7 +143,6 @@ describe('ApiService', () => {
 		it('#remove() should resolve with correct document', (done: DoneFn) => {
 			service.remove('this/is/valid', 'abc').then((apiRes: ApiResponse) => {
 				expect(apiRes.data).toEqual(httpResponseObj.data);
-				expect(apiRes.documentName).toEqual(httpResponseObj.documentName);
 				expect(apiRes.code).toEqual(200);
 				done();
 			});
