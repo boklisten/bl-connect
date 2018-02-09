@@ -42,6 +42,7 @@ export class RegisterService {
 			this._apiService.get(url).then((apiRes: ApiResponse) => {
 				try {
 					this._tokenService.parseTokensFromResponseDataAndStore(apiRes);
+					return resolve(true);
 				} catch (err) {
 					return reject(new BlApiError());
 				}
