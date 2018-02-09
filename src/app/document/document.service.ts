@@ -60,7 +60,6 @@ export class DocumentService<T extends BlDocument> {
 				this.getDocIfValid(res).then((doc: T) => {
 					resolve(doc);
 				}).catch((blApiErr: BlApiError) => {
-					console.log('we got an error: ', blApiErr);
 					reject(blApiErr);
 				});
 			}).catch((blApiErr: BlApiError) => {

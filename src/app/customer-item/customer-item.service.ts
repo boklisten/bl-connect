@@ -14,8 +14,17 @@ export class CustomerItemService {
 		this._documentService = new DocumentService<CustomerItem>(this._collectionName, this._apiService);
 	}
 	
+	
+	public add(customerItem: CustomerItem): Promise<CustomerItem> {
+		return this._documentService.add(customerItem);
+	}
+	
 	public getById(id: string): Promise<CustomerItem> {
 		return this._documentService.getById(id);
+	}
+	
+	public update(id: string, data: any): Promise<CustomerItem> {
+		return this._documentService.update(id, data);
 	}
 	
 }

@@ -14,6 +14,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {RegisterService} from "../register/register.service";
 import {ApiRequestService} from "../api/api-request.service";
 import {ApiTokenService} from "../api/api-token.service";
+import {CustomerItemService} from "../customer-item/customer-item.service";
 
 @NgModule({
 	imports: [
@@ -34,7 +35,8 @@ import {ApiTokenService} from "../api/api-token.service";
 		TokenService,
 		StorageService,
 		LoginService,
-		RegisterService
+		RegisterService,
+		CustomerItemService
 	]
 })
 export class BlConnectModule {
