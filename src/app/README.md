@@ -85,6 +85,35 @@ getById(id: string): Promise<OpeningHour>
 ```
 <br>
 
+### CustomerItemService 
+> to import this service:
+
+	import {CustomerItemService} from 'bl-connect';
+	
+> the methods you can use:
+
+```typescript
+getById(id: string): Promise<CustomerItemService>
+add(customerItem: CustomerItem): Promise<CustomerItem>
+update(id: string, data: any): Promise<CustomerItem>
+```
+<br>
+
+
+### OrderService 
+> to import this service:
+
+	import {OrderService} from 'bl-connect';
+	
+> the methods you can use:
+
+```typescript
+getById(id: string): Promise<Order>
+add(order: Order): Promise<Order>
+update(id: string, data: any): Promise<Order>
+```
+<br>
+
 ## Error handling
 When you use a service and that service rejects with an error you get a object of the type ***BlApiError***. 
 The error classes are provided by **bl-model** and are therefore easy to understand.
