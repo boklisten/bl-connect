@@ -23,6 +23,10 @@ export class CustomerItemService {
 		return this._documentService.getById(id);
 	}
 	
+	public getManyByIds(ids: string[]): Promise<CustomerItem[]> {
+		return this._documentService.getManyByIds(ids);
+	}
+	
 	public update(id: string, data: any): Promise<CustomerItem> {
 		return this._documentService.update(id, data);
 	}

@@ -23,5 +23,9 @@ export class ItemService {
 	public getById(id: string): Promise<Item> {
 		return this._documentService.getById(id);
 	}
+	
+	public getManyByIds(ids: string[]): Promise<Item[]> {
+		return this._documentService.getManyByIds(ids);
+	}
 }
 

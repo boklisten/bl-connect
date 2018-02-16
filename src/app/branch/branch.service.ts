@@ -26,4 +26,8 @@ export class BranchService {
 	public getById(id: string): Promise<Branch> {
 		return this._documentService.getById(id);
 	}
+	
+	public getManyByIds(ids: string[]): Promise<Branch[]> {
+		return this._documentService.getManyByIds(ids);
+	}
 }

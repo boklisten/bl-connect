@@ -22,6 +22,10 @@ export class OrderService {
 		return this._documentService.getById(id);
 	}
 	
+	public getManyByIds(ids: string[]): Promise<Order[]> {
+		return this._documentService.getManyByIds(ids);
+	}
+	
 	public update(id: string, data: any): Promise<Order> {
 		return this._documentService.update(id, data);
 	}

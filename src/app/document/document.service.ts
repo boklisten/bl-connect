@@ -40,6 +40,22 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 	
+	public getManyByIds(ids: string[]): Promise<T[]> {
+		return new Promise((resolve, reject) => {
+			const promArr: Promise<T>[] = [];
+			
+			for (const id of ids) {
+				promArr.push(this.getById(id));
+			}
+			
+			Promise.all(promArr).then((retVals: T[]) => {
+				resolve(retVals);
+			}).catch((blApiErr: BlApiError) => {
+				reject(blApiErr);
+			});
+		});
+	}
+	
 	public update(id: string, data: any): Promise<T> {
 		return new Promise((resolve, reject) => {
 			this._apiService.update(this._collectionName, id, data).then((res: ApiResponse) => {

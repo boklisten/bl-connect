@@ -19,5 +19,9 @@ export class OpeningHourService {
 	public getById(id: string): Promise<OpeningHour> {
 		return this._documentService.getById(id);
 	}
+	
+	public getManyByIds(ids: string[]): Promise<OpeningHour[]> {
+		return this._documentService.getManyByIds(ids);
+	}
 }
 
