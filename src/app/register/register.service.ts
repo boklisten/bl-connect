@@ -40,6 +40,7 @@ export class RegisterService {
 	private socialRegister(url: string): Promise<boolean> {
 		return new Promise((resolve, reject) => {
 			this._apiService.get(url).then((apiRes: ApiResponse) => {
+				console.log('we got a response:', apiRes);
 				try {
 					this._tokenService.parseTokensFromResponseDataAndStore(apiRes);
 					return resolve(true);

@@ -16,6 +16,13 @@ export const BL_CONFIG = {
 			version: 'v1'
 		}
 	},
+	payment: {
+		dibs: {
+			paymentId: {
+				url: 'payment/dibs'
+			}
+		}
+	},
 	token: {
 		accessToken: 'bl-access-token',
 		refreshToken: 'bl-refresh-token'

@@ -12,7 +12,7 @@ import {isArray} from "util";
 
 @Injectable()
 export class ApiService {
-	constructor(private _http: HttpClient, private _apiErrorService: ApiErrorService, private _tokenService: TokenService,
+	constructor(private _http: HttpClient, private _apiErrorService: ApiErrorService,
 				private _apiRequestService: ApiRequestService, private _apiTokenService: ApiTokenService) {
 	}
 	
@@ -104,7 +104,6 @@ export class ApiService {
 	
 	
 	public add(collection: string, data: any): Promise<ApiResponse> {
-		console.log('add we are called');
 		return new Promise((resolve, reject) => {
 			this._http.post(this._apiRequestService.apiPath(collection), data,
 				{headers: this._apiRequestService.getHeaders()}).toPromise().then((res: BlapiResponse) => {
