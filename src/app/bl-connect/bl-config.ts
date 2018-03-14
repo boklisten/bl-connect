@@ -2,7 +2,7 @@ export const BL_CONFIG = {
 	devEnvironment: true,
 	api: {
 		dev: {
-			protocol: 'http',
+			protocol: 'https',
 			basePath: 'localhost',
 			port: 1337,
 			path: 'api',
@@ -14,13 +14,6 @@ export const BL_CONFIG = {
 			port: 80,
 			path: 'api',
 			version: 'v1'
-		}
-	},
-	payment: {
-		dibs: {
-			paymentId: {
-				url: 'payment/dibs'
-			}
 		}
 	},
 	token: {
@@ -56,7 +49,9 @@ export const BL_CONFIG = {
 		userDetail: 'userdetails',
 		customerItem: 'customerItems',
 		order: 'orders',
-		orderItem: 'orderItems'
+		orderItem: 'orderItems',
+		payment: 'payments',
+		delivery: 'deliveries'
 	}
 };
 

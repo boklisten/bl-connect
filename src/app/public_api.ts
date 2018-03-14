@@ -12,3 +12,4 @@ export * from "./storage/storage.service";
 export * from "./register/register.service";
 export * from "./order/order.service";
 export * from "./customer-item/customer-item.service";
+export * from "./payment/payment.service";

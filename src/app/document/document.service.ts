@@ -70,7 +70,7 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 	
-	public add(data: any): Promise<T> {
+	public add(data: T): Promise<T> {
 		return new Promise((resolve, reject) => {
 			this._apiService.add(this._collectionName, data).then((res: ApiResponse) => {
 				this.getDocIfValid(res).then((doc: T) => {
@@ -120,6 +120,7 @@ export class DocumentService<T extends BlDocument> {
 				resolve(docs);
 				
 			} catch (err) {
+				console.log('the response::', apiRes);
 				reject(new BlApiError('document data not valid'));
 			}
 		});
@@ -142,12 +143,9 @@ export class DocumentService<T extends BlDocument> {
 	}
 	
 	private validateAndGetDoc(responseDocument: any): T {
-		if (!responseDocument.documentName || responseDocument.documentName.length <= 0) {
-			throw new Error('response data document does not have documentName');
-		}
 		
 		if (!responseDocument.data || !responseDocument.data.id) {
-			throw new Error('document does not have the required fields');
+			return responseDocument as T;
 		}
 		
 		return responseDocument.data as T;
