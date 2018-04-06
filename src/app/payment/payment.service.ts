@@ -1,6 +1,6 @@
 
 
-import {BlApiError, BlError, Order, Payment} from "bl-model";
+import {BlApiError, BlError, Order, Payment} from "@wizardcoder/bl-model";
 import {ApiService} from "../api/api.service";
 import {ApiResponse} from "../api/api-response";
 import {Injectable} from "@angular/core";

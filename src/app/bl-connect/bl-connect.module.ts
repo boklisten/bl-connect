@@ -17,6 +17,7 @@ import {ApiTokenService} from "../api/api-token.service";
 import {CustomerItemService} from "../customer-item/customer-item.service";
 import {OrderService} from "../order/order.service";
 import {PaymentService} from "../payment/payment.service";
+import {DeliveryService} from "../delivery/delivery.service";
 
 @NgModule({
 	imports: [
@@ -40,7 +41,8 @@ import {PaymentService} from "../payment/payment.service";
 		RegisterService,
 		CustomerItemService,
 		OrderService,
-		PaymentService
+		PaymentService,
+		DeliveryService
 	]
 })
 export class BlConnectModule {

@@ -1,5 +1,5 @@
 {
-	"name": "bl-connect",
+	"name": "@wizardcoder/bl-connect",
 	"version": "0.4.3",
 	"license": "MIT",
 	"scripts": {
@@ -48,8 +48,8 @@
 	},
 	"dependencies": {
 		"@auth0/angular-jwt": "^1.0.0-beta.10",
+		"@wizardcoder/bl-model": "^0.13.0",
 		"angular-2-local-storage": "^1.0.1",
-		"angular2-jwt": "^0.2.3",
-		"bl-model": "^0.12.0"
+		"angular2-jwt": "^0.2.3"
 	}
 }

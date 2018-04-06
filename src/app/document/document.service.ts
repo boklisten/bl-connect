@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BlApiError, BlDocument} from "bl-model";
+import {BlApiError, BlDocument} from "@wizardcoder/bl-model";
 import {ApiResponse} from "../api/api-response";
 import {isArray} from "util";
 import {ApiService} from "../api/api.service";

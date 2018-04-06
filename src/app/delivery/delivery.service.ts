@@ -2,7 +2,7 @@
 
 import {Injectable} from "@angular/core";
 import {DocumentService} from "../document/document.service";
-import {Delivery} from "bl-model";
+import {Delivery} from "@wizardcoder/bl-model";
 import {ApiService} from "../api/api.service";
 
 @Injectable()

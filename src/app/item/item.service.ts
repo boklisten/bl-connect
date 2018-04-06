@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ApiService} from "../api/api.service";
 import {ApiResponse} from "../api/api-response";
 import {ApiErrorResponse} from "../api/api-error-response";
-import {Item} from "bl-model";
+import {Item} from "@wizardcoder/bl-model";
 import {BL_CONFIG} from "../bl-connect/bl-config";
 import {DocumentService} from "../document/document.service";
 

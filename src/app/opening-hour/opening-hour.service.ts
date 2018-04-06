@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from "../api/api.service";
-import {OpeningHour} from "bl-model";
+import {OpeningHour} from "@wizardcoder/bl-model";
 import {ApiErrorResponse} from "../api/api-error-response";
 import {ApiResponse} from "../api/api-response";
 import {BL_CONFIG} from "../bl-connect/bl-config";

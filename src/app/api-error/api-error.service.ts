@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiErrorResponse} from "../api/api-error-response";
 import {HttpErrorResponse} from "@angular/common/http";
-import {BlApiError, BlapiErrorResponse, BlApiNotFoundError, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "bl-model";
+import {BlApiError, BlapiErrorResponse, BlApiNotFoundError, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "@wizardcoder/bl-model";
 
 
 @Injectable()

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {
 	BlApiError, BlapiErrorResponse, BlApiLoginRequiredError, BlApiPermissionDeniedError, CustomerItem, Item,
 	OpeningHour, Order, UserDetail, Payment
-} from "bl-model";
+} from "@wizardcoder/bl-model";
 import {UserDetailService} from "./user-detail/user-detail.service";
 import {ApiErrorResponse} from "./api/api-error-response";
 import {TokenService} from "./token/token.service";

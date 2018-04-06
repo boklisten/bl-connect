@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ApiService} from "../api/api.service";
 import {BL_CONFIG} from "../bl-connect/bl-config";
 import {DocumentService} from "../document/document.service";
-import {CustomerItem} from "bl-model";
+import {CustomerItem} from "@wizardcoder/bl-model";
 
 @Injectable()
 export class CustomerItemService {

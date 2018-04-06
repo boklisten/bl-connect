@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from "../api/api.service";
-import {BlApiError, Branch} from "bl-model";
+import {BlApiError, Branch} from "@wizardcoder/bl-model";
 import {ApiResponse} from "../api/api-response";
 import {ApiErrorResponse} from "../api/api-error-response";
 import {BL_CONFIG} from "../bl-connect/bl-config";

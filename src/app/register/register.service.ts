@@ -4,7 +4,7 @@ import {TokenService} from "../token/token.service";
 import {BL_CONFIG} from "../bl-connect/bl-config";
 import {ApiResponse} from "../api/api-response";
 import {ApiErrorService} from "../api-error/api-error.service";
-import {BlApiError} from "bl-model";
+import {BlApiError} from "@wizardcoder/bl-model";
 
 @Injectable()
 export class RegisterService {

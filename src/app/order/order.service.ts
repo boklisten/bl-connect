@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DocumentService} from "../document/document.service";
-import {Order} from "bl-model";
+import {Order} from "@wizardcoder/bl-model";
 import {ApiService} from "../api/api.service";
 import {BL_CONFIG} from "../bl-connect/bl-config";
 
