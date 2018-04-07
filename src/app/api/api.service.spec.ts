@@ -5,7 +5,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {ApiErrorService} from "../api-error/api-error.service";
 import {TokenService} from "../token/token.service";
 import {Observable} from "rxjs/Observable";
-import {BlApiError, BlApiNotFoundError} from "bl-model";
+import {BlApiError, BlApiNotFoundError} from "@wizardcoder/bl-model";
 import 'rxjs/add/observable/throw';
 import {ApiResponse} from "./api-response";
 import {ApiTokenService} from "./api-token.service";
@@ -47,7 +47,7 @@ describe('ApiService', () => {
 	} as ApiRequestService;
 	
 	beforeEach(() => {
-		service = new ApiService(httpClientServiceMock, new ApiErrorService(), tokenServiceMock,
+		service = new ApiService(httpClientServiceMock, new ApiErrorService(),
 			apiRequestServiceMock, apiTokenServiceMock);
 	});
 	
