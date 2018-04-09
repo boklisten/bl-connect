@@ -79,6 +79,12 @@ export class AppComponent implements OnInit {
 			confirmed: false,
 		};
 		
+		this._registerService.localRegister('bill@bob.com', 'password').then(() => {
+			console.log('we registered!');
+		}).catch((blApiError: BlApiError) => {
+			console.log('could not register..', this.printError(blApiError));
+		});
+		
 		this._loginService.login('a@b.com', 'password').then(() => {
 			
 			this._userDetailService.getById(this._tokenService.getAccessTokenBody().details).then((userDetail: UserDetail) => {

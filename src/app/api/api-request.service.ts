@@ -10,16 +10,7 @@ export class ApiRequestService {
 	}
 	
 	public apiPath(collection: string, query?: string): string {
-		let path = '';
-		
-		if (BL_CONFIG.devEnvironment) {
-			const apiDev = BL_CONFIG.api.dev;
-			path += apiDev.protocol + '://' + apiDev.basePath + ':' + apiDev.port + '/' + apiDev.path + '/' + apiDev.version + '/';
-		} else {
-			const apiProd = BL_CONFIG.api.prod;
-			path += apiProd.protocol + '://' + apiProd.basePath + ':' + apiProd.port + '/' + apiProd.path + '/' + apiProd.version + '/';
-		}
-		
+		const path = BL_CONFIG.api.basePath;
 		
 		if (query) {
 			return path + collection + query;

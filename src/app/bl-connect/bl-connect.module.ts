@@ -18,6 +18,7 @@ import {CustomerItemService} from "../customer-item/customer-item.service";
 import {OrderService} from "../order/order.service";
 import {PaymentService} from "../payment/payment.service";
 import {DeliveryService} from "../delivery/delivery.service";
+import {BL_CONFIG} from "./bl-config";
 
 @NgModule({
 	imports: [
@@ -46,4 +47,13 @@ import {DeliveryService} from "../delivery/delivery.service";
 	]
 })
 export class BlConnectModule {
+	public static withConfig(config?: {
+		basePath?: string
+	}) {
+		if (config) {
+			if (config.basePath) {
+				BL_CONFIG.api.basePath = config.basePath;
+			}
+		}
+	}
 }
