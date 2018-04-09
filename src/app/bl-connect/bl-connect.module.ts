@@ -55,5 +55,7 @@ export class BlConnectModule {
 				BL_CONFIG.api.basePath = config.basePath;
 			}
 		}
+		
+		return this;
 	}
 }
