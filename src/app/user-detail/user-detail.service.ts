@@ -25,4 +25,8 @@ export class UserDetailService {
 		return this._documentService.update(id, data);
 	}
 	
+	public get(query?: string): Promise<UserDetail[]> {
+		return this._documentService.get(query);
+	}
+	
 }
