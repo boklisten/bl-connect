@@ -10,18 +10,22 @@ import {DocumentService} from "../document/document.service";
 export class OpeningHourService {
 	private _collectionName: string;
 	private _documentService: DocumentService<OpeningHour>;
-	
+
 	constructor(private _apiService: ApiService) {
 		this._collectionName = BL_CONFIG.collection.openingHour;
 		this._documentService = new DocumentService<OpeningHour>(this._collectionName, this._apiService);
 	}
-	
+
 	public getById(id: string): Promise<OpeningHour> {
 		return this._documentService.getById(id);
 	}
-	
+
 	public getManyByIds(ids: string[]): Promise<OpeningHour[]> {
 		return this._documentService.getManyByIds(ids);
+	}
+
+	public update(id: string, data: any): Promise<OpeningHour> {
+		return this._documentService.update(id, data);
 	}
 }
 
