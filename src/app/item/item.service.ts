@@ -31,5 +31,9 @@ export class ItemService {
 	public update(id: string, data: any): Promise<Item> {
 		return this._documentService.update(id, data);
 	}
+
+	public add(item: Item): Promise<Item> {
+		return this._documentService.add(item);
+	}
 }
 

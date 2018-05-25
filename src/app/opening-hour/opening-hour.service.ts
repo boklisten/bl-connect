@@ -27,5 +27,9 @@ export class OpeningHourService {
 	public update(id: string, data: any): Promise<OpeningHour> {
 		return this._documentService.update(id, data);
 	}
+
+	public add(openingHour: OpeningHour): Promise<OpeningHour> {
+		return this._documentService.add(openingHour);
+	}
 }
 

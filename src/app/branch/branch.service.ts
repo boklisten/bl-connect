@@ -34,4 +34,8 @@ export class BranchService {
 	public update(id: string, data: any): Promise<Branch> {
 		return this._documentService.update(id, data);
 	}
+
+	public add(branch: Branch): Promise<Branch> {
+		return this._documentService.add(branch);
+	}
 }
