@@ -49,13 +49,13 @@
 		"zone.js": "^0.8.20"
 	},
 	"dependencies": {
-		"@wizardcoder/bl-model": "^0.13.11",
+		"@wizardcoder/bl-model": "^0.14.1",
 		"angular-2-local-storage": "^1.0.1",
 		"angular2-jwt": "^0.2.3"
 	},
 	"peerDependencies": {
 		"@angular/common": "^5.1.0",
 		"@angular/core": "^5.1.0",
-		"@wizardcoder/bl-model": "^0.13.3"
+		"@wizardcoder/bl-model": "^0.14.1"
 	}
 }
