@@ -19,6 +19,7 @@ import {OrderService} from "../order/order.service";
 import {PaymentService} from "../payment/payment.service";
 import {DeliveryService} from "../delivery/delivery.service";
 import {BL_CONFIG} from "./bl-config";
+import {BranchItemService} from "../branch-item/branch-item-service";
 
 @NgModule({
 	imports: [
@@ -34,6 +35,7 @@ import {BL_CONFIG} from "./bl-config";
 		ApiTokenService,
 		ItemService,
 		BranchService,
+		BranchItemService,
 		OpeningHourService,
 		UserDetailService,
 		TokenService,
@@ -55,7 +57,7 @@ export class BlConnectModule {
 				BL_CONFIG.api.basePath = config.basePath;
 			}
 		}
-		
+
 		return this;
 	}
 }

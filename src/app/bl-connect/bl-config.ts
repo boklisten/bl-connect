@@ -31,6 +31,7 @@ export const BL_CONFIG = {
 	collection: {
 		item: 'items',
 		branch: 'branches',
+		branchItem: 'branchitems',
 		openingHour: 'openingHours',
 		userDetail: 'userdetails',
 		customerItem: 'customerItems',
