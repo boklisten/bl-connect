@@ -14,3 +14,4 @@ export * from "./src/app/order/order.service";
 export * from "./src/app/customer-item/customer-item.service";
 export * from "./src/app/payment/payment.service";
 export * from "./src/app/delivery/delivery.service";
+export * from "./src/app/branch-item/branch-item-service";
