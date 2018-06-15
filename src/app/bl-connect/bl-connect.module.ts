@@ -20,6 +20,7 @@ import {PaymentService} from "../payment/payment.service";
 import {DeliveryService} from "../delivery/delivery.service";
 import {BL_CONFIG} from "./bl-config";
 import {BranchItemService} from "../branch-item/branch-item-service";
+import {PasswordResetService} from "../password-reset/password-reset.service";
 
 @NgModule({
 	imports: [
@@ -45,7 +46,8 @@ import {BranchItemService} from "../branch-item/branch-item-service";
 		CustomerItemService,
 		OrderService,
 		PaymentService,
-		DeliveryService
+		DeliveryService,
+		PasswordResetService
 	]
 })
 export class BlConnectModule {

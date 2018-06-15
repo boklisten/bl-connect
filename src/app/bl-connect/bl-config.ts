@@ -28,6 +28,11 @@ export const BL_CONFIG = {
 			url: 'auth/google'
 		}
 	},
+	passwordReset: {
+		setNew: {
+			operation: 'new'
+		}
+	},
 	collection: {
 		item: 'items',
 		branch: 'branches',
@@ -38,7 +43,8 @@ export const BL_CONFIG = {
 		order: 'orders',
 		orderItem: 'orderItems',
 		payment: 'payments',
-		delivery: 'deliveries'
+		delivery: 'deliveries',
+		passwordReset: 'passwordresets'
 	}
 };
 

@@ -13,6 +13,7 @@ import {CustomerItemService} from "./customer-item/customer-item.service";
 import {RegisterService} from "./register/register.service";
 import {PaymentService} from "./payment/payment.service";
 import {OrderService} from "./order/order.service";
+import {PasswordResetService} from "./password-reset/password-reset.service";
 
 @Component({
 	selector: 'app-root',
@@ -21,22 +22,26 @@ import {OrderService} from "./order/order.service";
 })
 export class AppComponent implements OnInit {
 	title = 'app';
-	
+
 	constructor(private _userDetailService: UserDetailService, private _tokenService: TokenService, private _itemService: ItemService,
 				private _loginService: LoginService, private _branchService: BranchService, private _customerItemService: CustomerItemService,
-				private _registerService: RegisterService, private _paymentService: PaymentService, private _orderService: OrderService) {
+				private _registerService: RegisterService, private _paymentService: PaymentService, private _orderService: OrderService,
+				private _passwordResetService: PasswordResetService) {
 		const expiredAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2tsaXN0ZW4uY28iLCJhdWQiOiJib2tsaXN0ZW4uY28iLCJpYXQiOjE1MTc4NTAyNTUsInN1YiI6InUjZDViY2U1NjUxNTczNGNmNjg5ZTFiOWU2NzBlY2YyMTIiLCJ1c2VybmFtZSI6ImFAYi5jb20iLCJwZXJtaXNzaW9uIjoiY3VzdG9tZXIiLCJkZXRhaWxzIjoiNWE3NDdhNDNmNDZmZDM2NTNmYjFjYjFkIiwiZXhwIjoxNTE3ODUwMzE1fQ._j8hJxRui1pkyQhT-JzMdzM_6YJ9ol1fOQ_T9d70hXI";
 		const expiredRefreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2tsaXN0ZW4uY28iLCJhdWQiOiJib2tsaXN0ZW4uY28iLCJpYXQiOjE1MTc4NTAyNTUsInN1YiI6InUjZDViY2U1NjUxNTczNGNmNjg5ZTFiOWU2NzBlY2YyMTIiLCJ1c2VybmFtZSI6ImFAYi5jb20iLCJleHAiOjE1MTc4NTAzMTV9.sbE89JxGTtrE0yMx55JNCqouG8qvszaSksWz7Is6880";
 		const validAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2tsaXN0ZW4uY28iLCJhdWQiOiJib2tsaXN0ZW4uY28iLCJpYXQiOjE1MTc4NTA1OTgsInN1YiI6InUjZDViY2U1NjUxNTczNGNmNjg5ZTFiOWU2NzBlY2YyMTIiLCJ1c2VybmFtZSI6ImFAYi5jb20iLCJwZXJtaXNzaW9uIjoiY3VzdG9tZXIiLCJkZXRhaWxzIjoiNWE3NDdhNDNmNDZmZDM2NTNmYjFjYjFkIiwiZXhwIjo0NjczNjEwNTk4fQ.Os1SlSuxbAdzPNXgvAaJ21Zfj06N0yFyNubKsgY1sio";
 		const validRefreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2tsaXN0ZW4uY28iLCJhdWQiOiJib2tsaXN0ZW4uY28iLCJpYXQiOjE1MTc4NTA1OTgsInN1YiI6InUjZDViY2U1NjUxNTczNGNmNjg5ZTFiOWU2NzBlY2YyMTIiLCJ1c2VybmFtZSI6ImFAYi5jb20iLCJleHAiOjQ2NzM2MTA1OTh9.oQ3XpcijM4CUCseI03jOJjqhOEQvJOWBWrv0oeumByA";
 		const validUserDetailId = '5a747a43f46fd3653fb1cb1d';
-		
+
 		this._tokenService.removeTokens();
-		
-		
+
+
 	}
-	
+
 	ngOnInit() {
+
+		/*
+
 		const orderJson: any = {
 			"id": "o1",
 			"amount": 370,
@@ -68,7 +73,7 @@ export class AppComponent implements OnInit {
 			"lastUpdated": '1',
 			"creationTime": '1'
 		};
-		
+
 		let testPayment: any = {
 			method: "dibs",
 			order: '',
@@ -78,27 +83,27 @@ export class AppComponent implements OnInit {
 			branch: '',
 			confirmed: false,
 		};
-		
+
 		this._registerService.localRegister('bill@bob.com', 'password').then(() => {
 			console.log('we registered!');
 		}).catch((blApiError: BlApiError) => {
 			console.log('could not register..', this.printError(blApiError));
 		});
-		
+
 		this._loginService.login('a@b.com', 'password').then(() => {
-			
+
 			this._userDetailService.getById(this._tokenService.getAccessTokenBody().details).then((userDetail: UserDetail) => {
-				
+
 				orderJson.customer = userDetail.id;
 				orderJson.user.id = userDetail.id;
-				
+
 				this._orderService.add(orderJson).then((order: Order) => {
-					
+
 					testPayment.order = order.id;
 					testPayment.customer = userDetail.id;
 					testPayment.branch = userDetail.branch;
-					
-					
+
+
 					this._paymentService.add(testPayment).then((payment: Payment) => {
 						console.log('we got the payment back!', payment);
 					}).catch((blApiErr: BlApiError) => {
@@ -113,7 +118,7 @@ export class AppComponent implements OnInit {
 		}).catch(() => {
 			console.log('could not login');
 		});
-		
+
 		/*
 		this._registerService.facebookRegister().then(() => {
 			console.log('hi there!');
@@ -122,7 +127,7 @@ export class AppComponent implements OnInit {
 		});
 		*/
 	}
-	
+
 	private printError(blApiErr: BlApiError) {
 		if (blApiErr instanceof BlApiLoginRequiredError) {
 			console.log('BlLoginRequiredError');

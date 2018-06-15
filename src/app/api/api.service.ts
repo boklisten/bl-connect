@@ -15,18 +15,18 @@ export class ApiService {
 	constructor(private _http: HttpClient, private _apiErrorService: ApiErrorService,
 				private _apiRequestService: ApiRequestService, private _apiTokenService: ApiTokenService) {
 	}
-	
+
 	public get(url: string, query?: string): Promise<ApiResponse> {
 		if (!url || url.length <= 0) {
 			const apiErr = new BlApiError();
 			apiErr.msg = 'url is undefined';
 			return Promise.reject(apiErr);
 		}
-		
+
 		return new Promise((resolve, reject) => {
 			this._http.get(this._apiRequestService.apiPath(url, query),
 				{headers: this._apiRequestService.getHeaders()}).toPromise().then((res: BlapiResponse) => {
-				
+
 				this.validateAndReturnResponse(res).then((apiRes: ApiResponse) => {
 					resolve(apiRes);
 				}).catch((err: BlApiError) => {
@@ -41,15 +41,15 @@ export class ApiService {
 			});
 		});
 	}
-	
+
 	private fetchTokensAndGet(collection: string, httpError: HttpErrorResponse, query?: string): Promise<ApiResponse> {
 		return new Promise((resolve, reject) => {
-			
+
 			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
 				this._apiTokenService.fetchNewTokens().then(() => {
 					this._http.get(this._apiRequestService.apiPath(collection, query),
 						{headers: this._apiRequestService.getHeaders()}).toPromise().then((res: BlapiResponse) => {
-						
+
 						this.validateAndReturnResponse(res).then((apiRes: ApiResponse) => {
 							resolve(apiRes);
 						}).catch((err: BlApiError) => {
@@ -67,7 +67,7 @@ export class ApiService {
 
 	public getById(collection: string, id: string): Promise<ApiResponse> {
 		return new Promise((resolve, reject) => {
-			
+
 			this._http.get(this._apiRequestService.apiPathWithId(collection, id),
 				{headers: this._apiRequestService.getHeaders()}).toPromise().then((res: BlapiResponse) => {
 				resolve(this.validateAndReturnResponse(res));
@@ -80,19 +80,19 @@ export class ApiService {
 			});
 		});
 	}
-	
+
 	private fetchTokensAndGetById(collection: string, id: string, httpError: HttpErrorResponse): Promise<BlapiResponse> {
 		return new Promise((resolve, reject) => {
 			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
 				this._apiTokenService.fetchNewTokens().then(() => { // try to get new tokens
-					
+
 					this._http.get(this._apiRequestService.apiPathWithId(collection, id),
 						{headers: this._apiRequestService.getHeaders()}).toPromise().then((res: BlapiResponse) => {
 						resolve(res);
 					}).catch((blApiErr: BlApiError) => {
 						return reject(blApiErr);
 					});
-					
+
 				}).catch((blApiErr: BlApiError) => {
 					return reject(blApiErr);
 				});
@@ -101,8 +101,8 @@ export class ApiService {
 			}
 		});
 	}
-	
-	
+
+
 	public add(collection: string, data: any): Promise<ApiResponse> {
 		return new Promise((resolve, reject) => {
 			this._http.post(this._apiRequestService.apiPath(collection), data,
@@ -117,7 +117,7 @@ export class ApiService {
 			});
 		});
 	}
-	
+
 	private fetchTokensAndAdd(collection: string, data: any, httpError: HttpErrorResponse): Promise<BlapiResponse> {
 		return new Promise((resolve, reject) => {
 			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
@@ -128,7 +128,7 @@ export class ApiService {
 					}).catch((blApiErr: BlApiError) => {
 						return reject(blApiErr);
 					});
-					
+
 				}).catch((blApiErr: BlApiError) => {
 					return reject(blApiErr);
 				});
@@ -137,7 +137,7 @@ export class ApiService {
 			}
 		});
 	}
-	
+
 	public update(collection: string, id: string, data: any): Promise<ApiResponse> {
 		return new Promise((resolve, reject) => {
 			this._http.patch(this._apiRequestService.apiPathWithId(collection, id), data,
@@ -152,7 +152,22 @@ export class ApiService {
 			});
 		});
 	}
-	
+
+	public updateWithOperation(collection: string, id: string, operation: string, data: any): Promise<ApiResponse> {
+		return new Promise((resolve, reject) => {
+			this._http.patch(this._apiRequestService.apiPathWithId(collection, id) + '/' + operation, data,
+				{headers: this._apiRequestService.getHeaders()}).toPromise().then((res: BlapiResponse) => {
+				resolve(this.validateAndReturnResponse(res));
+			}).catch((httpError: HttpErrorResponse) => {
+				this.fetchTokensAndUpdate(collection, id, data, httpError).then((res: BlapiResponse) => {
+					resolve(this.validateAndReturnResponse(res));
+				}).catch((blApiErr: BlApiError) => {
+					reject(blApiErr);
+				});
+			});
+		});
+	}
+
 	private fetchTokensAndUpdate(collection: string, id: string, data: any, httpError: HttpErrorResponse): Promise<BlapiResponse> {
 		return new Promise((resolve, reject) => {
 			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
@@ -171,7 +186,7 @@ export class ApiService {
 			}
 		});
 	}
-	
+
 	public remove(collection: string, id: string): Promise<ApiResponse> {
 		return new Promise((resolve, reject) => {
 			this._http.delete(this._apiRequestService.apiPathWithId(collection, id),
@@ -186,7 +201,7 @@ export class ApiService {
 			});
 		});
 	}
-	
+
 	private fetchTokensAndRemove(collection: string, id: string, httpError: HttpErrorResponse): Promise<BlapiResponse> {
 		return new Promise((resolve, reject) => {
 			if (this._apiErrorService.isAccessTokenInvalid(httpError)) { // accessToken invalid
@@ -205,7 +220,7 @@ export class ApiService {
 			}
 		});
 	}
-	
+
 	private validateAndReturnResponse(res: BlapiResponse): Promise<ApiResponse> {
 		try {
 			const apiRes = this.handleResponse(res);
@@ -216,25 +231,25 @@ export class ApiService {
 			return Promise.reject(blApiErr);
 		}
 	}
-	
-	
+
+
 	private handleResponse(res: BlapiResponse): ApiResponse {
 		try {
 			this.validateResponse(res);
 		} catch (err) {
 			throw new Error('BlApiDocumentError: response document is not valid: ' + err);
 		}
-		
+
 		return new ApiResponse('success', 200, res.data);
 	}
-	
+
 	private validateResponse(res: any) {
 		if (!res.data && !isArray(res.data)) {
 			throw new Error('BlApiDocumentError: mandatory field "data" not defined or is not an array');
 		}
 	}
-	
-	
+
+
 	private handleError(error: any): BlApiError {
 		return this._apiErrorService.handleError(error);
 	}
