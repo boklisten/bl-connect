@@ -21,6 +21,7 @@ import {DeliveryService} from "../delivery/delivery.service";
 import {BL_CONFIG} from "./bl-config";
 import {BranchItemService} from "../branch-item/branch-item-service";
 import {PasswordResetService} from "../password-reset/password-reset.service";
+import {EmailValidationService} from "../email-validation/email-validation.service";
 
 @NgModule({
 	imports: [
@@ -47,7 +48,8 @@ import {PasswordResetService} from "../password-reset/password-reset.service";
 		OrderService,
 		PaymentService,
 		DeliveryService,
-		PasswordResetService
+		PasswordResetService,
+		EmailValidationService
 	]
 })
 export class BlConnectModule {

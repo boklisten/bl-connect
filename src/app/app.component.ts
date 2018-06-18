@@ -14,6 +14,7 @@ import {RegisterService} from "./register/register.service";
 import {PaymentService} from "./payment/payment.service";
 import {OrderService} from "./order/order.service";
 import {PasswordResetService} from "./password-reset/password-reset.service";
+import {EmailValidationService} from "./email-validation/email-validation.service";
 
 @Component({
 	selector: 'app-root',
@@ -26,7 +27,9 @@ export class AppComponent implements OnInit {
 	constructor(private _userDetailService: UserDetailService, private _tokenService: TokenService, private _itemService: ItemService,
 				private _loginService: LoginService, private _branchService: BranchService, private _customerItemService: CustomerItemService,
 				private _registerService: RegisterService, private _paymentService: PaymentService, private _orderService: OrderService,
-				private _passwordResetService: PasswordResetService) {
+				private _passwordResetService: PasswordResetService,
+				private _emailValidationService: EmailValidationService
+				) {
 		const expiredAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2tsaXN0ZW4uY28iLCJhdWQiOiJib2tsaXN0ZW4uY28iLCJpYXQiOjE1MTc4NTAyNTUsInN1YiI6InUjZDViY2U1NjUxNTczNGNmNjg5ZTFiOWU2NzBlY2YyMTIiLCJ1c2VybmFtZSI6ImFAYi5jb20iLCJwZXJtaXNzaW9uIjoiY3VzdG9tZXIiLCJkZXRhaWxzIjoiNWE3NDdhNDNmNDZmZDM2NTNmYjFjYjFkIiwiZXhwIjoxNTE3ODUwMzE1fQ._j8hJxRui1pkyQhT-JzMdzM_6YJ9ol1fOQ_T9d70hXI";
 		const expiredRefreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2tsaXN0ZW4uY28iLCJhdWQiOiJib2tsaXN0ZW4uY28iLCJpYXQiOjE1MTc4NTAyNTUsInN1YiI6InUjZDViY2U1NjUxNTczNGNmNjg5ZTFiOWU2NzBlY2YyMTIiLCJ1c2VybmFtZSI6ImFAYi5jb20iLCJleHAiOjE1MTc4NTAzMTV9.sbE89JxGTtrE0yMx55JNCqouG8qvszaSksWz7Is6880";
 		const validAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2tsaXN0ZW4uY28iLCJhdWQiOiJib2tsaXN0ZW4uY28iLCJpYXQiOjE1MTc4NTA1OTgsInN1YiI6InUjZDViY2U1NjUxNTczNGNmNjg5ZTFiOWU2NzBlY2YyMTIiLCJ1c2VybmFtZSI6ImFAYi5jb20iLCJwZXJtaXNzaW9uIjoiY3VzdG9tZXIiLCJkZXRhaWxzIjoiNWE3NDdhNDNmNDZmZDM2NTNmYjFjYjFkIiwiZXhwIjo0NjczNjEwNTk4fQ.Os1SlSuxbAdzPNXgvAaJ21Zfj06N0yFyNubKsgY1sio";
@@ -39,6 +42,19 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		/*
+		this._loginService.login('aholskil@gmail.com', 'password').then(() => {
+			this._emailValidationService.requestNewConfirmationLink('5b278c7bfc67fb4bbf666225', 'aholskil@gmail.com').then(() => {
+				console.log('email confirmation link sent');
+			}).catch((blApiErr) => {
+				console.log('email confirmation link failed!');
+			});
+
+
+
+		});
+		*/
+
 
 		/*
 

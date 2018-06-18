@@ -33,6 +33,11 @@ export const BL_CONFIG = {
 			operation: 'new'
 		}
 	},
+	emailValidation: {
+		confirm: {
+			operation: 'confirm'
+		}
+	},
 	collection: {
 		item: 'items',
 		branch: 'branches',
@@ -44,7 +49,8 @@ export const BL_CONFIG = {
 		orderItem: 'orderItems',
 		payment: 'payments',
 		delivery: 'deliveries',
-		passwordReset: 'passwordresets'
+		passwordReset: 'passwordresets',
+		emailValidation: 'email_validations'
 	}
 };
 
