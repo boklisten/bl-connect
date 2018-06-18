@@ -16,3 +16,4 @@ export * from "./src/app/payment/payment.service";
 export * from "./src/app/delivery/delivery.service";
 export * from "./src/app/branch-item/branch-item-service";
 export * from "./src/app/password-reset/password-reset.service";
+export * from "./src/app/email-validation/email-validation.service";
