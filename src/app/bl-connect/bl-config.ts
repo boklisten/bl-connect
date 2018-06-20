@@ -1,6 +1,6 @@
 export const BL_CONFIG = {
 	api: {
-		basePath: 'http://localhost:1337/api/v1/',
+		basePath: 'http://localhost:1337/',
 	},
 	token: {
 		accessToken: 'bl-access-token',

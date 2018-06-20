@@ -44,14 +44,13 @@ export class AppComponent implements OnInit {
 	ngOnInit() {
 		/*
 		this._loginService.login('aholskil@gmail.com', 'password').then(() => {
-			this._emailValidationService.requestNewConfirmationLink('5b278c7bfc67fb4bbf666225', 'aholskil@gmail.com').then(() => {
-				console.log('email confirmation link sent');
-			}).catch((blApiErr) => {
-				console.log('email confirmation link failed!');
-			});
-
-
-
+			setTimeout(() => {
+				this._userDetailService.getById(this._tokenService.getAccessTokenBody().details).then((userDetail: UserDetail) => {
+					console.log('the user detail', userDetail);
+				}).catch((getUserDetailError) => {
+					console.log('could not get user detail', getUserDetailError);
+				});
+			}, 1100);
 		});
 		*/
 

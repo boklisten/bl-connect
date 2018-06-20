@@ -6,15 +6,15 @@ import {ApiRequestService} from "./api-request.service";
 
 @Injectable()
 export class ApiTokenService {
-	
+
 	constructor(private _http: HttpClient, private _tokenService: TokenService, private _apiRequestService: ApiRequestService) {
 	}
-	
+
 	public fetchNewTokens(): Promise<boolean> {
 		return new Promise((resolve, reject) => {
 			if (this._tokenService.haveRefreshToken()) {
 				const refreshTokenBody = {refreshToken: this._tokenService.getRefreshToken()};
-				
+
 				this._http.post(this._apiRequestService.apiPath('token'), refreshTokenBody).toPromise().then((res) => {
 					try {
 						const tokens = this.validateResponseDataTokens(res['data']);
@@ -27,16 +27,16 @@ export class ApiTokenService {
 						return reject(badDataError);
 					}
 				}).catch((err: HttpErrorResponse) => {
-					
+
 					return reject(this.handleHttpErrorResponse(err));
-					
+
 				});
 			} else {
 				return reject(new BlApiLoginRequiredError());
 			}
 		});
 	}
-	
+
 	private handleHttpErrorResponse(httpErr: HttpErrorResponse): BlApiError {
 		if (httpErr && httpErr.status) {
 			switch (httpErr.status) {
@@ -44,36 +44,28 @@ export class ApiTokenService {
 				case 403: return new BlApiLoginRequiredError();
 			}
 		}
-		
+
 		const apiErr = new BlApiError();
 		apiErr.msg = 'unknown error';
 		return apiErr;
 	}
-	
-	private validateResponseDataTokens(data: any[]): {accessToken: string, refreshToken: string} {
+
+	private validateResponseDataTokens(tokens: any[]): {accessToken: string, refreshToken: string} {
 		let refreshToken = '';
 		let accessToken = '';
-		
-		for (const d of data) {
-			if (!d.data || d.data.length <= 0) {
-				throw new Error('data of refreshToken is not defined');
-			}
-			
-			if (!d.documentName) {
-				throw new Error('documentName is missing on return data');
-			}
-			
-			if (d.documentName === 'refreshToken') {
-				refreshToken = d.data;
-			} else if (d.documentName === 'accessToken') {
-				accessToken = d.data;
+
+		for (const token of tokens) {
+			if (token['refreshToken']) {
+				refreshToken = token['refreshToken'];
+			} else if (token['accessToken']) {
+				accessToken = token['accessToken'];
 			}
 		}
-		
+
 		if (!accessToken || accessToken.length <= 0 || !refreshToken || refreshToken.length <= 0) {
 			throw new Error('tokens or one of the tokens are not defined');
 		}
-		
+
 		return {accessToken: accessToken, refreshToken: refreshToken};
 	}
 }
