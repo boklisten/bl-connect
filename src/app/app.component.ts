@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		/*
 		this._loginService.login('aholskil@gmail.com', 'password').then(() => {
 			setTimeout(() => {
 				this._userDetailService.getById(this._tokenService.getAccessTokenBody().details).then((userDetail: UserDetail) => {
@@ -52,7 +51,6 @@ export class AppComponent implements OnInit {
 				});
 			}, 1100);
 		});
-		*/
 
 
 		/*

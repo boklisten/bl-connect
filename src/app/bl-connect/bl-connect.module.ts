@@ -8,7 +8,6 @@ import {ApiErrorService} from "../api-error/api-error.service";
 import {UserDetailService} from "../user-detail/user-detail.service";
 import {TokenService} from "../token/token.service";
 import {StorageService} from "../storage/storage.service";
-import {LocalStorageModule} from "angular-2-local-storage";
 import {LoginService} from "../login/login.service";
 import {HttpClientModule} from "@angular/common/http";
 import {RegisterService} from "../register/register.service";
@@ -18,16 +17,27 @@ import {CustomerItemService} from "../customer-item/customer-item.service";
 import {OrderService} from "../order/order.service";
 import {PaymentService} from "../payment/payment.service";
 import {DeliveryService} from "../delivery/delivery.service";
-import {BL_CONFIG} from "./bl-config";
 import {BranchItemService} from "../branch-item/branch-item-service";
 import {PasswordResetService} from "../password-reset/password-reset.service";
 import {EmailValidationService} from "../email-validation/email-validation.service";
+import {JwtModule} from '@auth0/angular-jwt';
+import {BL_CONFIG} from "./bl-config";
+
+export function tokenGetter() {
+	return localStorage.getItem(BL_CONFIG.token.accessToken);
+}
 
 @NgModule({
 	imports: [
 		CommonModule,
-		//LocalStorageModule.withConfig({prefix: 'bl', storageType: 'sessionStorage'}),
-		HttpClientModule
+		HttpClientModule,
+		JwtModule.forRoot({
+			config: {
+				tokenGetter: tokenGetter,
+				whitelistedDomains: ['boklisten.co', 'boklisten.no', 'localhost:1337', 'localhost:4200']
+			}
+
+		})
 	],
 	declarations: [],
 	providers: [

@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import {LocalStorageService} from "angular-2-local-storage";
 
 @Injectable()
 export class StorageService {
-	
-	constructor(private _localStorage: LocalStorageService) {
-	
+
+	constructor() {
+
 	}
-	
+
 	public add(key: string, val: string): boolean {
 		/*
 		if (!this._localStorage.isSupported) {
@@ -23,7 +22,7 @@ export class StorageService {
 		localStorage.setItem(key, val);
 		return true;
 	}
-	
+
 	public get(key: string): string {
 		/*
 		if (!this._localStorage.isSupported) {
@@ -34,17 +33,17 @@ export class StorageService {
 			}
 		}
 		*/
-		
+
 		const storedObj = localStorage.getItem(key);
-		
+
 		if (!storedObj) {
 			throw new Error('could not find stored object with key "' + key + '"');
 		}
-		
+
 		return storedObj;
-		
+
 	}
-	
+
 	public remove(key: string): boolean {
 		/*
 		if (!this._localStorage.isSupported) {
@@ -54,7 +53,7 @@ export class StorageService {
 		localStorage.removeItem(key);
 		return true;
 	}
-	
+
 	public removeAll(): void {
 		/*
 		if (!this._localStorage.isSupported) {
@@ -64,7 +63,7 @@ export class StorageService {
 		*/
 		localStorage.clear();
 	}
-	
+
 	private storeCookie(key: string, val: string) {
 		/*
 		try {
@@ -75,7 +74,7 @@ export class StorageService {
 		*/
 		return true;
 	}
-	
+
 	private getCookie(key: string) {
 		/*
 		const val: any = this._cookieService.get(key);
@@ -85,7 +84,7 @@ export class StorageService {
 		return val;
 		*/
 	}
-	
+
 	private deleteCookie(key: string) {
 		/*
 		this._cookieService.remove(key);

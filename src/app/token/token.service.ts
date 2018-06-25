@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import {AccessToken, RefreshToken} from "@wizardcoder/bl-model";
 import {StorageService} from "../storage/storage.service";
 import {BL_CONFIG} from "../bl-connect/bl-config";
-import {JwtHelper} from "angular2-jwt";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Injectable()
 export class TokenService {
 	private _accessTokenName: string;
 	private _refreshTokenName: string;
-	private _jwtHelper: JwtHelper;
+	private _jwtHelper: JwtHelperService;
 
 
 	constructor(private _storageService: StorageService) {
 		this._accessTokenName = BL_CONFIG.token.accessToken;
 		this._refreshTokenName = BL_CONFIG.token.refreshToken;
-		this._jwtHelper = new JwtHelper();
+		this._jwtHelper = new JwtHelperService();
 
 	}
 
