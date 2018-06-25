@@ -42,8 +42,8 @@ export class ApiService {
 		});
 	}
 
-	public getWithOperation(url: string, operation: string, query?: string): Promise<ApiResponse> {
-		return this.get(url + '/' + operation, query);
+	public getWithOperation(collection: string, id: string, operation: string, query?: string): Promise<ApiResponse> {
+		return this.get(collection  + '/' + id + '/' +  operation, query);
 	}
 
 	private fetchTokensAndGet(collection: string, httpError: HttpErrorResponse, query?: string): Promise<ApiResponse> {

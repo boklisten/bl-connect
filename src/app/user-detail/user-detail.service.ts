@@ -10,23 +10,32 @@ import {DocumentService} from "../document/document.service";
 export class UserDetailService {
 	private _collectionName: string;
 	private _documentService: DocumentService<UserDetail>;
-	
+
 	constructor(private _apiService: ApiService) {
 		this._collectionName = BL_CONFIG.collection.userDetail;
 		this._documentService = new DocumentService<UserDetail>(this._collectionName, this._apiService);
-		
+
 	}
-	
+
 	public getById(id: string): Promise<UserDetail> {
 		return this._documentService.getById(id);
 	}
-	
+
 	public update(id: string, data: any): Promise<UserDetail> {
 		return this._documentService.update(id, data);
 	}
-	
+
 	public get(query?: string): Promise<UserDetail[]> {
 		return this._documentService.get(query);
 	}
-	
+
+	public isValid(id: string): Promise<{valid: boolean, invalidFields?: string[]}> {
+		return this._documentService.getWithOperation(id, 'valid').then((userDetailValidObject: {valid: boolean, invalidFields?: string[]}) => {
+			return userDetailValidObject;
+		}).catch((blApiError: BlApiError) => {
+			throw blApiError;
+		});
+	}
+
+
 }

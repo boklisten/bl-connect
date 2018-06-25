@@ -42,15 +42,27 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		/*
 		this._loginService.login('aholskil@gmail.com', 'password').then(() => {
 			setTimeout(() => {
 				this._userDetailService.getById(this._tokenService.getAccessTokenBody().details).then((userDetail: UserDetail) => {
-					console.log('the user detail', userDetail);
+					console.log('the user details', userDetail);
+					this._userDetailService.isValid(userDetail.id).then((userDetailValid: {valid: boolean, invalidFields?: string[]}) => {
+						if (userDetailValid.valid) {
+							console.log('the userDetail is valid!');
+						} else {
+							console.log('the userDetail is not valid, fields needed: ', userDetailValid.invalidFields);
+						}
+					}).catch((blApiErr) => {
+						console.log('the userdetail.isvalid returned an error', blApiErr);
+					});
 				}).catch((getUserDetailError) => {
 					console.log('could not get user detail', getUserDetailError);
 				});
 			}, 1100);
 		});
+
+		*/
 
 
 		/*
