@@ -26,7 +26,7 @@ import {EmailValidationService} from "../email-validation/email-validation.servi
 @NgModule({
 	imports: [
 		CommonModule,
-		LocalStorageModule.withConfig({prefix: 'bl', storageType: 'sessionStorage'}),
+		//LocalStorageModule.withConfig({prefix: 'bl', storageType: 'sessionStorage'}),
 		HttpClientModule
 	],
 	declarations: [],
@@ -53,6 +53,7 @@ import {EmailValidationService} from "../email-validation/email-validation.servi
 	]
 })
 export class BlConnectModule {
+	/*
 	public static withConfig(config?: {
 		basePath?: string
 	}) {
@@ -64,4 +65,5 @@ export class BlConnectModule {
 
 		return this;
 	}
+	*/
 }
