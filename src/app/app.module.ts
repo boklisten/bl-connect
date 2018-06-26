@@ -12,10 +12,11 @@ import {HttpClientModule} from "@angular/common/http";
 	imports: [
 		BrowserModule,
 		HttpClientModule,
-		BlConnectModule
+		BlConnectModule.withConfig({basePath: 'localhost:1337/'})
 	],
 	providers: [],
 	bootstrap: [AppComponent]
 })
 export class AppModule {
+
 }

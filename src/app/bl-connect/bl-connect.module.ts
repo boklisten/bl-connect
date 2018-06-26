@@ -63,7 +63,6 @@ export function tokenGetter() {
 	]
 })
 export class BlConnectModule {
-	/*
 	public static withConfig(config?: {
 		basePath?: string
 	}) {
@@ -75,5 +74,4 @@ export class BlConnectModule {
 
 		return this;
 	}
-	*/
 }
