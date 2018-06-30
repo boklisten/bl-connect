@@ -4,7 +4,7 @@ import {ApiService} from './api.service';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {ApiErrorService} from "../api-error/api-error.service";
 import {TokenService} from "../token/token.service";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {BlApiError, BlApiNotFoundError} from "@wizardcoder/bl-model";
 import {ApiResponse} from "./api-response";
 import {ApiTokenService} from "./api-token.service";
@@ -61,7 +61,7 @@ describe('ApiService', () => {
 
 		it('should reject with BlApiNotFoundError when document is not found', (done: DoneFn) => {
 			spyOn(httpClientServiceMock, 'get').and.returnValue(
-				Observable.throw({status: 404}));
+				throwError({status: 404}));
 
 			service.get('a/path').catch((err: BlApiError) => {
 				expect((err instanceof BlApiNotFoundError)).toBeTruthy();

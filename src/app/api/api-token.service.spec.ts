@@ -4,7 +4,7 @@ import {ApiTokenService} from './api-token.service';
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {TokenService} from "../token/token.service";
 import {ApiRequestService} from "./api-request.service";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {BlApiError, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "@wizardcoder/bl-model";
 import {ApiResponse} from "./api-response";
 
@@ -53,12 +53,10 @@ describe('ApiTokenService', () => {
 			const returnData = {
 				data: [
 					{
-						documentName: "accessToken",
-						data: "aRandomStringInTheMorning"
+						refreshToken: "aRandomStringInTheMorning"
 					},
 					{
-						documentName: "refreshToken",
-						data: "anotherRandomStringInTheMorning"
+						accessToken: "anotherRandomStringInTheMorning"
 					}
 				]
 			};
@@ -79,8 +77,7 @@ describe('ApiTokenService', () => {
 			const returnData = {
 				data: [
 					{
-						documentName: "accessToken",
-						data: "aRandomStringInTheMorning"
+						accessToken: "aRandomStringInTheMorning"
 					}
 				]
 			};
@@ -101,8 +98,7 @@ describe('ApiTokenService', () => {
 			const returnData = {
 				data: [
 					{
-						documentName: "refreshToken",
-						data: "aRandomStringInTheMorning"
+						refreshToken: "aRandomStringInTheMorning"
 					}
 				]
 			};
@@ -160,7 +156,7 @@ describe('ApiTokenService', () => {
 
 		it('should reject with BlApiLoginRequiredError if request is error and HttpResponseStatus is 401', (done: DoneFn) => {
 			spyOn(httpClientMock, 'post').and.returnValue(
-				Observable.throw({status: 401, error: {code: 401}})
+				throwError({status: 401, error: {code: 401}})
 			);
 
 			service.fetchNewTokens().catch((blApiErr: BlApiError) => {
@@ -171,7 +167,7 @@ describe('ApiTokenService', () => {
 
 		it('should reject with BlApiLoginRequiredError if request is error and HttpResponseStatus is 403', (done: DoneFn) => {
 			spyOn(httpClientMock, 'post').and.returnValue(
-				Observable.throw({status: 403, error: {code: 403}})
+				throwError({status: 403, error: {code: 403}})
 			);
 
 			service.fetchNewTokens().catch((blApiErr: BlApiError) => {
@@ -182,7 +178,7 @@ describe('ApiTokenService', () => {
 
 		it('should reject with BlApiError if request is error and HttpResponseStatus is not 403 or 401', (done: DoneFn) => {
 			spyOn(httpClientMock, 'post').and.returnValue(
-				Observable.throw({status: 350, error: {code: 350}})
+				throwError({status: 350, error: {code: 350}})
 			);
 
 			service.fetchNewTokens().catch((blApiErr: BlApiError) => {

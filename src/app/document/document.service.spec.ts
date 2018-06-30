@@ -38,22 +38,6 @@ describe('DocumentService', () => {
 			});
 		});
 
-		it('should reject if the returned ApiService data is not of valid documents', (done: DoneFn) => {
-			const branchDoc1 = {documentName: 'somethingElse', data: {age: 'MikkyD'}};
-			const returnObj = {data: [
-				branchDoc1
-			]};
-
-			spyOn(apiServiceMock, 'get').and.returnValue(
-				Promise.resolve(returnObj)
-			);
-
-			service.get().catch((blApiError: BlApiError) => {
-				expect(blApiError.msg).toMatch('document data not valid');
-				done();
-			});
-		});
-
 		it('should reject with BlApiError if apiService rejects', (done: DoneFn) => {
 			const blApiErr = new BlApiError();
 			blApiErr.msg = 'an error occurred';
@@ -119,7 +103,7 @@ describe('DocumentService', () => {
 			);
 
 			service.getById('abc').catch((apiErr: BlApiError) => {
-				expect(apiErr.msg).toMatch('there where more than one document in the response')
+				expect(apiErr.msg).toMatch('there where more than one document in the response');
 				done();
 			});
 		});
@@ -146,7 +130,7 @@ describe('DocumentService', () => {
 			const doc = {documentName: 'aDoc', data: {missing: 'this doc is missing an id field'}};
 
 			spyOn(apiServiceMock, 'update').and.returnValue(
-				Promise.resolve({data: [doc]})
+				Promise.resolve([doc])
 			);
 
 			service.update('abc', {hello: 'there'}).catch((blApiError: BlApiError) => {
@@ -187,7 +171,7 @@ describe('DocumentService', () => {
 			const doc = {documentName: 'aDoc', data: {missing: 'this doc is missing an id field'}};
 
 			spyOn(apiServiceMock, 'add').and.returnValue(
-				Promise.resolve({data: [doc]})
+				Promise.resolve([doc])
 			);
 
 			service.add({hello: 'there'}).catch((blApiError: BlApiError) => {
@@ -228,7 +212,7 @@ describe('DocumentService', () => {
 			const doc = {documentName: 'aDoc', data: {missing: 'this doc is missing an id field'}};
 
 			spyOn(apiServiceMock, 'remove').and.returnValue(
-				Promise.resolve({data: [doc]})
+				Promise.resolve(doc)
 			);
 
 			service.remove('abc').catch((blApiError: BlApiError) => {

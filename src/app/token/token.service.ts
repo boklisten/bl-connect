@@ -80,12 +80,20 @@ export class TokenService {
 	}
 
 	public getAccessTokenBody(): AccessToken {
-		/*
-		if (!this.isAccessTokenValid()) {
+		let token = this.getAccessToken();
+
+		if (!token) {
+			throw new Error('could not get accessToken');
+		}
+
+		let decodedToken;
+		try {
+			decodedToken = this._jwtHelper.decodeToken(token);
+		} catch (e) {
 			throw new Error('accessToken is not valid');
 		}
-		*/
-		return this._jwtHelper.decodeToken(this.getAccessToken());
+
+		return decodedToken;
 	}
 
 	public getRefreshTokenBody(): RefreshToken {
