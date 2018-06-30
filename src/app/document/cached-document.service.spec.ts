@@ -11,7 +11,8 @@ describe('CachedDocumentService', () => {
 	const documentService = new DocumentService();
 
 	beforeEach(() => {
-		service = new CachedDocumentService(documentService, simpleCache);
+		service = new CachedDocumentService(simpleCache);
+		service._documentService = documentService;
 		simpleCache.refreshTimeMs = 50000;
 	});
 
@@ -118,6 +119,9 @@ describe('CachedDocumentService', () => {
 			service.getManyByIds(['kk1', 'slj', 'bcb']).then((documents: any[]) => {
 				expect(spy).toHaveBeenCalled();
 				expect(documents).toEqual([testDocOne, testDocTwo, testDocThree]);
+				expect(simpleCache.get(testDocOne.id)).toEqual(testDocOne);
+				expect(simpleCache.get(testDocTwo.id)).toEqual(testDocTwo);
+				expect(simpleCache.get(testDocThree.id)).toEqual(testDocThree);
 				done();
 			});
 		});

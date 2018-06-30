@@ -45,4 +45,8 @@ export class SimpleCache<T extends BlDocument> {
 	public clear() {
 		this._simpleCacheStorage = {};
 	}
+
+	public size() {
+		return (Object.keys(this._simpleCacheStorage).length);
+	}
 }

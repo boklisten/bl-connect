@@ -22,10 +22,15 @@ import {PasswordResetService} from "../password-reset/password-reset.service";
 import {EmailValidationService} from "../email-validation/email-validation.service";
 import {JwtModule} from '@auth0/angular-jwt';
 import {BL_CONFIG} from "./bl-config";
+import {CachedDocumentService} from "../document/cached-document.service";
+import {BlDocument} from "@wizardcoder/bl-model";
+import {SimpleCache} from "../simple-cache/simple-cache.service";
 
 export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
 }
+
+const simpleCache = new SimpleCache(5000);
 
 @NgModule({
 	imports: [
@@ -34,7 +39,7 @@ export function tokenGetter() {
 		JwtModule.forRoot({
 			config: {
 				tokenGetter: tokenGetter,
-				whitelistedDomains: ['boklisten.co', 'boklisten.no', 'localhost:1337', 'localhost:4200']
+				whitelistedDomains: ['bladmin.boklisten.co', 'api.boklisten.co', 'boklisten.co', 'bladmin.boklisten.no', 'api.boklisten.no', 'boklisten.no', 'localhost:1337', 'localhost:4200']
 			}
 
 		})
@@ -59,13 +64,13 @@ export function tokenGetter() {
 		PaymentService,
 		DeliveryService,
 		PasswordResetService,
-		EmailValidationService
+		EmailValidationService,
+		{provide: SimpleCache, useValue: new SimpleCache()},
+		CachedDocumentService
 	]
 })
 export class BlConnectModule {
-	public static withConfig(config?: {
-		basePath?: string
-	}) {
+	public static withConfig(config?: {basePath?: string}) {
 		if (config) {
 			if (config.basePath) {
 				BL_CONFIG.api.basePath = config.basePath;

@@ -6,8 +6,9 @@ import {SimpleCache} from "../simple-cache/simple-cache.service";
 
 @Injectable()
 export class CachedDocumentService<T extends BlDocument> {
+	public _documentService: DocumentService<T>;
 
-	constructor(private _documentService: DocumentService<T>, private _simpleCache: SimpleCache<T>) {
+	constructor(private _simpleCache: SimpleCache<any>) {
 
 	}
 
@@ -69,7 +70,14 @@ export class CachedDocumentService<T extends BlDocument> {
 				throw err;
 			});
 		} else {
-			return this._documentService.getManyByIds(notCachedObjectIds);
+			return this._documentService.getManyByIds(notCachedObjectIds).then((returnedDocuments: T[]) => {
+				for (const returnedDocument of returnedDocuments) {
+					this._simpleCache.add(returnedDocument);
+				}
+				return returnedDocuments;
+			}).catch((err) => {
+				throw err;
+			});
 		}
 	}
 

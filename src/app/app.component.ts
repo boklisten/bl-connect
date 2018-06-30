@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {
 	BlApiError, BlapiErrorResponse, BlApiLoginRequiredError, BlApiPermissionDeniedError, CustomerItem, Item,
-	OpeningHour, Order, UserDetail, Payment
+	OpeningHour, Order, UserDetail, Payment, Branch
 } from "@wizardcoder/bl-model";
 import {UserDetailService} from "./user-detail/user-detail.service";
 import {ApiErrorResponse} from "./api/api-error-response";
@@ -15,6 +15,7 @@ import {PaymentService} from "./payment/payment.service";
 import {OrderService} from "./order/order.service";
 import {PasswordResetService} from "./password-reset/password-reset.service";
 import {EmailValidationService} from "./email-validation/email-validation.service";
+import {SimpleCache} from "./simple-cache/simple-cache.service";
 
 @Component({
 	selector: 'app-root',
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit {
 				private _loginService: LoginService, private _branchService: BranchService, private _customerItemService: CustomerItemService,
 				private _registerService: RegisterService, private _paymentService: PaymentService, private _orderService: OrderService,
 				private _passwordResetService: PasswordResetService,
-				private _emailValidationService: EmailValidationService
+				private _emailValidationService: EmailValidationService,
+				private _simpleCache: SimpleCache<any>
 				) {
 		const expiredAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2tsaXN0ZW4uY28iLCJhdWQiOiJib2tsaXN0ZW4uY28iLCJpYXQiOjE1MTc4NTAyNTUsInN1YiI6InUjZDViY2U1NjUxNTczNGNmNjg5ZTFiOWU2NzBlY2YyMTIiLCJ1c2VybmFtZSI6ImFAYi5jb20iLCJwZXJtaXNzaW9uIjoiY3VzdG9tZXIiLCJkZXRhaWxzIjoiNWE3NDdhNDNmNDZmZDM2NTNmYjFjYjFkIiwiZXhwIjoxNTE3ODUwMzE1fQ._j8hJxRui1pkyQhT-JzMdzM_6YJ9ol1fOQ_T9d70hXI";
 		const expiredRefreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2tsaXN0ZW4uY28iLCJhdWQiOiJib2tsaXN0ZW4uY28iLCJpYXQiOjE1MTc4NTAyNTUsInN1YiI6InUjZDViY2U1NjUxNTczNGNmNjg5ZTFiOWU2NzBlY2YyMTIiLCJ1c2VybmFtZSI6ImFAYi5jb20iLCJleHAiOjE1MTc4NTAzMTV9.sbE89JxGTtrE0yMx55JNCqouG8qvszaSksWz7Is6880";
@@ -43,114 +45,64 @@ export class AppComponent implements OnInit {
 
 	ngOnInit() {
 		/*
-		this._loginService.login('aholskil@gmail.com', 'password').then(() => {
-			setTimeout(() => {
-				this._userDetailService.getById(this._tokenService.getAccessTokenBody().details).then((userDetail: UserDetail) => {
-					console.log('the user details', userDetail);
-					this._userDetailService.isValid(userDetail.id).then((userDetailValid: {valid: boolean, invalidFields?: string[]}) => {
-						if (userDetailValid.valid) {
-							console.log('the userDetail is valid!');
-						} else {
-							console.log('the userDetail is not valid, fields needed: ', userDetailValid.invalidFields);
-						}
-					}).catch((blApiErr) => {
-						console.log('the userdetail.isvalid returned an error', blApiErr);
-					});
-				}).catch((getUserDetailError) => {
-					console.log('could not get user detail', getUserDetailError);
-				});
-			}, 1100);
-		});
 
-		*/
+		const startTime = new Date().getTime();
+		this._branchService.getById('5b0e74644457b345a930424c').then((branch: Branch) => {
+			const firstReturnTime = new Date().getTime();
+			console.log('the first call was ', (firstReturnTime - startTime), 'ms');
 
+			const secondStartTime = new Date().getTime();
 
-		/*
+			this._branchService.getById('5b0e74644457b345a930424c').then((branchTwo) => {
+				const secondReturnTime = new Date().getTime();
+				console.log('the second call was ', (secondReturnTime - secondStartTime), 'ms');
 
-		const orderJson: any = {
-			"id": "o1",
-			"amount": 370,
-			"application": "bl-web",
-			"orderItems": [
-				{
-					"type": "rent",
-					"amount": 370,
-					"item": "5a1d67cdf14cbe78ff047d02",
-					"title": "Signatur 3",
-					"rentRate": 0,
-					"taxRate": 0,
-					"taxAmount": 0,
-					"unitPrice": 370,
-					"rentInfo": {
-						"oneSemester": true,
-						"twoSemesters": false
-					}
-				}
-			],
-			"branch": "5a1d67cdf14cbe78ff047d00",
-			"byCustomer": true,
-			"payments": [],
-			"comments": [],
-			"active": false,
-			"user": {
-				"id": "u1"
-			},
-			"lastUpdated": '1',
-			"creationTime": '1'
-		};
-
-		let testPayment: any = {
-			method: "dibs",
-			order: '',
-			info: {},
-			amount: 370,
-			customer: '',
-			branch: '',
-			confirmed: false,
-		};
-
-		this._registerService.localRegister('bill@bob.com', 'password').then(() => {
-			console.log('we registered!');
-		}).catch((blApiError: BlApiError) => {
-			console.log('could not register..', this.printError(blApiError));
-		});
-
-		this._loginService.login('a@b.com', 'password').then(() => {
-
-			this._userDetailService.getById(this._tokenService.getAccessTokenBody().details).then((userDetail: UserDetail) => {
-
-				orderJson.customer = userDetail.id;
-				orderJson.user.id = userDetail.id;
-
-				this._orderService.add(orderJson).then((order: Order) => {
-
-					testPayment.order = order.id;
-					testPayment.customer = userDetail.id;
-					testPayment.branch = userDetail.branch;
-
-
-					this._paymentService.add(testPayment).then((payment: Payment) => {
-						console.log('we got the payment back!', payment);
-					}).catch((blApiErr: BlApiError) => {
-						console.log('could not add payment', blApiErr);
-					});
-				}).catch(() => {
-					console.log('could not add order');
-				});
-			}).catch(() => {
-				console.log('could not get user details');
+			}).catch((err) => {
+				console.log('could not get branch2', err);
 			});
-		}).catch(() => {
-			console.log('could not login');
-		});
-
-		/*
-		this._registerService.facebookRegister().then(() => {
-			console.log('hi there!');
-		}).catch((blApiError: BlApiError) => {
-			console.log('we fuct up', blApiError);
+		}).catch((err1) => {
+			console.log('could not get branch1', err1);
 		});
 		*/
+		// const ids = ["5b0e74644457b345a930424c", "5b0e74644457b345a930424d", "5b0e74644457b345a930424e", "5b0e74644457b345a930424f",  "5b0e74644457b345a9304250", "5b0e74644457b345a9304251", "5b0e74644457b345a9304252", "5b0e74644457b345a9304253", "5b0e74644457b345a9304254", "5b0e74644457b345a9304255"];
+/*
+		const startTime = new Date().getTime();
+		this._branchService.getManyByIds(ids).then((branches: Branch[]) => {
+			const firstReturnTime = new Date().getTime();
+			console.log('the first call was ', (firstReturnTime - startTime), 'ms');
+			const secondStartTime = new Date().getTime();
+			this._branchService.getManyByIds(ids).then((branchesTwo: Branch[]) => {
+				const secondReturnTime = new Date().getTime();
+				console.log('the second call was ', (secondReturnTime - secondStartTime), 'ms');
+
+			}).catch((err) => {
+				console.log('could not get branch2', err);
+			});
+		}).catch((err1) => {
+			console.log('could not get branch1', err1);
+		});*/
+/*
+		const startTime2 = new Date().getTime();
+		this._branchService.getManyByIds(ids).then((branches: Branch[]) => {
+			const firstReturnTime = new Date().getTime();
+			console.log('the first call was ', (firstReturnTime - startTime2), 'ms');
+
+
+			setTimeout(() => {
+				const secondStartTime = new Date().getTime();
+				this._branchService.getManyByIds(ids).then((branchesTwo: Branch[]) => {
+					const secondReturnTime = new Date().getTime();
+					console.log('the second call was ', (secondReturnTime - secondStartTime), 'ms');
+
+				}).catch((err) => {
+					console.log('could not get branch2', err);
+				});
+			}, 1000);
+		}).catch((err1) => {
+			console.log('could not get branch1', err1);
+		});
+		*/
+
 	}
 
 	private printError(blApiErr: BlApiError) {

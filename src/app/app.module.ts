@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {BlConnectModule} from "./bl-connect/bl-connect.module";
 import {HttpClientModule} from "@angular/common/http";
+import {SimpleCache} from "./simple-cache/simple-cache.service";
 
 @NgModule({
 	declarations: [
@@ -12,11 +13,12 @@ import {HttpClientModule} from "@angular/common/http";
 	imports: [
 		BrowserModule,
 		HttpClientModule,
-		BlConnectModule.withConfig({basePath: 'localhost:1337/'})
+		BlConnectModule.withConfig({basePath: 'http://localhost:1337/'})
 	],
 	providers: [],
 	bootstrap: [AppComponent]
 })
 export class AppModule {
+
 
 }
