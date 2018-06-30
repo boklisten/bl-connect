@@ -8,12 +8,10 @@ import {CachedDocumentService} from "../document/cached-document.service";
 @Injectable()
 export class BranchService {
 	private collectionName: string;
-	private documentName: string;
 
 	constructor(private _apiService: ApiService, private _cachedDocumentService: CachedDocumentService<any>) {
 		this.collectionName = BL_CONFIG.collection.branch;
 		_cachedDocumentService._documentService = new DocumentService<Branch>(this.collectionName, this._apiService);
-		this.documentName = 'branch';
 	}
 
 	public get(query?: string): Promise<Branch[]>	 {

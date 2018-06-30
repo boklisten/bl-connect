@@ -5,35 +5,35 @@ import {ApiErrorResponse} from "../api/api-error-response";
 import {Item} from "@wizardcoder/bl-model";
 import {BL_CONFIG} from "../bl-connect/bl-config";
 import {DocumentService} from "../document/document.service";
+import {CachedDocumentService} from "../document/cached-document.service";
 
 @Injectable()
 export class ItemService {
 	private _collectionName: string;
-	private _documentService: DocumentService<Item>;
 
-	constructor(private _apiService: ApiService) {
+	constructor(private _apiService: ApiService, private _cachedDocumentService: CachedDocumentService<any>) {
 		this._collectionName = BL_CONFIG.collection.item;
-		this._documentService = new DocumentService<Item>(this._collectionName, this._apiService);
+		_cachedDocumentService._documentService = new DocumentService<Item>(this._collectionName, this._apiService);
 	}
 
 	public get(query?: string): Promise<Item[]> {
-		return this._documentService.get(query);
+		return this._cachedDocumentService.get(query);
 	}
 
 	public getById(id: string): Promise<Item> {
-		return this._documentService.getById(id);
+		return this._cachedDocumentService.getById(id);
 	}
 
 	public getManyByIds(ids: string[]): Promise<Item[]> {
-		return this._documentService.getManyByIds(ids);
+		return this._cachedDocumentService.getManyByIds(ids);
 	}
 
 	public update(id: string, data: any): Promise<Item> {
-		return this._documentService.update(id, data);
+		return this._cachedDocumentService.update(id, data);
 	}
 
 	public add(item: Item): Promise<Item> {
-		return this._documentService.add(item);
+		return this._cachedDocumentService.add(item);
 	}
 }
 
