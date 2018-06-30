@@ -48,6 +48,16 @@ describe('SimpleCacheService', () => {
 		});
 	});
 
+	describe('#remove', () => {
+		it('should remove document with id', () => {
+			const testDocument = {id: 'abc', title: 'The book of Mormon'};
+			service.add(testDocument);
+			expect(service.get(testDocument.id)).toEqual(testDocument);
+			service.remove(testDocument.id);
+			expect(service.get(testDocument.id)).toBeUndefined();
+		});
+	});
+
 
 
 });
