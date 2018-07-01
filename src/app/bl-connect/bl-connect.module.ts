@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ApiService} from "../api/api.service";
 import {ItemService} from "../item/item.service";
@@ -31,8 +31,6 @@ export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
 }
 
-const simpleCache = new SimpleCache(5000);
-
 @NgModule({
 	imports: [
 		CommonModule,
@@ -40,45 +38,52 @@ const simpleCache = new SimpleCache(5000);
 		JwtModule.forRoot({
 			config: {
 				tokenGetter: tokenGetter,
-				whitelistedDomains: ['bladmin.boklisten.co', 'api.boklisten.co', 'boklisten.co', 'bladmin.boklisten.no', 'api.boklisten.no', 'boklisten.no', 'localhost:1337', 'localhost:4200']
+				whitelistedDomains: [
+					'bladmin.boklisten.co',
+					'api.boklisten.co',
+					'boklisten.co',
+					'bladmin.boklisten.no',
+					'api.boklisten.no',
+					'boklisten.no',
+					'localhost:1337',
+					'localhost:4200'
+				]
 			}
-
 		})
 	],
-	declarations: [],
-	providers: [
-		ApiService,
-		ApiErrorService,
-		ApiRequestService,
-		ApiTokenService,
-		ItemService,
-		BranchService,
-		BranchItemService,
-		OpeningHourService,
-		UserDetailService,
-		TokenService,
-		StorageService,
-		LoginService,
-		RegisterService,
-		CustomerItemService,
-		OrderService,
-		PaymentService,
-		DeliveryService,
-		PasswordResetService,
-		EmailValidationService,
-		DocumentService,
-		{provide: SimpleCache, useValue: new SimpleCache()},
-		CachedDocumentService
-	]
+	declarations: []
 })
 export class BlConnectModule {
-	public static withConfig(config?: {basePath?: string}) {
-		if (config) {
-			if (config.basePath) {
-				BL_CONFIG.api.basePath = config.basePath;
-			}
+	public static forRoot(config?: {basePath?: string}): ModuleWithProviders {
+		if (config && config.basePath) {
+			BL_CONFIG.api.basePath = config.basePath;
 		}
-
-		return this;
+		return {
+			ngModule: BlConnectModule,
+			providers: [
+				ApiService,
+				ApiErrorService,
+				ApiRequestService,
+				ApiTokenService,
+				ItemService,
+				BranchService,
+				BranchItemService,
+				OpeningHourService,
+				UserDetailService,
+				TokenService,
+				StorageService,
+				LoginService,
+				RegisterService,
+				CustomerItemService,
+				OrderService,
+				PaymentService,
+				DeliveryService,
+				PasswordResetService,
+				EmailValidationService,
+				DocumentService,
+				{provide: SimpleCache, useValue: new SimpleCache()},
+				CachedDocumentService
+			]
+		};
 	}
 }
