@@ -9,7 +9,7 @@ import {s} from "@angular/core/src/render3";
 export class CachedDocumentService {
 	public _documentService: DocumentService;
 
-	constructor(private _simpleCache: SimpleCache<any>, private _documentServiceInput: DocumentService) {
+	constructor(private _simpleCache: SimpleCache, private _documentServiceInput: DocumentService) {
 		this._documentService = _documentServiceInput;
 	}
 

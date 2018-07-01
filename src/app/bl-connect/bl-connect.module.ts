@@ -75,8 +75,8 @@ export function tokenGetter() {
 		PasswordResetService,
 		EmailValidationService,
 		DocumentService,
-		{provide: SimpleCache, useValue: new SimpleCache()},
-			CachedDocumentService
+		SimpleCache,
+		CachedDocumentService
 	]
 })
 export class BlConnectModule {

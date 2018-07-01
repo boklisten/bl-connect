@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
 				private _registerService: RegisterService, private _paymentService: PaymentService, private _orderService: OrderService,
 				private _passwordResetService: PasswordResetService,
 				private _emailValidationService: EmailValidationService,
-				private _simpleCache: SimpleCache<any>,
+				private _simpleCache: SimpleCache,
 				private _branchItemService: BranchItemService
 				) {
 		const expiredAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2tsaXN0ZW4uY28iLCJhdWQiOiJib2tsaXN0ZW4uY28iLCJpYXQiOjE1MTc4NTAyNTUsInN1YiI6InUjZDViY2U1NjUxNTczNGNmNjg5ZTFiOWU2NzBlY2YyMTIiLCJ1c2VybmFtZSI6ImFAYi5jb20iLCJwZXJtaXNzaW9uIjoiY3VzdG9tZXIiLCJkZXRhaWxzIjoiNWE3NDdhNDNmNDZmZDM2NTNmYjFjYjFkIiwiZXhwIjoxNTE3ODUwMzE1fQ._j8hJxRui1pkyQhT-JzMdzM_6YJ9ol1fOQ_T9d70hXI";
