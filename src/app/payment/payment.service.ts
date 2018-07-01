@@ -13,23 +13,23 @@ export class PaymentService {
 
 	private _collection: string;
 
-	constructor(private _apiService: ApiService, private _cachedDocumentService: CachedDocumentService) {
+	constructor(private _apiService: ApiService, private _documentService: CachedDocumentService) {
 		this._collection = BL_CONFIG.collection.payment;
 	}
 
 	public getById(id: string): Promise<Payment> {
-		return this._cachedDocumentService.getById(this._collection, id);
+		return this._documentService.getById(this._collection, id);
 	}
 
 	public getManyByIds(ids: string[]): Promise<Payment[]> {
-		return this._cachedDocumentService.getManyByIds(this._collection, ids);
+		return this._documentService.getManyByIds(this._collection, ids);
 	}
 
 	public add(payment: Payment): Promise<Payment> {
-		return this._cachedDocumentService.add(this._collection, payment);
+		return this._documentService.add(this._collection, payment);
 	}
 
 	public update(id: string, data: any): Promise<Payment> {
-		return this._cachedDocumentService.update(this._collection, id, data);
+		return this._documentService.update(this._collection, id, data);
 	}
 }
