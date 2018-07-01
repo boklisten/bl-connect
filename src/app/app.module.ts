@@ -4,7 +4,6 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {BlConnectModule} from "./bl-connect/bl-connect.module";
 import {HttpClientModule} from "@angular/common/http";
-import {SimpleCache} from "./simple-cache/simple-cache.service";
 
 @NgModule({
 	declarations: [

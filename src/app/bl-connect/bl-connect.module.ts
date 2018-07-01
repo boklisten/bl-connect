@@ -26,6 +26,7 @@ import {CachedDocumentService} from "../document/cached-document.service";
 import {BlDocument} from "@wizardcoder/bl-model";
 import {SimpleCache} from "../simple-cache/simple-cache.service";
 import {DocumentService} from "../document/document.service";
+import {BlConnectConfigService} from "./bl-connect-config.service";
 
 export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
@@ -51,39 +52,33 @@ export function tokenGetter() {
 			}
 		})
 	],
-	declarations: []
+	declarations: [],
+	providers: [
+		BlConnectConfigService,
+		ApiService,
+		ApiErrorService,
+		ApiRequestService,
+		ApiTokenService,
+		ItemService,
+		BranchService,
+		BranchItemService,
+		OpeningHourService,
+		UserDetailService,
+		TokenService,
+		StorageService,
+		LoginService,
+		RegisterService,
+		CustomerItemService,
+		OrderService,
+		PaymentService,
+		DeliveryService,
+		PasswordResetService,
+		EmailValidationService,
+		DocumentService,
+		{provide: SimpleCache, useValue: new SimpleCache()},
+			CachedDocumentService
+	]
 })
 export class BlConnectModule {
-	public static forRoot(config?: {basePath?: string}): ModuleWithProviders {
-		if (config && config.basePath) {
-			BL_CONFIG.api.basePath = config.basePath;
-		}
-		return {
-			ngModule: BlConnectModule,
-			providers: [
-				ApiService,
-				ApiErrorService,
-				ApiRequestService,
-				ApiTokenService,
-				ItemService,
-				BranchService,
-				BranchItemService,
-				OpeningHourService,
-				UserDetailService,
-				TokenService,
-				StorageService,
-				LoginService,
-				RegisterService,
-				CustomerItemService,
-				OrderService,
-				PaymentService,
-				DeliveryService,
-				PasswordResetService,
-				EmailValidationService,
-				DocumentService,
-				{provide: SimpleCache, useValue: new SimpleCache()},
-				CachedDocumentService
-			]
-		};
-	}
+
 }
