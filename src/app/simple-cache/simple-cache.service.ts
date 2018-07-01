@@ -47,4 +47,12 @@ export class SimpleCache {
 	public size() {
 		return (Object.keys(this._simpleCacheStorage).length);
 	}
+
+	public print() {
+		for (let key in Object.keys(this._simpleCacheStorage)) {
+			if (this._simpleCacheStorage.hasOwnProperty(key)) {
+				console.log(key, this._simpleCacheStorage[key]);
+			}
+		}
+	}
 }

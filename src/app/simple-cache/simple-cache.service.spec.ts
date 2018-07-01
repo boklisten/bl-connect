@@ -3,7 +3,7 @@ import {TestBed, inject} from '@angular/core/testing';
 import {SimpleCache} from './simple-cache.service';
 
 describe('SimpleCacheService', () => {
-	let service: SimpleCache<any>;
+	let service: SimpleCache;
 
 
 	beforeEach(() => {

@@ -46,6 +46,48 @@ describe('CachedDocumentService', () => {
 				done();
 			});
 		});
+
+		it('should store the request collection with an array of ids returned', (done) => {
+			const testDocOne = {id: 'abc', name: 'Ally Bally'};
+			const testDocTwo = {id: '123', name: 'Jimmy Bimmy'};
+
+			spyOn(documentService, 'get').and.callFake(() => {
+				return Promise.resolve([testDocOne, testDocTwo]);
+			});
+
+			service.get('collectionName').then((returnedDocuments: any[]) => {
+				expect(returnedDocuments).toEqual([testDocOne, testDocTwo]);
+				expect(simpleCache.get(testDocOne.id)).toEqual(testDocOne);
+				expect(simpleCache.get(testDocTwo.id)).toEqual(testDocTwo);
+
+				const expectedObj = {id: 'collectionName', documentIds: [testDocOne.id, testDocTwo.id]};
+
+				expect(simpleCache.get('collectionName')).toEqual(expectedObj);
+
+				done();
+			});
+		});
+
+		it('should not call api if the collection is already cached', (done) => {
+			const testDocOne = {id: 'abc', name: 'Ally Bally'};
+			const testDocTwo = {id: '123', name: 'Jimmy Bimmy'};
+
+			simpleCache.add({id: 'collectionName', documentIds: [testDocOne.id, testDocTwo.id]});
+			simpleCache.add(testDocOne);
+			simpleCache.add(testDocTwo);
+			console.log('the collection Ids', simpleCache.get('collectionName'));
+
+			const spy = spyOn(documentService, 'get').and.callFake(() => {
+
+			});
+
+			service.get('collectionName').then((returnedDocuments: any[]) => {
+
+				expect(spy).not.toHaveBeenCalled();
+				expect(returnedDocuments).toEqual([testDocOne, testDocTwo]);
+				done();
+			});
+		});
 	});
 
 	describe('#getById', () => {

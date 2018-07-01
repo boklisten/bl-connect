@@ -14,10 +14,37 @@ export class CachedDocumentService {
 	}
 
 	public get(collection: string, query?: string): Promise<any[]> {
+		const cachedCollection: {id: string, documentIds: string[]} = this._simpleCache.get(collection);
+
+		if (cachedCollection) {
+			const returnObjects = [];
+
+			for (const cachedObjId of cachedCollection.documentIds) {
+				const cachedObj = this._simpleCache.get(cachedObjId);
+
+				if (!cachedObj) {
+					break;
+				} else {
+					returnObjects.push(cachedObj);
+				}
+			}
+
+			if (returnObjects.length === cachedCollection.documentIds.length) {
+				return Promise.resolve(returnObjects);
+			}
+		}
+
+
 		return this._documentService.get(collection, query).then((documents: any[]) => {
+			const documentIds = [];
+
 			for (const document of documents) {
+				documentIds.push(document.id);
 				this._simpleCache.add(document);
 			}
+
+			const cachedRequestObj = {id: collection, documentIds: documentIds};
+			this._simpleCache.add(cachedRequestObj);
 
 			return documents;
 		}).catch((err) => {
@@ -108,4 +135,6 @@ export class CachedDocumentService {
 			throw err;
 		});
 	}
+
+
 }
