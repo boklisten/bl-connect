@@ -13,7 +13,7 @@ export class PaymentService {
 
 	private _collection: string;
 
-	constructor(private _apiService: ApiService, private _documentService: CachedDocumentService) {
+	constructor(private _apiService: ApiService, private _documentService: DocumentService) {
 		this._collection = BL_CONFIG.collection.payment;
 	}
 
