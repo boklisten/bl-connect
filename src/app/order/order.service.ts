@@ -6,28 +6,26 @@ import {BL_CONFIG} from "../bl-connect/bl-config";
 
 @Injectable()
 export class OrderService {
-	private _documentService: DocumentService<Order>;
-	private _collectionName: string;
-	
-	constructor(private _apiService: ApiService) {
-		this._collectionName = BL_CONFIG.collection.order;
-		this._documentService = new DocumentService<Order>(this._collectionName, this._apiService);
+	private _collection: string;
+
+	constructor(private _apiService: ApiService, private _documentService: DocumentService) {
+		this._collection = BL_CONFIG.collection.order;
 	}
-	
+
 	public add(order: Order): Promise<Order> {
-		return this._documentService.add(order);
+		return this._documentService.add(this._collection, order);
 	}
-	
+
 	public getById(id: string): Promise<Order> {
-		return this._documentService.getById(id);
+		return this._documentService.getById(this._collection, id);
 	}
-	
+
 	public getManyByIds(ids: string[]): Promise<Order[]> {
-		return this._documentService.getManyByIds(ids);
+		return this._documentService.getManyByIds(this._collection, ids);
 	}
-	
+
 	public update(id: string, data: any): Promise<Order> {
-		return this._documentService.update(id, data);
+		return this._documentService.update(this._collection, id, data);
 	}
-	
+
 }

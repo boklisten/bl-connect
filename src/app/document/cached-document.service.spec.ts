@@ -1,18 +1,15 @@
-import {BranchService} from "./branch.service";
 import {SimpleCache} from "../simple-cache/simple-cache.service";
 import {ApiService} from "../api/api.service";
-import {DocumentService} from "../document/document.service";
+import {DocumentService} from "./document.service";
 import {CachedDocumentService} from "./cached-document.service";
 
 describe('CachedDocumentService', () => {
 	const simpleCache = new SimpleCache();
-	const apiService = new ApiService();
 	let service: CachedDocumentService;
-	const documentService = new DocumentService();
+	const documentService = new DocumentService({} as ApiService);
 
 	beforeEach(() => {
-		service = new CachedDocumentService(simpleCache);
-		service._documentService = documentService;
+		service = new CachedDocumentService(simpleCache, documentService);
 		simpleCache.refreshTimeMs = 50000;
 	});
 
@@ -29,10 +26,23 @@ describe('CachedDocumentService', () => {
 				return Promise.resolve([testDocOne, testDocTwo]);
 			});
 
-			service.get().then((returnedDocuments: any[]) => {
+			service.get('any').then((returnedDocuments: any[]) => {
 				expect(returnedDocuments).toEqual([testDocOne, testDocTwo]);
 				expect(simpleCache.get(testDocOne.id)).toEqual(testDocOne);
 				expect(simpleCache.get(testDocTwo.id)).toEqual(testDocTwo);
+				done();
+			});
+		});
+
+		it('should reject if documentService rejects', (done) => {
+			const expectedError = new Error('a random error');
+
+			spyOn(documentService, 'get').and.callFake(() => {
+				return Promise.reject(expectedError);
+			});
+
+			service.get('any').catch((err) => {
+				expect(err).toEqual(expectedError);
 				done();
 			});
 		});
@@ -47,11 +57,25 @@ describe('CachedDocumentService', () => {
 				return Promise.resolve(testDocument);
 			});
 
-			service.getById('abc').then((returnedBranch) => {
+			service.getById('collection', 'abc').then((returnedBranch) => {
 				expect(returnedBranch).toEqual(testDocument);
 				expect(simpleCache.get(returnedBranch.id)).toEqual(testDocument);
 				done();
 			});
+		});
+
+		it('should reject if documentService rejects', (done) => {
+			const expectedError = new Error('document not found');
+
+			spyOn(documentService, 'getById').and.callFake((id) => {
+				return Promise.reject(expectedError);
+			});
+
+			service.getById('collection', 'aRandomId').catch((err) => {
+				expect(err).toEqual(expectedError);
+				done();
+			});
+
 		});
 
 		it('should not call documentService if document is already in cache', (done) => {
@@ -60,7 +84,7 @@ describe('CachedDocumentService', () => {
 
 			const spy = spyOn(documentService, 'getById');
 
-			service.getById('123').then((returnedDocument) => {
+			service.getById('collection', '123').then((returnedDocument) => {
 				expect(spy).not.toHaveBeenCalled();
 				expect(returnedDocument).toEqual(testDocument);
 				done();
@@ -77,7 +101,7 @@ describe('CachedDocumentService', () => {
 			});
 
 			setTimeout(() => {
-				service.getById(testDocument.id).then((returnedDoc) => {
+				service.getById('collection', testDocument.id).then((returnedDoc) => {
 					expect(spy).toHaveBeenCalled();
 					expect(returnedDoc).toEqual(testDocument);
 					done();
@@ -100,7 +124,7 @@ describe('CachedDocumentService', () => {
 
 			});
 
-			service.getManyByIds(['abc', '123', 'zxy']).then((documents: any[]) => {
+			service.getManyByIds('collection', ['abc', '123', 'zxy']).then((documents: any[]) => {
 				expect(spy).not.toHaveBeenCalled();
 				expect(documents).toEqual([testDocOne, testDocTwo, testDocThree]);
 				done();
@@ -116,7 +140,7 @@ describe('CachedDocumentService', () => {
 				return Promise.resolve([testDocOne, testDocTwo, testDocThree]);
 			});
 
-			service.getManyByIds(['kk1', 'slj', 'bcb']).then((documents: any[]) => {
+			service.getManyByIds('collection', ['kk1', 'slj', 'bcb']).then((documents: any[]) => {
 				expect(spy).toHaveBeenCalled();
 				expect(documents).toEqual([testDocOne, testDocTwo, testDocThree]);
 				expect(simpleCache.get(testDocOne.id)).toEqual(testDocOne);
@@ -140,8 +164,8 @@ describe('CachedDocumentService', () => {
 				return Promise.resolve([testDocTwo]);
 			});
 
-			service.getManyByIds(['td1', 'td2', 'td3']).then((returnedDocuments: any[]) => {
-				expect(spy).toHaveBeenCalledWith(['td2']); // should only ask api for the none cached object
+			service.getManyByIds('collection', ['td1', 'td2', 'td3']).then((returnedDocuments: any[]) => {
+				expect(spy).toHaveBeenCalledWith('collection', ['td2']); // should only ask api for the none cached object
 				expect(returnedDocuments).toEqual([testDocOne, testDocThree, testDocTwo]);
 				done();
 			});
@@ -156,7 +180,7 @@ describe('CachedDocumentService', () => {
 				return Promise.resolve(updatedTestDoc);
 			});
 
-			service.update('abc', {name: 'Sam Hikky'}).then((updatedDocument) => {
+			service.update('collection', 'abc', {name: 'Sam Hikky'}).then((updatedDocument) => {
 				expect(updatedDocument).toEqual(updatedTestDoc);
 				expect(simpleCache.get(updatedDocument.id)).toEqual(updatedDocument);
 				done();
@@ -172,7 +196,7 @@ describe('CachedDocumentService', () => {
 				return Promise.resolve(testDoc);
 			});
 
-			service.add(testDoc).then((addedDocument) => {
+			service.add('collection', testDoc).then((addedDocument) => {
 				expect(addedDocument).toEqual(testDoc);
 				expect(simpleCache.get(addedDocument.id)).toEqual(testDoc);
 				done();
@@ -189,7 +213,7 @@ describe('CachedDocumentService', () => {
 				return Promise.resolve(testDoc);
 			});
 
-			service.remove(testDoc.id).then((removedDoc) => {
+			service.remove('collection', testDoc.id).then((removedDoc) => {
 				expect(removedDoc).toEqual(testDoc);
 				expect(simpleCache.get(testDoc.id)).toBeUndefined();
 				done();

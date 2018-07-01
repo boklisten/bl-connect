@@ -13,7 +13,7 @@ import {SimpleCache} from "./simple-cache/simple-cache.service";
 	imports: [
 		BrowserModule,
 		HttpClientModule,
-		BlConnectModule.withConfig({basePath: 'http://localhost:1337/'})
+		BlConnectModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

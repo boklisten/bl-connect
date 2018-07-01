@@ -9,28 +9,26 @@ import {BL_CONFIG} from "../bl-connect/bl-config";
 
 @Injectable()
 export class PaymentService {
-	
-	private _collectionName: string;
-	private _documentService: DocumentService<Payment>;
-	
-	constructor(private _apiService: ApiService) {
-		this._collectionName = BL_CONFIG.collection.payment;
-		this._documentService = new DocumentService<Payment>(this._collectionName, this._apiService);
+
+	private _collection: string;
+
+	constructor(private _apiService: ApiService, private _documentService: DocumentService) {
+		this._collection = BL_CONFIG.collection.payment;
 	}
-	
+
 	public getById(id: string): Promise<Payment> {
-		return this._documentService.getById(id);
+		return this._documentService.getById(this._collection, id);
 	}
-	
+
 	public getManyByIds(ids: string[]): Promise<Payment[]> {
-		return this._documentService.getManyByIds(ids);
+		return this._documentService.getManyByIds(this._collection, ids);
 	}
-	
+
 	public add(payment: Payment): Promise<Payment> {
-		return this._documentService.add(payment);
+		return this._documentService.add(this._collection, payment);
 	}
-	
+
 	public update(id: string, data: any): Promise<Payment> {
-		return this._documentService.update(id, data);
+		return this._documentService.update(this._collection, id, data);
 	}
 }

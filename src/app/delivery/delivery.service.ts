@@ -7,23 +7,21 @@ import {ApiService} from "../api/api.service";
 
 @Injectable()
 export class DeliveryService {
-	private _collectionName: string;
-	private _documentService: DocumentService<Delivery>;
-	
-	constructor(private _apiService: ApiService) {
-		this._collectionName = 'deliveries';
-		this._documentService = new DocumentService(this._collectionName, this._apiService);
+	private _collection: string;
+
+	constructor(private _apiService: ApiService, private _documentService: DocumentService) {
+		this._collection = 'deliveries';
 	}
-	
+
 	public getById(id: string): Promise<Delivery> {
-		return this._documentService.getById(id);
+		return this._documentService.getById(this._collection, id);
 	}
-	
+
 	public add(delivery: Delivery): Promise<Delivery> {
-		return this._documentService.add(delivery);
+		return this._documentService.add(this._collection, delivery);
 	}
-	
+
 	public update(id: string, data: any): Promise<Delivery> {
-		return this._documentService.update(id, data);
+		return this._documentService.update(this._collection, id, data);
 	}
 }

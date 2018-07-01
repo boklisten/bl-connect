@@ -8,21 +8,18 @@ import {DocumentService} from "../document/document.service";
 
 @Injectable()
 export class UserDetailService {
-	private _collectionName: string;
-	private _documentService: DocumentService<UserDetail>;
+	private _collection: string;
 
-	constructor(private _apiService: ApiService) {
-		this._collectionName = BL_CONFIG.collection.userDetail;
-		this._documentService = new DocumentService<UserDetail>(this._collectionName, this._apiService);
-
+	constructor(private _apiService: ApiService, private _documentService: DocumentService) {
+		this._collection = BL_CONFIG.collection.userDetail;
 	}
 
 	public getById(id: string): Promise<UserDetail> {
-		return this._documentService.getById(id);
+		return this._documentService.getById(this._collection, id);
 	}
 
 	public update(id: string, data: any): Promise<UserDetail> {
-		return this._documentService.update(id, data);
+		return this._documentService.update(this._collection, id, data);
 	}
 
 	public get(query?: string): Promise<UserDetail[]> {
@@ -30,7 +27,7 @@ export class UserDetailService {
 	}
 
 	public isValid(id: string): Promise<{valid: boolean, invalidFields?: string[]}> {
-		return this._documentService.getWithOperation(id, 'valid').then((userDetailValidObject: {valid: boolean, invalidFields?: string[]}) => {
+		return this._documentService.getWithOperation(this._collection, id, 'valid').then((userDetailValidObject: {valid: boolean, invalidFields?: string[]}) => {
 			return userDetailValidObject;
 		}).catch((blApiError: BlApiError) => {
 			throw blApiError;

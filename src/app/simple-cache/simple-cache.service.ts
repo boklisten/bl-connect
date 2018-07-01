@@ -6,9 +6,7 @@ interface SimpleCacheObject {
 	time: number;
 }
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class SimpleCache<T extends BlDocument> {
 	public refreshTimeMs: number; // a number of milliseconds before the cached object is considered old
 	private _simpleCacheStorage: {[id: string]: SimpleCacheObject};

@@ -7,30 +7,29 @@ import {CachedDocumentService} from "../document/cached-document.service";
 
 @Injectable()
 export class BranchService {
-	private collectionName: string;
+	private collection: string;
 
-	constructor(private _apiService: ApiService, private _cachedDocumentService: CachedDocumentService<any>) {
-		this.collectionName = BL_CONFIG.collection.branch;
-		_cachedDocumentService._documentService = new DocumentService<Branch>(this.collectionName, this._apiService);
+	constructor(private _apiService: ApiService, private _cachedDocumentService: CachedDocumentService) {
+		this.collection = BL_CONFIG.collection.branch;
 	}
 
 	public get(query?: string): Promise<Branch[]>	 {
-		return this._cachedDocumentService.get(query);
+		return this._cachedDocumentService.get(this.collection, query);
 	}
 
 	public getById(id: string): Promise<Branch> {
-		return this._cachedDocumentService.getById(id);
+		return this._cachedDocumentService.getById(this.collection, id);
 	}
 
 	public getManyByIds(ids: string[]): Promise<Branch[]> {
-		return this._cachedDocumentService.getManyByIds(ids);
+		return this._cachedDocumentService.getManyByIds(this.collection, ids);
 	}
 
 	public update(id: string, data: any): Promise<Branch> {
-		return this._cachedDocumentService.update(id, data);
+		return this._cachedDocumentService.update(this.collection, id, data);
 	}
 
 	public add(branch: Branch): Promise<Branch> {
-		return this._cachedDocumentService.add(branch);
+		return this._cachedDocumentService.add(this.collection, branch);
 	}
 }

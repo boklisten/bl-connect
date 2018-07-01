@@ -5,16 +5,16 @@ import {isArray} from "util";
 import {ApiService} from "../api/api.service";
 
 @Injectable()
-export class DocumentService<T extends BlDocument> {
+export class DocumentService {
 
-	constructor(private _collectionName: string, private _apiService: ApiService) {
+	constructor(private _apiService: ApiService) {
 	}
 
-	public get(query?: string): Promise<T[]> {
+	public get(collection: string, query?: string): Promise<any[]> {
 		return new Promise((resolve, reject) => {
-			this._apiService.get(this._collectionName, query).then(
+			this._apiService.get(collection, query).then(
 				(res: ApiResponse) => {
-					this.getDocsIfValid(res).then((docs: T[]) => {
+					this.getDocsIfValid(res).then((docs: any[]) => {
 						resolve(docs);
 					}).catch((blApiErr: BlApiError) => {
 						reject(blApiErr);
@@ -25,10 +25,10 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 
-	public getById(id: string): Promise<T> {
+	public getById(collection: string, id: string): Promise<any> {
 		return new Promise((resolve, reject) => {
-			this._apiService.getById(this._collectionName, id).then((res: ApiResponse) => {
-					this.getDocIfValid(res).then((doc: T) => {
+			this._apiService.getById(collection, id).then((res: ApiResponse) => {
+					this.getDocIfValid(res).then((doc: any) => {
 						resolve(doc);
 					}).catch((blApiErr: BlApiError) => {
 						reject(blApiErr);
@@ -40,9 +40,9 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 
-	public getWithOperation(id: string, operation: string): Promise<any> {
+	public getWithOperation(collection: string, id: string, operation: string): Promise<any> {
 		return new Promise((resolve, reject) => {
-			this._apiService.getWithOperation(this._collectionName, id, operation).then((res: ApiResponse) => {
+			this._apiService.getWithOperation(collection, id, operation).then((res: ApiResponse) => {
 				this.getDocIfValid(res).then((doc: any) => {
 					resolve(doc);
 				}).catch((blApiError: BlApiError) => {
@@ -54,15 +54,15 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 
-	public getManyByIds(ids: string[]): Promise<T[]> {
+	public getManyByIds(collection, ids: string[]): Promise<any[]> {
 		return new Promise((resolve, reject) => {
-			const promArr: Promise<T>[] = [];
+			const promArr: Promise<any>[] = [];
 
 			for (const id of ids) {
-				promArr.push(this.getById(id));
+				promArr.push(this.getById(collection, id));
 			}
 
-			Promise.all(promArr).then((retVals: T[]) => {
+			Promise.all(promArr).then((retVals: any[]) => {
 				resolve(retVals);
 			}).catch((blApiErr: BlApiError) => {
 				reject(blApiErr);
@@ -70,10 +70,10 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 
-	public update(id: string, data: any): Promise<T> {
+	public update(collection: string, id: string, data: any): Promise<any> {
 		return new Promise((resolve, reject) => {
-			this._apiService.update(this._collectionName, id, data).then((res: ApiResponse) => {
-				this.getDocIfValid(res).then((doc: T) => {
+			this._apiService.update(collection, id, data).then((res: ApiResponse) => {
+				this.getDocIfValid(res).then((doc: any) => {
 					resolve(doc);
 				}).catch((blApiErr: BlApiError) => {
 					reject(blApiErr);
@@ -84,10 +84,10 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 
-	public add(data: T): Promise<T> {
+	public add(collection: string, data: any): Promise<any> {
 		return new Promise((resolve, reject) => {
-			this._apiService.add(this._collectionName, data).then((res: ApiResponse) => {
-				this.getDocIfValid(res).then((doc: T) => {
+			this._apiService.add(collection, data).then((res: ApiResponse) => {
+				this.getDocIfValid(res).then((doc: any) => {
 					resolve(doc);
 				}).catch((blApiErr: BlApiError) => {
 					reject(blApiErr);
@@ -98,10 +98,10 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 
-	public remove(id: string): Promise<T> {
+	public remove(collection: string, id: string): Promise<any> {
 		return new Promise((resolve, reject) => {
-			this._apiService.remove(this._collectionName, id).then((res: ApiResponse) => {
-				this.getDocIfValid(res).then((doc: T) => {
+			this._apiService.remove(collection, id).then((res: ApiResponse) => {
+				this.getDocIfValid(res).then((doc: any) => {
 					resolve(doc);
 				}).catch((blApiErr: BlApiError) => {
 					reject(blApiErr);
@@ -112,9 +112,9 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 
-	private getDocIfValid(apiRes: ApiResponse): Promise<T> {
+	private getDocIfValid(apiRes: ApiResponse): Promise<any> {
 		return new Promise((resolve, reject) => {
-			this.getDocsIfValid(apiRes).then((docs: T[]) => {
+			this.getDocsIfValid(apiRes).then((docs: any[]) => {
 				if (docs.length !== 1) {
 					return reject(new BlApiError('there where more than one document in the response'));
 				}
@@ -126,7 +126,7 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 
-	private getDocsIfValid(apiRes: ApiResponse): Promise<T[]> {
+	private getDocsIfValid(apiRes: ApiResponse): Promise<any[]> {
 		return new Promise((resolve, reject) => {
 			try {
 				const docs = this.validateAndGetDocs(apiRes);
@@ -140,14 +140,14 @@ export class DocumentService<T extends BlDocument> {
 		});
 	}
 
-	private validateAndGetDocs(apiResponse: ApiResponse): T[] {
+	private validateAndGetDocs(apiResponse: ApiResponse): any[] {
 
 		if (!isArray(apiResponse.data)) {
 
 			throw new Error('response data is not an array');
 		}
 
-		const docs: T[] = [];
+		const docs: any[] = [];
 
 		for (const d of apiResponse.data) {
 			docs.push(this.validateAndGetDoc(d));
@@ -156,13 +156,13 @@ export class DocumentService<T extends BlDocument> {
 		return docs;
 	}
 
-	private validateAndGetDoc(responseDocument: any): T {
+	private validateAndGetDoc(responseDocument: any) {
 
 		if (!responseDocument.data || !responseDocument.data.id) {
-			return responseDocument as T;
+			return responseDocument;
 		}
 
-		return responseDocument.data as T;
+		return responseDocument.data;
 	}
 
 }

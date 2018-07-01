@@ -2,18 +2,19 @@ import {Injectable} from "@angular/core";
 import {DocumentService} from "./document.service";
 import {BlDocument} from "@wizardcoder/bl-model";
 import {SimpleCache} from "../simple-cache/simple-cache.service";
+import {s} from "@angular/core/src/render3";
 
 
 @Injectable()
-export class CachedDocumentService<T extends BlDocument> {
-	public _documentService: DocumentService<T>;
+export class CachedDocumentService {
+	public _documentService: DocumentService;
 
-	constructor(private _simpleCache: SimpleCache<any>) {
-
+	constructor(private _simpleCache: SimpleCache<any>, private _documentServiceInput: DocumentService) {
+		this._documentService = _documentServiceInput;
 	}
 
-	public get(query?: string): Promise<T[]> {
-		return this._documentService.get(query).then((documents: T[]) => {
+	public get(collection: string, query?: string): Promise<any[]> {
+		return this._documentService.get(collection, query).then((documents: any[]) => {
 			for (const document of documents) {
 				this._simpleCache.add(document);
 			}
@@ -24,11 +25,11 @@ export class CachedDocumentService<T extends BlDocument> {
 		});
 	}
 
-	public getById(id: string): Promise<T> {
+	public getById(collection: string, id: string): Promise<any> {
 		const cachedObj = this._simpleCache.get(id);
 
 		if (!cachedObj) { // if no cached object, call api
-			return this._documentService.getById(id).then((document: T) => {
+			return this._documentService.getById(collection, id).then((document: any) => {
 				this._simpleCache.add(document);
 				return document;
 			}).catch((e) => {
@@ -39,11 +40,11 @@ export class CachedDocumentService<T extends BlDocument> {
 		return Promise.resolve(cachedObj);
 	}
 
-	public getWithOperation(id: string, operation: string): Promise<any> {
-		return this._documentService.getWithOperation(id, operation);
+	public getWithOperation(collection: string, id: string, operation: string): Promise<any> {
+		return this._documentService.getWithOperation(collection, id, operation);
 	}
 
-	public getManyByIds(ids: string[]): Promise<T[]> {
+	public getManyByIds(collection: string, ids: string[]): Promise<any> {
 		const cachedObjects  = [];
 		const notCachedObjectIds = [];
 
@@ -60,7 +61,7 @@ export class CachedDocumentService<T extends BlDocument> {
 		if (cachedObjects.length === ids.length) {
 			return Promise.resolve(cachedObjects);
 		} else if (cachedObjects.length > 0) {
-			return this._documentService.getManyByIds(notCachedObjectIds).then((returnedDocuments: T[]) => {
+			return this._documentService.getManyByIds(collection, notCachedObjectIds).then((returnedDocuments: any[]) => {
 				for (const returnedDoc of returnedDocuments) {
 					this._simpleCache.add(returnedDoc);
 					cachedObjects.push(returnedDoc);
@@ -70,7 +71,7 @@ export class CachedDocumentService<T extends BlDocument> {
 				throw err;
 			});
 		} else {
-			return this._documentService.getManyByIds(notCachedObjectIds).then((returnedDocuments: T[]) => {
+			return this._documentService.getManyByIds(collection, notCachedObjectIds).then((returnedDocuments: any[]) => {
 				for (const returnedDocument of returnedDocuments) {
 					this._simpleCache.add(returnedDocument);
 				}
@@ -81,8 +82,8 @@ export class CachedDocumentService<T extends BlDocument> {
 		}
 	}
 
-	public update(id: string, data: any): Promise<T> {
-		return this._documentService.update(id, data).then((updatedDocument: T) => {
+	public update(collection: string, id: string, data: any): Promise<any> {
+		return this._documentService.update(collection, id, data).then((updatedDocument) => {
 			this._simpleCache.add(updatedDocument);
 			return updatedDocument;
 		}).catch((err) => {
@@ -90,8 +91,8 @@ export class CachedDocumentService<T extends BlDocument> {
 		});
 	}
 
-	public add(doc: T): Promise<T> {
-		return this._documentService.add(doc).then((addedDocument: T) => {
+	public add(collection: string, doc: any): Promise<any> {
+		return this._documentService.add(collection, doc).then((addedDocument) => {
 			this._simpleCache.add(addedDocument);
 			return addedDocument;
 		}).catch((err) => {
@@ -99,8 +100,8 @@ export class CachedDocumentService<T extends BlDocument> {
 		});
 	}
 
-	public remove(id: string): Promise<T> {
-		return this._documentService.remove(id).then((removedDoc) => {
+	public remove(collection: string, id: string): Promise<any> {
+		return this._documentService.remove(collection, id).then((removedDoc) => {
 			this._simpleCache.remove(removedDoc.id);
 			return removedDoc;
 		}).catch((err) => {

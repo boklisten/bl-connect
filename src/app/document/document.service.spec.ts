@@ -4,7 +4,7 @@ import {ApiService} from "../api/api.service";
 import {BlApiError, BlApiLoginRequiredError, BlApiNotFoundError, BlApiPermissionDeniedError, Branch} from "@wizardcoder/bl-model";
 import {DocumentService} from "./document.service";
 describe('DocumentService', () => {
-	let service: DocumentService<any>;
+	let service: DocumentService;
 
 	const apiServiceMock = {
 		get: (url: string, query?: string) => {},
@@ -15,7 +15,7 @@ describe('DocumentService', () => {
 	} as ApiService;
 
 	beforeEach(() => {
-		service = new DocumentService('any', apiServiceMock);
+		service = new DocumentService(apiServiceMock);
 	});
 
 	describe('#get()', () => {
@@ -31,7 +31,7 @@ describe('DocumentService', () => {
 				Promise.resolve(returnObj)
 			);
 
-			service.get().then((branches: Branch[]) => {
+			service.get('collection').then((branches: Branch[]) => {
 				expect(branches[0].name).toEqual(branchDoc1.data.name);
 				expect(branches[1].name).toEqual(branchDoc2.data.name);
 				done();
@@ -46,7 +46,7 @@ describe('DocumentService', () => {
 				Promise.reject(blApiErr)
 			);
 
-			service.get().catch((apiErr: BlApiError) => {
+			service.get('collection').catch((apiErr: BlApiError) => {
 				expect(apiErr.msg).toEqual(blApiErr.msg);
 				done();
 			});
@@ -66,7 +66,7 @@ describe('DocumentService', () => {
 				Promise.resolve(returnObj)
 			);
 
-			service.getById('abc').then((branch: Branch) => {
+			service.getById('collection', 'abc').then((branch: Branch) => {
 				expect(branch.id).toEqual(branchDoc.data.id);
 				done();
 			});
@@ -80,7 +80,7 @@ describe('DocumentService', () => {
 				Promise.reject(blApiErr)
 			);
 
-			service.getById('abc').catch((apiErr: BlApiError) => {
+			service.getById('collection', 'abc').catch((apiErr: BlApiError) => {
 				expect(apiErr.msg).toEqual(blApiErr.msg);
 				done();
 			});
@@ -102,7 +102,7 @@ describe('DocumentService', () => {
 				Promise.resolve(returnObj)
 			);
 
-			service.getById('abc').catch((apiErr: BlApiError) => {
+			service.getById('collection', 'abc').catch((apiErr: BlApiError) => {
 				expect(apiErr.msg).toMatch('there where more than one document in the response');
 				done();
 			});
@@ -119,7 +119,7 @@ describe('DocumentService', () => {
 				Promise.resolve({data: [doc]})
 			);
 
-			service.update('abc', {hello: 'there'}).then((resDoc: any) => {
+			service.update('collection', 'abc', {hello: 'there'}).then((resDoc: any) => {
 				expect(resDoc).toEqual(doc.data);
 				done();
 			});
@@ -133,7 +133,7 @@ describe('DocumentService', () => {
 				Promise.resolve([doc])
 			);
 
-			service.update('abc', {hello: 'there'}).catch((blApiError: BlApiError) => {
+			service.update('collection', 'abc', {hello: 'there'}).catch((blApiError: BlApiError) => {
 				expect(blApiError.msg).toMatch('document data not valid');
 				done();
 			});
@@ -144,7 +144,7 @@ describe('DocumentService', () => {
 				Promise.reject(new BlApiLoginRequiredError())
 			);
 
-			service.update('abc', {hello: 'my man'}).catch((blApiError: BlApiError) => {
+			service.update('collection', 'abc', {hello: 'my man'}).catch((blApiError: BlApiError) => {
 				expect((blApiError instanceof BlApiLoginRequiredError)).toBeTruthy();
 				done();
 			});
@@ -160,7 +160,7 @@ describe('DocumentService', () => {
 				Promise.resolve({data: [doc]})
 			);
 
-			service.add({hello: 'there'}).then((resDoc: any) => {
+			service.add('collection', {hello: 'there'}).then((resDoc: any) => {
 				expect(resDoc).toEqual(doc.data);
 				done();
 			});
@@ -174,7 +174,7 @@ describe('DocumentService', () => {
 				Promise.resolve([doc])
 			);
 
-			service.add({hello: 'there'}).catch((blApiError: BlApiError) => {
+			service.add('collection', {hello: 'there'}).catch((blApiError: BlApiError) => {
 				expect(blApiError.msg).toMatch('document data not valid');
 				done();
 			});
@@ -185,7 +185,7 @@ describe('DocumentService', () => {
 				Promise.reject(new BlApiPermissionDeniedError())
 			);
 
-			service.add({hello: 'my man'}).catch((blApiError: BlApiError) => {
+			service.add('collection', {hello: 'my man'}).catch((blApiError: BlApiError) => {
 				expect((blApiError instanceof BlApiPermissionDeniedError)).toBeTruthy();
 				done();
 			});
@@ -201,7 +201,7 @@ describe('DocumentService', () => {
 				Promise.resolve({data: [doc]})
 			);
 
-			service.remove('abc').then((resDoc: any) => {
+			service.remove('collection', 'abc').then((resDoc: any) => {
 				expect(resDoc).toEqual(doc.data);
 				done();
 			});
@@ -215,7 +215,7 @@ describe('DocumentService', () => {
 				Promise.resolve(doc)
 			);
 
-			service.remove('abc').catch((blApiError: BlApiError) => {
+			service.remove('collection', 'abc').catch((blApiError: BlApiError) => {
 				expect(blApiError.msg).toMatch('document data not valid');
 				done();
 			});
@@ -226,7 +226,7 @@ describe('DocumentService', () => {
 				Promise.reject(new BlApiNotFoundError())
 			);
 
-			service.remove('abc').catch((blApiError: BlApiError) => {
+			service.remove('collection', 'abc').catch((blApiError: BlApiError) => {
 				expect((blApiError instanceof BlApiNotFoundError)).toBeTruthy();
 				done();
 			});

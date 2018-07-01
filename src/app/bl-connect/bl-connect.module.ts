@@ -25,6 +25,7 @@ import {BL_CONFIG} from "./bl-config";
 import {CachedDocumentService} from "../document/cached-document.service";
 import {BlDocument} from "@wizardcoder/bl-model";
 import {SimpleCache} from "../simple-cache/simple-cache.service";
+import {DocumentService} from "../document/document.service";
 
 export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
@@ -65,6 +66,7 @@ const simpleCache = new SimpleCache(5000);
 		DeliveryService,
 		PasswordResetService,
 		EmailValidationService,
+		DocumentService,
 		{provide: SimpleCache, useValue: new SimpleCache()},
 		CachedDocumentService
 	]

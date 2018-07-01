@@ -7,28 +7,27 @@ import {CachedDocumentService} from "../document/cached-document.service";
 
 @Injectable()
 export class CustomerItemService {
-	private _collectionName: string;
+	private _collection: string;
 
-	constructor(private _apiService: ApiService, private _cachedDocumentService: CachedDocumentService<CustomerItem>) {
-		this._collectionName = BL_CONFIG.collection.customerItem;
-		_cachedDocumentService._documentService = new DocumentService<CustomerItem>(this._collectionName, this._apiService);
+	constructor(private _apiService: ApiService, private _cachedDocumentService: CachedDocumentService) {
+		this._collection = BL_CONFIG.collection.customerItem;
 	}
 
 
 	public add(customerItem: CustomerItem): Promise<CustomerItem> {
-		return this._cachedDocumentService.add(customerItem);
+		return this._cachedDocumentService.add(this._collection, customerItem);
 	}
 
 	public getById(id: string): Promise<CustomerItem> {
-		return this._cachedDocumentService.getById(id);
+		return this._cachedDocumentService.getById(this._collection, id);
 	}
 
 	public getManyByIds(ids: string[]): Promise<CustomerItem[]> {
-		return this._cachedDocumentService.getManyByIds(ids);
+		return this._cachedDocumentService.getManyByIds(this._collection, ids);
 	}
 
 	public update(id: string, data: any): Promise<CustomerItem> {
-		return this._cachedDocumentService.update(id, data);
+		return this._cachedDocumentService.update(this._collection, id, data);
 	}
 
 }
