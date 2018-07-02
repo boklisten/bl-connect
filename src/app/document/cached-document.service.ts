@@ -14,7 +14,8 @@ export class CachedDocumentService {
 	}
 
 	public get(collection: string, query?: string): Promise<any[]> {
-		const cachedCollection: {id: string, documentIds: string[]} = this._simpleCache.get(collection);
+		const queryString = (!query) ? '' : query;
+		const cachedCollection: {id: string, documentIds: string[]} = this._simpleCache.get(collection + queryString);
 
 		if (cachedCollection) {
 			const returnObjects = [];
@@ -43,7 +44,7 @@ export class CachedDocumentService {
 				this._simpleCache.add(document);
 			}
 
-			const cachedRequestObj = {id: collection, documentIds: documentIds};
+			const cachedRequestObj = {id: collection + queryString, documentIds: documentIds};
 			this._simpleCache.add(cachedRequestObj);
 
 			return documents;

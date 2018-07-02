@@ -68,6 +68,27 @@ describe('CachedDocumentService', () => {
 			});
 		});
 
+		it('should store the request response in cache with id like collectionName + query if query is provided', (done) => {
+			const testDocOne = {id: 'abc', name: 'Ally Bally'};
+			const testDocTwo = {id: '123', name: 'Jimmy Bimmy'};
+
+			spyOn(documentService, 'get').and.callFake(() => {
+				return Promise.resolve([testDocOne, testDocTwo]);
+			});
+
+			service.get('collectionName', '?s=simpleSearchTerm').then((returnedDocuments: any[]) => {
+				expect(returnedDocuments).toEqual([testDocOne, testDocTwo]);
+				expect(simpleCache.get(testDocOne.id)).toEqual(testDocOne);
+				expect(simpleCache.get(testDocTwo.id)).toEqual(testDocTwo);
+
+				const expectedObj = {id: 'collectionName?s=simpleSearchTerm', documentIds: [testDocOne.id, testDocTwo.id]};
+
+				expect(simpleCache.get('collectionName?s=simpleSearchTerm')).toEqual(expectedObj);
+
+				done();
+			});
+		});
+
 		it('should not call api if the collection is already cached', (done) => {
 			const testDocOne = {id: 'abc', name: 'Ally Bally'};
 			const testDocTwo = {id: '123', name: 'Jimmy Bimmy'};
