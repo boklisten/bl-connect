@@ -33,7 +33,7 @@ export class UserSessionService {
 	/**
 	 * Alerts the observer when logout is needed
 	 *
-	 * @returns {Observable<boolean>}
+	 * @returns Observable<boolean>
 	 */
 	public onLogout(): Observable<boolean> {
 		return this.logout$.asObservable();
@@ -42,7 +42,7 @@ export class UserSessionService {
 	/**
 	 * Alerts the observer on login
 	 *
-	 * @returns {Observable<boolean>}
+	 * @returns Observable<boolean>
 	 */
 	public onLogin(): Observable<boolean> {
 		return this.login$.asObservable();
