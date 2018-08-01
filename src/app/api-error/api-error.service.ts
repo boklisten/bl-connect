@@ -21,16 +21,17 @@ export class ApiErrorService {
 			return err;
 		}
 
-		switch (httpError.status) {
-			case 401: return new BlApiLoginRequiredError();
-			case 403: return new BlApiPermissionDeniedError();
-			case 404: return new BlApiNotFoundError();
-		}
 
 		if (!httpError.error || !httpError.error.code) {
-			const err = new BlApiError();
-			err.msg = 'unknown error';
-			return err;
+			switch (httpError.status) {
+				case 401: return new BlApiLoginRequiredError();
+				case 403: return new BlApiPermissionDeniedError();
+				case 404: return new BlApiNotFoundError();
+				default:
+					const err = new BlApiError();
+					err.msg = 'unknown error';
+					return err;
+			}
 		}
 
 		switch (httpError.error.code) {

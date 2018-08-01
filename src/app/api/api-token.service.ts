@@ -3,11 +3,12 @@ import {TokenService} from "../token/token.service";
 import {BlApiError, BlApiLoginRequiredError} from "@wizardcoder/bl-model";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ApiRequestService} from "./api-request.service";
+import {ApiErrorService} from "../api-error/api-error.service";
 
 @Injectable()
 export class ApiTokenService {
 
-	constructor(private _http: HttpClient, private _tokenService: TokenService, private _apiRequestService: ApiRequestService) {
+	constructor(private _http: HttpClient, private _tokenService: TokenService, private _apiRequestService: ApiRequestService, private _apiErrorService: ApiErrorService) {
 	}
 
 	public fetchNewTokens(): Promise<boolean> {
@@ -27,27 +28,13 @@ export class ApiTokenService {
 						return reject(badDataError);
 					}
 				}).catch((err: HttpErrorResponse) => {
-
-					return reject(this.handleHttpErrorResponse(err));
+					return reject(this._apiErrorService.handleError(err));
 
 				});
 			} else {
 				return reject(new BlApiLoginRequiredError());
 			}
 		});
-	}
-
-	private handleHttpErrorResponse(httpErr: HttpErrorResponse): BlApiError {
-		if (httpErr && httpErr.status) {
-			switch (httpErr.status) {
-				case 401: return new BlApiLoginRequiredError();
-				case 403: return new BlApiLoginRequiredError();
-			}
-		}
-
-		const apiErr = new BlApiError();
-		apiErr.msg = 'unknown error';
-		return apiErr;
 	}
 
 	private validateResponseDataTokens(tokens: any[]): {accessToken: string, refreshToken: string} {

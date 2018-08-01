@@ -46,137 +46,19 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
-		const branchItemIds = [
-			"5b1066b989f4356d3b6f778e",
-			"5b10df2ddcfb9d0aa39df893",
-			"5b10df2ddcfb9d0aa39df894",
-			"5b10df2ddcfb9d0aa39df895",
-			"5b10df2ddcfb9d0aa39df896",
-			"5b10df2ddcfb9d0aa39df897",
-			"5b10df2ddcfb9d0aa39df898",
-			"5b10df2ddcfb9d0aa39df899",
-			"5b10df2ddcfb9d0aa39df89a",
-			"5b10df2ddcfb9d0aa39df89b",
-
-		];
-			//"5b0e74644457b345a930424c"
-
-
-		this._simpleCache.refreshTimeMs = 400;
-		const startTime = new Date().getTime();
-		this._branchService.getById('5b0e74644457b345a930424c').then((branch: Branch) => {
-			const firstReturnTime = new Date().getTime();
-			console.log('1 branch call was ', (firstReturnTime - startTime), 'ms');
-
-			const secondStartTime = new Date().getTime();
-
-			this._branchItemService.getManyByIds(branch.branchItems).then((branchItems) => {
-				const secondReturnTime = new Date().getTime();
-				console.log('1 branchItem call was ', (secondReturnTime - secondStartTime), 'ms');
-
-				const thirdStartTime = new Date().getTime();
-				this._branchItemService.getManyByIds(branch.branchItems).then((branchItems2) => {
-					const thirdReturnTime = new Date().getTime();
-					console.log('2 branchItem call was ', (thirdReturnTime - thirdStartTime), 'ms');
-				}).catch((err) => {
-					console.log('could not get branch2', err);
-				});
-
-
-			}).catch((err) => {
-				console.log('could not get branch2', err);
-			});
-
-		}).catch((err1) => {
-			console.log('could not get branch1', err1);
-		});
-
-		const itemIds = [
-			"5b0bee004b1865462391f179",
-			"5b0bee004b1865462391f17a",
-			"5b0bee004b1865462391f17b",
-			"5b0bee004b1865462391f17c",
-			"5b0bee004b1865462391f17d",
-			"5b0bee004b1865462391f17e",
-			"5b0bee004b1865462391f17f"
-		];
-
-		const itemStartTime = new Date().getTime();
-		this._itemService.getManyByIds(itemIds).then(() => {
-			console.log('item 1 time', new Date().getTime() - itemStartTime);
-
-			const itemStartTime2 = new Date().getTime();
-
-			this._itemService.getManyByIds(itemIds).then(() => {
-				console.log('item 2 time', new Date().getTime() - itemStartTime2);
-			}).catch(() => {
-				console.log('could not get items 2');
-			});
-
-
-		}).catch(() => {
-			console.log('could not get items');
-		});
-
-
-
 		/*
-
-		const startTime = new Date().getTime();
-		this._branchService.getById('5b0e74644457b345a930424c').then((branch: Branch) => {
-			const firstReturnTime = new Date().getTime();
-			console.log('the first call was ', (firstReturnTime - startTime), 'ms');
-
-			const secondStartTime = new Date().getTime();
-
-			this._branchService.getById('5b0e74644457b345a930424c').then((branchTwo) => {
-				const secondReturnTime = new Date().getTime();
-				console.log('the second call was ', (secondReturnTime - secondStartTime), 'ms');
-
-			}).catch((err) => {
-				console.log('could not get branch2', err);
-			});
-		}).catch((err1) => {
-			console.log('could not get branch1', err1);
-		});
-		*/
-		// const ids = ["5b0e74644457b345a930424c", "5b0e74644457b345a930424d", "5b0e74644457b345a930424e", "5b0e74644457b345a930424f",  "5b0e74644457b345a9304250", "5b0e74644457b345a9304251", "5b0e74644457b345a9304252", "5b0e74644457b345a9304253", "5b0e74644457b345a9304254", "5b0e74644457b345a9304255"];
-/*
-		const startTime = new Date().getTime();
-		this._branchService.getManyByIds(ids).then((branches: Branch[]) => {
-			const firstReturnTime = new Date().getTime();
-			console.log('the first call was ', (firstReturnTime - startTime), 'ms');
-			const secondStartTime = new Date().getTime();
-			this._branchService.getManyByIds(ids).then((branchesTwo: Branch[]) => {
-				const secondReturnTime = new Date().getTime();
-				console.log('the second call was ', (secondReturnTime - secondStartTime), 'ms');
-
-			}).catch((err) => {
-				console.log('could not get branch2', err);
-			});
-		}).catch((err1) => {
-			console.log('could not get branch1', err1);
-		});*/
-/*
-		const startTime2 = new Date().getTime();
-		this._branchService.getManyByIds(ids).then((branches: Branch[]) => {
-			const firstReturnTime = new Date().getTime();
-			console.log('the first call was ', (firstReturnTime - startTime2), 'ms');
-
-
+		this._loginService.login('aholskil@gmail.com', 'password').then(() => {
+			console.log('login success');
 			setTimeout(() => {
-				const secondStartTime = new Date().getTime();
-				this._branchService.getManyByIds(ids).then((branchesTwo: Branch[]) => {
-					const secondReturnTime = new Date().getTime();
-					console.log('the second call was ', (secondReturnTime - secondStartTime), 'ms');
-
+				this._userDetailService.getById(this._tokenService.getAccessTokenBody().details).then(() => {
+					console.log('got user details!');
 				}).catch((err) => {
-					console.log('could not get branch2', err);
+					console.log('could not get user details', err);
 				});
-			}, 1000);
-		}).catch((err1) => {
-			console.log('could not get branch1', err1);
+
+			}, 2000);
+
+
 		});
 		*/
 
