@@ -9,6 +9,7 @@ import {BlApiError, BlApiNotFoundError} from "@wizardcoder/bl-model";
 import {ApiResponse} from "./api-response";
 import {ApiTokenService} from "./api-token.service";
 import {ApiRequestService} from "./api-request.service";
+import {UserSessionService} from "../user-session/user-session.service";
 
 describe('ApiService', () => {
 	let service: ApiService;
@@ -46,7 +47,7 @@ describe('ApiService', () => {
 	} as ApiRequestService;
 
 	beforeEach(() => {
-		service = new ApiService(httpClientServiceMock, new ApiErrorService(),
+		service = new ApiService(httpClientServiceMock, new ApiErrorService(new UserSessionService()),
 			apiRequestServiceMock, apiTokenServiceMock);
 	});
 

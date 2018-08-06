@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ApiResponse} from "./api-response";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {BL_CONFIG} from "../bl-connect/bl-config";
-import {BlapiResponse, BlApiError, BlApiLoginRequiredError} from "@wizardcoder/bl-model";
+import {BlapiResponse, BlApiError, BlApiLoginRequiredError, BlApiNotFoundError} from "@wizardcoder/bl-model";
 import {ApiErrorService} from "../api-error/api-error.service";
 import {TokenService} from "../token/token.service";
 import {ApiRequestService} from "./api-request.service";
@@ -33,6 +33,10 @@ export class ApiService {
 					reject(err);
 				});
 			}).catch((httpErrorResponse: HttpErrorResponse) => {
+				if (httpErrorResponse.status === 404) {
+					reject(new BlApiNotFoundError());
+				}
+
 				this.fetchTokensAndGet(url, httpErrorResponse, query).then((apiRes: ApiResponse) => {
 					resolve(apiRes);
 				}).catch((apiErr: BlApiError) => {

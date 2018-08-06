@@ -23,15 +23,7 @@ export class ApiErrorService {
 
 
 		if (!httpError.error || !httpError.error.code) {
-			switch (httpError.status) {
-				case 401: return new BlApiLoginRequiredError();
-				case 403: return new BlApiPermissionDeniedError();
-				case 404: return new BlApiNotFoundError();
-				default:
-					const err = new BlApiError();
-					err.msg = 'unknown error';
-					return err;
-			}
+			this.handleErrorByStatus(httpError);
 		}
 
 		switch (httpError.error.code) {
@@ -42,7 +34,19 @@ export class ApiErrorService {
 				this.userSessionService.logout();
 				return new BlApiLoginRequiredError();
 			case 911: return new BlApiLoginRequiredError(); //no authToken in request
-			default: return new BlApiError();
+			default: return this.handleErrorByStatus(httpError);
+		}
+	}
+
+	private handleErrorByStatus(httpError: HttpErrorResponse) {
+		switch (httpError.status) {
+			case 401: return new BlApiLoginRequiredError();
+			case 403: return new BlApiPermissionDeniedError();
+			case 404: return new BlApiNotFoundError();
+			default:
+				const err = new BlApiError();
+				err.msg = 'unknown error';
+				return err;
 		}
 	}
 

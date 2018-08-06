@@ -9,25 +9,25 @@ import {CachedDocumentService} from "../document/cached-document.service";
 export class CustomerItemService {
 	private _collection: string;
 
-	constructor(private _apiService: ApiService, private _cachedDocumentService: CachedDocumentService) {
+	constructor(private _apiService: ApiService, private _documentService: DocumentService) {
 		this._collection = BL_CONFIG.collection.customerItem;
 	}
 
 
 	public add(customerItem: CustomerItem): Promise<CustomerItem> {
-		return this._cachedDocumentService.add(this._collection, customerItem);
+		return this._documentService.add(this._collection, customerItem);
 	}
 
 	public getById(id: string): Promise<CustomerItem> {
-		return this._cachedDocumentService.getById(this._collection, id);
+		return this._documentService.getById(this._collection, id);
 	}
 
 	public getManyByIds(ids: string[]): Promise<CustomerItem[]> {
-		return this._cachedDocumentService.getManyByIds(this._collection, ids);
+		return this._documentService.getManyByIds(this._collection, ids);
 	}
 
 	public update(id: string, data: any): Promise<CustomerItem> {
-		return this._cachedDocumentService.update(this._collection, id, data);
+		return this._documentService.update(this._collection, id, data);
 	}
 
 }

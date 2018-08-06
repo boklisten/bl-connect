@@ -1,12 +1,14 @@
 import {TestBed, inject} from '@angular/core/testing';
 
 import {ApiTokenService} from './api-token.service';
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {TokenService} from "../token/token.service";
 import {ApiRequestService} from "./api-request.service";
 import {Observable, throwError} from "rxjs";
 import {BlApiError, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "@wizardcoder/bl-model";
 import {ApiResponse} from "./api-response";
+import {ApiErrorService} from "../api-error/api-error.service";
+import {UserSessionService} from "../user-session/user-session.service";
 
 describe('ApiTokenService', () => {
 	let service: ApiTokenService;
@@ -28,9 +30,13 @@ describe('ApiTokenService', () => {
 		apiPath: (url: string) => 'a/valid/path'
 	} as ApiRequestService;
 
+	const apiErrorServiceMock = {
+		handleError: (httpError: HttpErrorResponse) => {}
+	} as ApiErrorService;
+
 
 	beforeEach(() => {
-		service = new ApiTokenService(httpClientMock, tokenServiceMock, apiRequestServiceMock);
+		service = new ApiTokenService(httpClientMock, tokenServiceMock, apiRequestServiceMock, new ApiErrorService(new UserSessionService()));
 	});
 
 
@@ -160,18 +166,19 @@ describe('ApiTokenService', () => {
 			);
 
 			service.fetchNewTokens().catch((blApiErr: BlApiError) => {
+				console.log('the err', blApiErr);
 				expect((blApiErr instanceof BlApiLoginRequiredError)).toBeTruthy();
 				done();
 			});
 		});
 
-		it('should reject with BlApiLoginRequiredError if request is error and HttpResponseStatus is 403', (done: DoneFn) => {
+		it('should reject with BlApiPermissionDeniedError if request is error and HttpResponseStatus is 403', (done: DoneFn) => {
 			spyOn(httpClientMock, 'post').and.returnValue(
 				throwError({status: 403, error: {code: 403}})
 			);
 
 			service.fetchNewTokens().catch((blApiErr: BlApiError) => {
-				expect((blApiErr instanceof BlApiLoginRequiredError)).toBeTruthy();
+				expect((blApiErr instanceof BlApiPermissionDeniedError)).toBeTruthy();
 				done();
 			});
 		});
