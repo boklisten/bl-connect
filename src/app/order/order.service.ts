@@ -9,7 +9,7 @@ import {CachedDocumentService} from "../document/cached-document.service";
 export class OrderService {
 	private _collection: string;
 
-	constructor(private _apiService: ApiService, private _cachedDocumentService: CachedDocumentService) {
+	constructor(private _apiService: ApiService, private _cachedDocumentService: CachedDocumentService, private _documentService: DocumentService) {
 		this._collection = BL_CONFIG.collection.order;
 	}
 
@@ -27,6 +27,10 @@ export class OrderService {
 
 	public update(id: string, data: any): Promise<Order> {
 		return this._cachedDocumentService.update(this._collection, id, data);
+	}
+
+	public getAll(query: string): Promise<Order[]> {
+		return this._documentService.get(this._collection, query);
 	}
 
 }
