@@ -43,9 +43,11 @@ export function tokenGetter() {
 					'bladmin.boklisten.co',
 					'api.boklisten.co',
 					'boklisten.co',
+					'www.boklisten.co',
 					'bladmin.boklisten.no',
 					'api.boklisten.no',
 					'boklisten.no',
+					'www.boklisten.no',
 					'localhost:1337',
 					'localhost:4200'
 				]

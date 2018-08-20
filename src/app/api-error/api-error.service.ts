@@ -1,8 +1,11 @@
 import {Injectable} from '@angular/core';
 import {ApiErrorResponse} from "../api/api-error-response";
 import {HttpErrorResponse} from "@angular/common/http";
-import {BlApiError, BlapiErrorResponse, BlApiNotFoundError, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "@wizardcoder/bl-model";
+import {BlApiError, BlapiErrorResponse, BlApiNotFoundError,
+	BlApiLoginRequiredError, BlApiPermissionDeniedError} from "@wizardcoder/bl-model";
 import {UserSessionService} from "../user-session/user-session.service";
+import {BlApiUserAlreadyExistsError} from "@wizardcoder/bl-model/dist/bl-api-error/bl-api-user-already-exists-error";
+import {BlApiUsernameAndPasswordError} from "@wizardcoder/bl-model/dist/bl-api-error/bl-api-username-and-password-error";
 
 
 @Injectable()
@@ -28,12 +31,16 @@ export class ApiErrorService {
 
 		switch (httpError.error.code) {
 			case 901: return new BlApiPermissionDeniedError(); // wrong password
+			case 903: return new BlApiUserAlreadyExistsError(); // username already exists
 			case 904: return new BlApiPermissionDeniedError(); // does not have the right permission
-			case 908: return new BlApiPermissionDeniedError(); // username or password incorrect
+			case 908: return new BlApiUsernameAndPasswordError(); // username or password incorrect
 			case 909: // refreshToken invalid
 				this.userSessionService.logout();
 				return new BlApiLoginRequiredError();
 			case 911: return new BlApiLoginRequiredError(); //no authToken in request
+			case 913:
+				this.userSessionService.logout();
+				return new BlApiLoginRequiredError();
 			default: return this.handleErrorByStatus(httpError);
 		}
 	}

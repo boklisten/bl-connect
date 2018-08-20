@@ -61,7 +61,6 @@ export class AppComponent implements OnInit {
 
 		});
 		*/
-
 	}
 
 	private printError(blApiErr: BlApiError) {
