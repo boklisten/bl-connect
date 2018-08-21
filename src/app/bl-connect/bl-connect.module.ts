@@ -23,10 +23,11 @@ import {EmailValidationService} from "../email-validation/email-validation.servi
 import {JwtModule} from '@auth0/angular-jwt';
 import {BL_CONFIG} from "./bl-config";
 import {CachedDocumentService} from "../document/cached-document.service";
-import {BlDocument} from "@wizardcoder/bl-model";
 import {SimpleCache} from "../simple-cache/simple-cache.service";
 import {DocumentService} from "../document/document.service";
 import {BlConnectConfigService} from "./bl-connect-config.service";
+import {PrintPdfService} from "../print-pdf/print-pdf.service";
+import {OrderPdfService} from "../order-pdf/order-pdf.service";
 
 export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
@@ -78,7 +79,9 @@ export function tokenGetter() {
 		EmailValidationService,
 		DocumentService,
 		SimpleCache,
-		CachedDocumentService
+		CachedDocumentService,
+		PrintPdfService,
+		OrderPdfService
 	]
 })
 export class BlConnectModule {
