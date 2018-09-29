@@ -13,10 +13,13 @@ export class CustomerItemService {
 		this._collection = BL_CONFIG.collection.customerItem;
 	}
 
-
 	public add(customerItem: CustomerItem): Promise<CustomerItem> {
 		return this._documentService.add(this._collection, customerItem);
-	}
+  }
+
+  public get(query?: string): Promise<CustomerItem[]> {
+    return this._documentService.get(this._collection, query);
+  }
 
 	public getById(id: string): Promise<CustomerItem> {
 		return this._documentService.getById(this._collection, id);

@@ -19,7 +19,11 @@ export class PaymentService {
 
 	public getById(id: string): Promise<Payment> {
 		return this._documentService.getById(this._collection, id);
-	}
+  }
+
+  public get(query?: string): Promise<Payment[]> {
+    return this._documentService.get(this._collection, query);
+  }
 
 	public getManyByIds(ids: string[]): Promise<Payment[]> {
 		return this._documentService.getManyByIds(this._collection, ids);
