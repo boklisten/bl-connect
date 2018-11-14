@@ -28,6 +28,7 @@ import {DocumentService} from "../document/document.service";
 import {BlConnectConfigService} from "./bl-connect-config.service";
 import {PrintPdfService} from "../print-pdf/print-pdf.service";
 import {OrderPdfService} from "../order-pdf/order-pdf.service";
+import {MessageService} from "../message/message.service";
 
 export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
@@ -81,7 +82,8 @@ export function tokenGetter() {
 		SimpleCache,
 		CachedDocumentService,
 		PrintPdfService,
-		OrderPdfService
+    OrderPdfService,
+    MessageService
 	]
 })
 export class BlConnectModule {

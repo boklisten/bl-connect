@@ -21,3 +21,4 @@ export * from "./src/app/bl-connect/bl-connect-config.service";
 export * from "./src/app/user-session/user-session.service";
 export * from "./src/app/order-pdf/order-pdf.service";
 export * from "./src/app/print-pdf/print-pdf.service";
+export * from "./src/app/message/message.service"
