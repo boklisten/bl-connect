@@ -59,7 +59,8 @@ export const BL_CONFIG = {
 		delivery: 'deliveries',
 		passwordReset: 'passwordresets',
     emailValidation: 'email_validations',
-    message: 'messages'
+    message: 'messages',
+    invoice: 'invoices'
 	}
 };
 
