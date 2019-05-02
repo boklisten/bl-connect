@@ -31,20 +31,4 @@ export class MessageService {
   public update(id: string, data: any): Promise<Message> {
     return this._documentService.update(this._collection, id, data);
   }
-
-  public sendReminder(customerId: string, deadline: Date, type: CustomerItemType | 'all', textBlocks?: TextBlock[]): Promise<Message> {
-    const message: Message = {
-      id: '',
-      messageType: 'reminder',
-      messageSubtype: type as any,
-      messageMethod: 'all',
-      customerId: customerId,
-      info: {
-        deadline: deadline
-      },
-      textBlocks: (textBlocks && textBlocks.length > 0) ? textBlocks : []
-    };
-
-    return this._documentService.add(this._collection, message);
-  }
 }
