@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
-import { BlApiError, Message, TextBlock } from '@wizardcoder/bl-model';
+import { BlApiError, Message, TextBlock, CustomerItemType } from '@wizardcoder/bl-model';
 import { BL_CONFIG } from "../bl-connect/bl-config";
 import { TokenService } from "../token/token.service";
 import { DocumentService } from '../document/document.service';
@@ -13,10 +13,11 @@ export class MessageService {
     this._collection = BL_CONFIG.collection.message;
   }
 
-  public sendReminder(customerId: string, deadline: Date, textBlocks?: TextBlock[]): Promise<Message> {
+  public sendReminder(customerId: string, deadline: Date, type: CustomerItemType | 'all', textBlocks?: TextBlock[]): Promise<Message> {
     const message: Message = {
       id: '',
       messageType: 'reminder',
+      messageSubtype: type as any,
       messageMethod: 'all',
       customerId: customerId,
       info: {
