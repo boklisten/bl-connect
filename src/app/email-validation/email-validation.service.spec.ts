@@ -1,27 +1,26 @@
-import {TestBed, inject} from '@angular/core/testing';
+import { TestBed, inject } from "@angular/core/testing";
 
-import {EmailValidationService} from './email-validation.service';
-import {Injectable} from "@angular/core";
-import {ApiService} from "../api/api.service";
-
+import { EmailValidationService } from "./email-validation.service";
+import { Injectable } from "@angular/core";
+import { ApiService } from "../../api/api.service";
 
 @Injectable()
-class ApiStubService {
+class ApiStubService {}
 
-}
-
-
-describe('EmailValidationService', () => {
+describe("EmailValidationService", () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			providers: [
 				EmailValidationService,
-				{provide: ApiService, useClass: ApiStubService}
+				{ provide: ApiService, useClass: ApiStubService }
 			]
 		});
 	});
 
-	it('should be created', inject([EmailValidationService], (service: EmailValidationService) => {
-		expect(service).toBeTruthy();
-	}));
+	it("should be created", inject(
+		[EmailValidationService],
+		(service: EmailValidationService) => {
+			expect(service).toBeTruthy();
+		}
+	));
 });

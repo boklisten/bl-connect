@@ -76,7 +76,7 @@ describe('CachedDocumentService', () => {
 				return Promise.resolve([testDocOne, testDocTwo]);
 			});
 
-			service.get('collectionName', '?s=simpleSearchTerm').then((returnedDocuments: any[]) => {
+      service.get('collectionName', {query: '?s=simpleSearchTerm'}).then((returnedDocuments: any[]) => {
 				expect(returnedDocuments).toEqual([testDocOne, testDocTwo]);
 				expect(simpleCache.get(testDocOne.id)).toEqual(testDocOne);
 				expect(simpleCache.get(testDocTwo.id)).toEqual(testDocTwo);

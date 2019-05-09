@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BlApiError, BlDocument} from "@wizardcoder/bl-model";
+import {BlApiError, BlDocument, BlApiNotFoundError} from "@wizardcoder/bl-model";
 import {ApiResponse} from "../api/api-response";
 import {isArray} from "util";
 import {ApiService} from "../api/api.service";
@@ -11,6 +11,9 @@ export class DocumentService {
 	}
 
 	public get(collection: string, query?: string): Promise<any[]> {
+    if (!collection) {
+      return Promise.reject(new BlApiNotFoundError());
+    }
 		return new Promise((resolve, reject) => {
 			this._apiService.get(collection, query).then(
 				(res: ApiResponse) => {
@@ -26,6 +29,9 @@ export class DocumentService {
 	}
 
 	public getById(collection: string, id: string): Promise<any> {
+    if (!collection || !id) {
+      return Promise.reject(new BlApiNotFoundError());
+    }
 		return new Promise((resolve, reject) => {
 			this._apiService.getById(collection, id).then((res: ApiResponse) => {
 					this.getDocIfValid(res).then((doc: any) => {
@@ -41,6 +47,9 @@ export class DocumentService {
 	}
 
 	public getWithOperation(collection: string, id: string, operation: string): Promise<any> {
+    if (!collection || !id || !operation) {
+      return Promise.reject(new BlApiNotFoundError());
+    }
 		return new Promise((resolve, reject) => {
 			this._apiService.getWithOperation(collection, id, operation).then((res: ApiResponse) => {
 				this.getDocIfValid(res).then((doc: any) => {
@@ -55,6 +64,9 @@ export class DocumentService {
 	}
 
 	public getManyByIds(collection, ids: string[]): Promise<any[]> {
+    if (!collection || ids.length <= 0) {
+      return Promise.reject(new BlApiNotFoundError());
+    }
 		return new Promise((resolve, reject) => {
 			const promArr: Promise<any>[] = [];
 
@@ -71,6 +83,9 @@ export class DocumentService {
 	}
 
 	public update(collection: string, id: string, data: any): Promise<any> {
+    if (!collection || !id) {
+      return Promise.reject(new BlApiNotFoundError());
+    }
 		return new Promise((resolve, reject) => {
 			this._apiService.update(collection, id, data).then((res: ApiResponse) => {
 				this.getDocIfValid(res).then((doc: any) => {
@@ -85,6 +100,9 @@ export class DocumentService {
 	}
 
 	public add(collection: string, data: any): Promise<any> {
+    if (!collection) {
+      return Promise.reject(new BlApiNotFoundError());
+    }
 		return new Promise((resolve, reject) => {
 			this._apiService.add(collection, data).then((res: ApiResponse) => {
 				this.getDocIfValid(res).then((doc: any) => {
@@ -99,6 +117,9 @@ export class DocumentService {
 	}
 
 	public remove(collection: string, id: string): Promise<any> {
+    if (!collection || !id) {
+      return Promise.reject(new BlApiNotFoundError());
+    }
 		return new Promise((resolve, reject) => {
 			this._apiService.remove(collection, id).then((res: ApiResponse) => {
 				this.getDocIfValid(res).then((doc: any) => {

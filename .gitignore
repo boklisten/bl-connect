@@ -33,6 +33,7 @@ npm-debug.log
 testem.log
 /typings
 yarn-error.log
+*.tgz
 
 # e2e
 /e2e/*.js
@@ -41,6 +42,7 @@ yarn-error.log
 # System Files
 .DS_Store
 Thumbs.db
+
 
 # Vim files
 *.swp
