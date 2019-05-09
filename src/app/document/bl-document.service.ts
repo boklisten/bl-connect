@@ -18,12 +18,39 @@ export class BlDocumentService<T extends BlDocument> {
 		return this._cachedDocumentService.get(this._collection, options);
 	}
 
-	public getById(id: string, options?: CachedDocumentService): Promise<T> {
-		return this._cachedDocumentService.getById(this._collection, id);
+	public getById(
+		id: string,
+		options?: CachedDocumentServiceOptions
+	): Promise<T> {
+		return this._cachedDocumentService.getById(
+			this._collection,
+			id,
+			options
+		);
 	}
 
-	public getManyByIds(ids: string[]): Promise<T[]> {
-		return this._cachedDocumentService.getManyByIds(this._collection, ids);
+	public getWithOperation(
+		id: string,
+		operation: string,
+		options?: CachedDocumentServiceOptions
+	): Promise<T[]> {
+		return this._cachedDocumentService.getWithOperation(
+			this._collection,
+			id,
+			operation,
+			options
+		);
+	}
+
+	public getManyByIds(
+		ids: string[],
+		options?: CachedDocumentServiceOptions
+	): Promise<T[]> {
+		return this._cachedDocumentService.getManyByIds(
+			this._collection,
+			ids,
+			options
+		);
 	}
 
 	public update(id: string, data: any): Promise<T> {
@@ -32,6 +59,10 @@ export class BlDocumentService<T extends BlDocument> {
 
 	public add(data: T): Promise<T> {
 		return this._cachedDocumentService.add(this._collection, data);
+	}
+
+	public remove(id: string): Promise<T> {
+		return this._cachedDocumentService.remove(this._collection, id);
 	}
 
 	protected setCollection(name: string) {

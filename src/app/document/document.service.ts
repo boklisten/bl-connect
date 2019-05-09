@@ -1,72 +1,91 @@
-import {Injectable} from '@angular/core';
-import {BlApiError, BlDocument, BlApiNotFoundError} from "@wizardcoder/bl-model";
-import {ApiResponse} from "../api/api-response";
-import {isArray} from "util";
-import {ApiService} from "../api/api.service";
+import { Injectable } from "@angular/core";
+import {
+	BlApiError,
+	BlDocument,
+	BlApiNotFoundError
+} from "@wizardcoder/bl-model";
+import { ApiResponse } from "../api/api-response";
+import { isArray } from "util";
+import { ApiService } from "../api/api.service";
 
 @Injectable()
 export class DocumentService {
-
-	constructor(private _apiService: ApiService) {
-	}
+	constructor(private _apiService: ApiService) {}
 
 	public get(collection: string, query?: string): Promise<any[]> {
-    if (!collection) {
-      return Promise.reject(new BlApiNotFoundError());
-    }
+		if (!collection) {
+			return Promise.reject(new BlApiNotFoundError());
+		}
 		return new Promise((resolve, reject) => {
 			this._apiService.get(collection, query).then(
 				(res: ApiResponse) => {
-					this.getDocsIfValid(res).then((docs: any[]) => {
-						resolve(docs);
-					}).catch((blApiErr: BlApiError) => {
-						reject(blApiErr);
-					});
-				}, (error: BlApiError) => {
+					this.getDocsIfValid(res)
+						.then((docs: any[]) => {
+							resolve(docs);
+						})
+						.catch((blApiErr: BlApiError) => {
+							reject(blApiErr);
+						});
+				},
+				(error: BlApiError) => {
 					reject(error);
-				});
+				}
+			);
 		});
 	}
 
 	public getById(collection: string, id: string): Promise<any> {
-    if (!collection || !id) {
-      return Promise.reject(new BlApiNotFoundError());
-    }
+		if (!collection || !id) {
+			return Promise.reject(new BlApiNotFoundError());
+		}
 		return new Promise((resolve, reject) => {
-			this._apiService.getById(collection, id).then((res: ApiResponse) => {
-					this.getDocIfValid(res).then((doc: any) => {
-						resolve(doc);
-					}).catch((blApiErr: BlApiError) => {
-						reject(blApiErr);
-					});
+			this._apiService.getById(collection, id).then(
+				(res: ApiResponse) => {
+					this.getDocIfValid(res)
+						.then((doc: any) => {
+							resolve(doc);
+						})
+						.catch((blApiErr: BlApiError) => {
+							reject(blApiErr);
+						});
 				},
 				(error: BlApiError) => {
 					reject(error);
-				});
+				}
+			);
 		});
 	}
 
-	public getWithOperation(collection: string, id: string, operation: string): Promise<any> {
-    if (!collection || !id || !operation) {
-      return Promise.reject(new BlApiNotFoundError());
-    }
+	public getWithOperation(
+		collection: string,
+		id: string,
+		operation: string
+	): Promise<any> {
+		if (!collection || !id || !operation) {
+			return Promise.reject(new BlApiNotFoundError());
+		}
 		return new Promise((resolve, reject) => {
-			this._apiService.getWithOperation(collection, id, operation).then((res: ApiResponse) => {
-				this.getDocIfValid(res).then((doc: any) => {
-					resolve(doc);
-				}).catch((blApiError: BlApiError) => {
-					reject(blApiError);
+			this._apiService
+				.getWithOperation(collection, id, operation)
+				.then((res: ApiResponse) => {
+					this.getDocIfValid(res)
+						.then((doc: any) => {
+							resolve(doc);
+						})
+						.catch((blApiError: BlApiError) => {
+							reject(blApiError);
+						});
+				})
+				.catch((err: BlApiError) => {
+					reject(err);
 				});
-			}).catch((err: BlApiError) => {
-				reject(err);
-			});
 		});
 	}
 
 	public getManyByIds(collection, ids: string[]): Promise<any[]> {
-    if (!collection || ids.length <= 0) {
-      return Promise.reject(new BlApiNotFoundError());
-    }
+		if (!collection || ids.length <= 0) {
+			return Promise.reject(new BlApiNotFoundError());
+		}
 		return new Promise((resolve, reject) => {
 			const promArr: Promise<any>[] = [];
 
@@ -74,76 +93,99 @@ export class DocumentService {
 				promArr.push(this.getById(collection, id));
 			}
 
-			Promise.all(promArr).then((retVals: any[]) => {
-				resolve(retVals);
-			}).catch((blApiErr: BlApiError) => {
-				reject(blApiErr);
-			});
+			Promise.all(promArr)
+				.then((retVals: any[]) => {
+					resolve(retVals);
+				})
+				.catch((blApiErr: BlApiError) => {
+					reject(blApiErr);
+				});
 		});
 	}
 
 	public update(collection: string, id: string, data: any): Promise<any> {
-    if (!collection || !id) {
-      return Promise.reject(new BlApiNotFoundError());
-    }
+		if (!collection || !id) {
+			return Promise.reject(new BlApiNotFoundError());
+		}
 		return new Promise((resolve, reject) => {
-			this._apiService.update(collection, id, data).then((res: ApiResponse) => {
-				this.getDocIfValid(res).then((doc: any) => {
-					resolve(doc);
-				}).catch((blApiErr: BlApiError) => {
+			this._apiService
+				.update(collection, id, data)
+				.then((res: ApiResponse) => {
+					this.getDocIfValid(res)
+						.then((doc: any) => {
+							resolve(doc);
+						})
+						.catch((blApiErr: BlApiError) => {
+							reject(blApiErr);
+						});
+				})
+				.catch((blApiErr: BlApiError) => {
 					reject(blApiErr);
 				});
-			}).catch((blApiErr: BlApiError) => {
-				reject(blApiErr);
-			});
 		});
 	}
 
 	public add(collection: string, data: any): Promise<any> {
-    if (!collection) {
-      return Promise.reject(new BlApiNotFoundError());
-    }
+		if (!collection) {
+			return Promise.reject(new BlApiNotFoundError());
+		}
 		return new Promise((resolve, reject) => {
-			this._apiService.add(collection, data).then((res: ApiResponse) => {
-				this.getDocIfValid(res).then((doc: any) => {
-					resolve(doc);
-				}).catch((blApiErr: BlApiError) => {
+			this._apiService
+				.add(collection, data)
+				.then((res: ApiResponse) => {
+					this.getDocIfValid(res)
+						.then((doc: any) => {
+							resolve(doc);
+						})
+						.catch((blApiErr: BlApiError) => {
+							reject(blApiErr);
+						});
+				})
+				.catch((blApiErr: BlApiError) => {
 					reject(blApiErr);
 				});
-			}).catch((blApiErr: BlApiError) => {
-				reject(blApiErr);
-			});
 		});
 	}
 
 	public remove(collection: string, id: string): Promise<any> {
-    if (!collection || !id) {
-      return Promise.reject(new BlApiNotFoundError());
-    }
+		if (!collection || !id) {
+			return Promise.reject(new BlApiNotFoundError());
+		}
 		return new Promise((resolve, reject) => {
-			this._apiService.remove(collection, id).then((res: ApiResponse) => {
-				this.getDocIfValid(res).then((doc: any) => {
-					resolve(doc);
-				}).catch((blApiErr: BlApiError) => {
+			this._apiService
+				.remove(collection, id)
+				.then((res: ApiResponse) => {
+					this.getDocIfValid(res)
+						.then((doc: any) => {
+							resolve(doc);
+						})
+						.catch((blApiErr: BlApiError) => {
+							reject(blApiErr);
+						});
+				})
+				.catch((blApiErr: BlApiError) => {
 					reject(blApiErr);
 				});
-			}).catch((blApiErr: BlApiError) => {
-				reject(blApiErr);
-			});
 		});
 	}
 
 	private getDocIfValid(apiRes: ApiResponse): Promise<any> {
 		return new Promise((resolve, reject) => {
-			this.getDocsIfValid(apiRes).then((docs: any[]) => {
-				if (docs.length !== 1) {
-					return reject(new BlApiError('there where more than one document in the response'));
-				}
+			this.getDocsIfValid(apiRes)
+				.then((docs: any[]) => {
+					if (docs.length !== 1) {
+						return reject(
+							new BlApiError(
+								"there where more than one document in the response"
+							)
+						);
+					}
 
-				resolve(docs[0]);
-			}).catch((err: BlApiError) => {
-				reject(err);
-			});
+					resolve(docs[0]);
+				})
+				.catch((err: BlApiError) => {
+					reject(err);
+				});
 		});
 	}
 
@@ -153,19 +195,16 @@ export class DocumentService {
 				const docs = this.validateAndGetDocs(apiRes);
 
 				resolve(docs);
-
 			} catch (err) {
-				console.log('the response::', apiRes);
-				reject(new BlApiError('document data not valid'));
+				console.log("the response::", apiRes);
+				reject(new BlApiError("document data not valid"));
 			}
 		});
 	}
 
 	private validateAndGetDocs(apiResponse: ApiResponse): any[] {
-
 		if (!isArray(apiResponse.data)) {
-
-			throw new Error('response data is not an array');
+			throw new Error("response data is not an array");
 		}
 
 		const docs: any[] = [];
@@ -178,12 +217,10 @@ export class DocumentService {
 	}
 
 	private validateAndGetDoc(responseDocument: any) {
-
 		if (!responseDocument.data || !responseDocument.data.id) {
 			return responseDocument;
 		}
 
 		return responseDocument.data;
 	}
-
 }
