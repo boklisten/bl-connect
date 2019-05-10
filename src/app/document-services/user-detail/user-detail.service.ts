@@ -12,7 +12,7 @@ import { BlDocumentService } from "../../document/bl-document.service";
 export class UserDetailService extends BlDocumentService<UserDetail> {
 	constructor(private cachedDocumentService: CachedDocumentService) {
 		super(cachedDocumentService);
-		this.setCollection(BL_CONFIG.collection.payment);
+		this.setCollection(BL_CONFIG.collection.userDetail);
 	}
 
 	public isValid(
