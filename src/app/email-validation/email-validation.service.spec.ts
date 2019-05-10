@@ -2,7 +2,7 @@ import { TestBed, inject } from "@angular/core/testing";
 
 import { EmailValidationService } from "./email-validation.service";
 import { Injectable } from "@angular/core";
-import { ApiService } from "../../api/api.service";
+import { ApiService } from "../api/api.service";
 
 @Injectable()
 class ApiStubService {}

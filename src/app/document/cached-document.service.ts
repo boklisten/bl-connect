@@ -17,19 +17,72 @@ export class CachedDocumentService {
 		this._documentService = _documentServiceInput;
 	}
 
-	public get(
+	public async get(
 		collection: string,
 		options?: CachedDocumentServiceOptions
 	): Promise<any[]> {
 		if (!options) options = { query: null, fresh: false };
 		const queryString = !options.query ? "" : options.query;
+
+		try {
+			const cachedDocuments = this.getCachedDocuments(
+				collection,
+				queryString,
+				options
+			);
+
+			if (cachedDocuments) {
+				return cachedDocuments;
+			}
+		} catch (e) {
+			throw e;
+		}
+
+		try {
+			const documents = await this._documentService.get(
+				collection,
+				options.query
+			);
+
+			this.addDocumentsToCache(collection, queryString, documents);
+
+			return documents;
+		} catch (e) {
+			throw e;
+		}
+	}
+
+	private addDocumentsToCache(
+		collection: string,
+		query: string,
+		documents: any[]
+	) {
+		const documentIds = [];
+
+		for (const document of documents) {
+			documentIds.push(document.id);
+			this._simpleCache.add(document);
+		}
+
+		const cachedRequestObj = {
+			id: collection + query,
+			documentIds: documentIds
+		};
+		this._simpleCache.add(cachedRequestObj);
+	}
+
+	private getCachedDocuments(
+		collection: string,
+		query: string,
+		options?: CachedDocumentServiceOptions
+	) {
 		const cachedCollection: {
 			id: string;
 			documentIds: string[];
-		} = this._simpleCache.get(collection + queryString);
+		} = this._simpleCache.get(collection + query);
 
 		if (cachedCollection) {
-			const returnObjects = [];
+			const cachedObjects = [];
 
 			for (const cachedObjId of cachedCollection.documentIds) {
 				let cachedObj = undefined;
@@ -43,36 +96,15 @@ export class CachedDocumentService {
 				if (!cachedObj) {
 					break;
 				} else {
-					returnObjects.push(cachedObj);
+					cachedObjects.push(cachedObj);
 				}
 			}
 
-			if (returnObjects.length === cachedCollection.documentIds.length) {
-				return Promise.resolve(returnObjects);
+			if (cachedObjects.length === cachedCollection.documentIds.length) {
+				return cachedObjects;
 			}
 		}
-
-		return this._documentService
-			.get(collection, options.query)
-			.then((documents: any[]) => {
-				const documentIds = [];
-
-				for (const document of documents) {
-					documentIds.push(document.id);
-					this._simpleCache.add(document);
-				}
-
-				const cachedRequestObj = {
-					id: collection + queryString,
-					documentIds: documentIds
-				};
-				this._simpleCache.add(cachedRequestObj);
-
-				return documents;
-			})
-			.catch(err => {
-				throw err;
-			});
+		return null;
 	}
 
 	public getById(
@@ -80,7 +112,13 @@ export class CachedDocumentService {
 		id: string,
 		options?: CachedDocumentServiceOptions
 	): Promise<any> {
-		const cachedObj = this._simpleCache.get(id);
+		let cachedObj = null;
+
+		if (options && options.fresh) {
+			this._simpleCache.remove(id);
+		} else {
+			cachedObj = this._simpleCache.get(id);
+		}
 
 		if (!cachedObj) {
 			// if no cached object, call api
@@ -120,7 +158,14 @@ export class CachedDocumentService {
 		const notCachedObjectIds = [];
 
 		for (const id of ids) {
-			const cachedObj = this._simpleCache.get(id);
+			let cachedObj = null;
+
+			if (options && options.fresh) {
+				cachedObj = null;
+				this._simpleCache.remove(id);
+			} else {
+				cachedObj = this._simpleCache.get(id);
+			}
 
 			if (cachedObj) {
 				cachedObjects.push(cachedObj);
