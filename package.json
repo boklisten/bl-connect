@@ -9,10 +9,10 @@
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
-		"prepublish": "npm run build:lib",
-		"build:lib": "ng-packagr -p package.json",
-		"pub": "npm publish ./dist/@wizardcoder/bl-connect",
-		"blink": "npm run build:lib && npm link dist/bl-connect"
+		"build": "ng-packagr -p package.json",
+		"pub": "npm run build && npm publish ./dist/@wizardcoder/bl-connect",
+		"prepublish": "npm run test",
+		"preversion": "npm run test"
 	},
 	"ngPackage": {
 		"lib": {
