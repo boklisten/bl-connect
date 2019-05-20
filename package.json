@@ -10,9 +10,7 @@
 		"lint": "ng lint",
 		"e2e": "ng e2e",
 		"build": "ng-packagr -p package.json",
-		"pub": "npm run build && npm publish ./dist/@wizardcoder/bl-connect",
-		"prepublish": "npm run test",
-		"preversion": "npm run test"
+		"pub": "npm run build && npm publish ./dist/@wizardcoder/bl-connect"
 	},
 	"ngPackage": {
 		"lib": {
