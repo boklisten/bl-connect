@@ -24,3 +24,5 @@ export * from "./src/app/document-services/payment/payment.service";
 export * from "./src/app/document-services/delivery/delivery.service";
 export * from "./src/app/document-services/branch-item/branch-item.service";
 export * from "./src/app/document-services/user-detail/user-detail.service";
+
+export * from "./src/app/document-services/company/company.service";
