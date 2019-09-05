@@ -30,6 +30,7 @@ import { PrintPdfService } from "../print-pdf/print-pdf.service";
 import { OrderPdfService } from "../order-pdf/order-pdf.service";
 import { MessageService } from "../document-services/message/message.service";
 import { InvoiceService } from "../document-services/invoice/invoice.service";
+import { CompanyService } from "../document-services/company/company.service";
 
 export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
@@ -85,7 +86,8 @@ export function tokenGetter() {
 		PrintPdfService,
 		OrderPdfService,
 		MessageService,
-		InvoiceService
+		InvoiceService,
+		CompanyService
 	]
 })
 export class BlConnectModule {}

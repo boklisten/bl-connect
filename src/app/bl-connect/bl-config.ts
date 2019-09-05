@@ -1,66 +1,66 @@
 export const BL_CONFIG = {
 	api: {
-		basePath: 'http://localhost:1337/',
+		basePath: "http://localhost:1337/"
 	},
 	token: {
-		accessToken: 'bl-access-token',
-		refreshToken: 'bl-refresh-token'
+		accessToken: "bl-access-token",
+		refreshToken: "bl-refresh-token"
 	},
 	login: {
 		local: {
-			url: 'auth/local/login'
+			url: "auth/local/login"
 		},
 		facebook: {
-			url: 'auth/facebook'
+			url: "auth/facebook"
 		},
 		google: {
-			url: 'auth/google'
+			url: "auth/google"
 		}
 	},
 	register: {
 		local: {
-			url: 'auth/local/register'
+			url: "auth/local/register"
 		},
 		facebook: {
-			url: 'auth/facebook'
+			url: "auth/facebook"
 		},
 		google: {
-			url: 'auth/google'
+			url: "auth/google"
 		}
 	},
 	order: {
 		receipt: {
-			operation: 'receipt'
+			operation: "receipt"
 		},
 		agreement: {
-			operation: 'agreement'
+			operation: "agreement"
 		}
 	},
 	passwordReset: {
 		setNew: {
-			operation: 'new'
+			operation: "new"
 		}
 	},
 	emailValidation: {
 		confirm: {
-			operation: 'confirm'
+			operation: "confirm"
 		}
 	},
 	collection: {
-		item: 'items',
-		branch: 'branches',
-		branchItem: 'branchitems',
-		openingHour: 'openingHours',
-		userDetail: 'userdetails',
-		customerItem: 'customerItems',
-		order: 'orders',
-		orderItem: 'orderItems',
-		payment: 'payments',
-		delivery: 'deliveries',
-		passwordReset: 'passwordresets',
-    emailValidation: 'email_validations',
-    message: 'messages',
-    invoice: 'invoices'
+		item: "items",
+		branch: "branches",
+		branchItem: "branchitems",
+		openingHour: "openingHours",
+		userDetail: "userdetails",
+		customerItem: "customerItems",
+		order: "orders",
+		orderItem: "orderItems",
+		payment: "payments",
+		delivery: "deliveries",
+		passwordReset: "passwordresets",
+		company: "companies",
+		emailValidation: "email_validations",
+		message: "messages",
+		invoice: "invoices"
 	}
 };
-
