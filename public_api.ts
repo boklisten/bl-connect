@@ -26,3 +26,5 @@ export * from "./src/app/document-services/branch-item/branch-item.service";
 export * from "./src/app/document-services/user-detail/user-detail.service";
 
 export * from "./src/app/document-services/company/company.service";
+
+export * from "./src/app/document-services/match/match.service";

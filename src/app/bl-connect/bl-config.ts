@@ -61,6 +61,7 @@ export const BL_CONFIG = {
 		company: "companies",
 		emailValidation: "email_validations",
 		message: "messages",
-		invoice: "invoices"
+		invoice: "invoices",
+		match: "matches"
 	}
 };
