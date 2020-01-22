@@ -21,6 +21,7 @@ export class CachedDocumentService {
 		collection: string,
 		options?: CachedDocumentServiceOptions
 	): Promise<any[]> {
+		if (!options) options = { query: null, fresh: false };
 		return this._documentService.get(collection, options.query);
 	}
 
