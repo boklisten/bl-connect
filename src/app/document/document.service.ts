@@ -83,11 +83,10 @@ export class DocumentService {
 	}
 
 	public async getManyByIds(collection, ids: string[]): Promise<any[]> {
-		if (!collection || ids.length <= 0) {
-			return Promise.reject(new BlApiNotFoundError());
-		}
-
 		let returnObjects = [];
+		if (!collection || ids.length <= 0) {
+			return returnObjects;
+		}
 
 		for (const id of ids) {
 			try {
