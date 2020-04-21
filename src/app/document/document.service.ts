@@ -82,25 +82,23 @@ export class DocumentService {
 		});
 	}
 
-	public getManyByIds(collection, ids: string[]): Promise<any[]> {
+	public async getManyByIds(collection, ids: string[]): Promise<any[]> {
 		if (!collection || ids.length <= 0) {
 			return Promise.reject(new BlApiNotFoundError());
 		}
-		return new Promise((resolve, reject) => {
-			const promArr: Promise<any>[] = [];
 
-			for (const id of ids) {
-				promArr.push(this.getById(collection, id));
+		let returnObjects = [];
+
+		for (const id of ids) {
+			try {
+				let returnObject = await this.getById(collection, id);
+				returnObjects.push(returnObject);
+			} catch (e) {
+				returnObjects.push({ id: id, error: e });
 			}
+		}
 
-			Promise.all(promArr)
-				.then((retVals: any[]) => {
-					resolve(retVals);
-				})
-				.catch((blApiErr: BlApiError) => {
-					reject(blApiErr);
-				});
-		});
+		return returnObjects;
 	}
 
 	public update(collection: string, id: string, data: any): Promise<any> {
