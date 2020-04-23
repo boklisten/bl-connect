@@ -13,6 +13,7 @@ export * from "./src/app/user-session/user-session.service";
 export * from "./src/app/order-pdf/order-pdf.service";
 export * from "./src/app/print-pdf/print-pdf.service";
 
+export * from "./src/app/document-services/booking/booking.service";
 export * from "./src/app/document-services/item/item.service";
 export * from "./src/app/document-services/branch/branch.service";
 export * from "./src/app/document-services/opening-hour/opening-hour.service";
