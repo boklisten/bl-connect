@@ -32,8 +32,8 @@ export class EmailValidationService {
 				.updateWithOperation(
 					BL_CONFIG.collection.emailValidation,
 					confirmationId,
-					BL_CONFIG.emailValidation.confirm.operation,
-					{}
+					{},
+					BL_CONFIG.emailValidation.confirm.operation
 				)
 				.then(() => {
 					resolve(true);
