@@ -260,8 +260,8 @@ export class ApiService {
 	public updateWithOperation(
 		collection: string,
 		id: string,
-		operation: string,
-		data: any
+		data: any,
+		operation: string
 	): Promise<ApiResponse> {
 		return new Promise((resolve, reject) => {
 			this._http
