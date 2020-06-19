@@ -122,6 +122,34 @@ export class DocumentService {
 		});
 	}
 
+	public updateWithOperation(
+		collection: string,
+		id: string,
+		data: any,
+		operation: string
+	): Promise<any> {
+		if (!collection || !id) {
+			return Promise.reject(new BlApiNotFoundError());
+		}
+
+		return new Promise((resolve, reject) => {
+			this._apiService
+				.updateWithOperation(collection, id, data, operation)
+				.then((res: ApiResponse) => {
+					this.getDocIfValid(res)
+						.then((doc: any) => {
+							resolve(doc);
+						})
+						.catch((blApiErr: BlApiError) => {
+							reject(blApiErr);
+						});
+				})
+				.catch((blApiErr: BlApiError) => {
+					reject(blApiErr);
+				});
+		});
+	}
+
 	public add(collection: string, data: any): Promise<any> {
 		if (!collection) {
 			return Promise.reject(new BlApiNotFoundError());

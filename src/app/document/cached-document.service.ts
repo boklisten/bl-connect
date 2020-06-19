@@ -58,6 +58,20 @@ export class CachedDocumentService {
 		return this._documentService.update(collection, id, data);
 	}
 
+	public updateWithOperation(
+		collection: string,
+		id: string,
+		data: string,
+		operation: string
+	): Promise<any> {
+		return this._documentService.updateWithOperation(
+			collection,
+			id,
+			data,
+			operation
+		);
+	}
+
 	public add(collection: string, doc: any): Promise<any> {
 		return this._documentService.add(collection, doc);
 	}

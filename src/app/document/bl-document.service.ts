@@ -57,6 +57,19 @@ export class BlDocumentService<T extends BlDocument> {
 		return this._cachedDocumentService.update(this._collection, id, data);
 	}
 
+	public updateWithOperation(
+		id: string,
+		data: any,
+		operation: string
+	): Promise<T> {
+		return this._cachedDocumentService.updateWithOperation(
+			this._collection,
+			id,
+			data,
+			operation
+		);
+	}
+
 	public add(data: T): Promise<T> {
 		return this._cachedDocumentService.add(this._collection, data);
 	}
