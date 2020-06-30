@@ -33,6 +33,7 @@ import { InvoiceService } from "../document-services/invoice/invoice.service";
 import { CompanyService } from "../document-services/company/company.service";
 import { MatchService } from "../document-services/match/match.service";
 import { BookingService } from "../document-services/booking/booking.service";
+import { UniqueItemService } from "../document-services/unique-item/unique-item.service";
 
 export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
@@ -91,7 +92,8 @@ export function tokenGetter() {
 		InvoiceService,
 		CompanyService,
 		MatchService,
-		BookingService
+		BookingService,
+		UniqueItemService
 	]
 })
 export class BlConnectModule {}

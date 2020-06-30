@@ -63,6 +63,7 @@ export const BL_CONFIG = {
 		message: "messages",
 		invoice: "invoices",
 		match: "matches",
-		booking: "bookings"
+		booking: "bookings",
+		uniqueItem: "uniqueitems"
 	}
 };
