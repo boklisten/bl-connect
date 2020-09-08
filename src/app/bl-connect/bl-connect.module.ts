@@ -47,10 +47,9 @@ export function tokenGetter() {
 			config: {
 				tokenGetter: tokenGetter,
 				whitelistedDomains: [
-					"bladmin.boklisten.co",
-					"api.boklisten.co",
-					"boklisten.co",
-					"www.boklisten.co",
+					"bladmin.test.boklisten.no",
+					"api.test.boklisten.no",
+					"web.test.boklisten.no",
 					"bladmin.boklisten.no",
 					"api.boklisten.no",
 					"boklisten.no",
