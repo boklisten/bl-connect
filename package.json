@@ -1,6 +1,6 @@
 {
 	"name": "@wizardcoder/bl-connect",
-	"version": "0.17.2",
+	"version": "0.17.3",
 	"license": "MIT",
 	"scripts": {
 		"ng": "ng",
