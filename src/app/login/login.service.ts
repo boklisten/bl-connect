@@ -41,6 +41,10 @@ export class LoginService {
 		return this.socialLogin(BL_CONFIG.login.google.url);
 	}
 
+	public feideLogin(): Promise<boolean> {
+		return this.socialLogin(BL_CONFIG.login.feide.url);
+	}
+
 	private socialLogin(url: string): Promise<boolean> {
 		return new Promise((resolve, reject) => {
 			this._apiService

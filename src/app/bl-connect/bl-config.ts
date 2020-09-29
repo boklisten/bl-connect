@@ -15,6 +15,9 @@ export const BL_CONFIG = {
 		},
 		google: {
 			url: "auth/google"
+		},
+		feide: {
+			url: "auth/feide"
 		}
 	},
 	register: {
@@ -26,6 +29,9 @@ export const BL_CONFIG = {
 		},
 		google: {
 			url: "auth/google"
+		},
+		feide: {
+			url: "auth/feide"
 		}
 	},
 	order: {
