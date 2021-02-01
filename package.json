@@ -57,7 +57,7 @@
 		"tslint": "~5.3.2",
 		"typescript": "2.7.2",
 		"webpack": "^4.29.0",
-		"webpack-dev-server": "^2.11.1",
+		"webpack-dev-server": "^3.1.11",
 		"zone.js": "^0.8.26"
 	},
 	"peerDependencies": {
