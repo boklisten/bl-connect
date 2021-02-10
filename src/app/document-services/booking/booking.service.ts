@@ -5,7 +5,7 @@ import { BL_CONFIG } from "../../bl-connect/bl-config";
 import { BlDocumentService } from "../../document/bl-document.service";
 import {
 	CachedDocumentService,
-	CachedDocumentServiceOptions
+	CachedDocumentServiceOptions,
 } from "../../document/cached-document.service";
 
 @Injectable()

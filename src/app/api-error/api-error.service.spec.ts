@@ -17,8 +17,8 @@ describe("ApiErrorService", () => {
 		const httpErrorResponse = {
 			name: "BlLoginRequiredError",
 			error: {
-				code: 909 // refreshToken is invalid
-			}
+				code: 909, // refreshToken is invalid
+			},
 		} as HttpErrorResponse;
 
 		const userSessionLogoutSpy = spyOn(userSessionService, "logout");

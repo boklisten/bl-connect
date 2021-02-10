@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import {
 	BlApiError,
 	BlDocument,
-	BlApiNotFoundError
+	BlApiNotFoundError,
 } from "@boklisten/bl-model";
 import { ApiResponse } from "../api/api-response";
 import { isArray } from "util";
@@ -83,14 +83,14 @@ export class DocumentService {
 	}
 
 	public async getManyByIds(collection, ids: string[]): Promise<any[]> {
-		let returnObjects = [];
+		const returnObjects = [];
 		if (!collection || ids.length <= 0) {
 			return returnObjects;
 		}
 
 		for (const id of ids) {
 			try {
-				let returnObject = await this.getById(collection, id);
+				const returnObject = await this.getById(collection, id);
 				returnObjects.push(returnObject);
 			} catch (e) {
 				returnObjects.push({ id: id, error: e });

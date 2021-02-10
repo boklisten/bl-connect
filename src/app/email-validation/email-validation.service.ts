@@ -15,7 +15,7 @@ export class EmailValidationService {
 			this._apiService
 				.add(BL_CONFIG.collection.emailValidation, {
 					userDetail: userDetailId,
-					email: email
+					email: email,
 				})
 				.then(() => {
 					resolve(true);

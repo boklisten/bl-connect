@@ -1,15 +1,14 @@
-import {TestBed, inject} from '@angular/core/testing';
+import { TestBed, inject } from "@angular/core/testing";
 
-import {OrderPdfService} from './order-pdf.service';
+import { OrderPdfService } from "./order-pdf.service";
 
-
-describe('OrderPdfService', () => {
+describe("OrderPdfService", () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [OrderPdfService]
+			providers: [OrderPdfService],
 		});
 	});
-  /*
+	/*
 	it('should be created', inject([OrderPdfService], (service: OrderPdfService) => {
 		expect(service).toBeTruthy();
 	}));

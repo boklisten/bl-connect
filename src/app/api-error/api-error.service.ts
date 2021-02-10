@@ -6,7 +6,7 @@ import {
 	BlapiErrorResponse,
 	BlApiNotFoundError,
 	BlApiLoginRequiredError,
-	BlApiPermissionDeniedError
+	BlApiPermissionDeniedError,
 } from "@boklisten/bl-model";
 import { UserSessionService } from "../user-session/user-session.service";
 import { BlApiUserAlreadyExistsError } from "@boklisten/bl-model/dist/bl-api-error/bl-api-user-already-exists-error";

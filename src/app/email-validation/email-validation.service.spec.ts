@@ -12,8 +12,8 @@ describe("EmailValidationService", () => {
 		TestBed.configureTestingModule({
 			providers: [
 				EmailValidationService,
-				{ provide: ApiService, useClass: ApiStubService }
-			]
+				{ provide: ApiService, useClass: ApiStubService },
+			],
 		});
 	});
 

@@ -18,7 +18,7 @@ export class ApiTokenService {
 		return new Promise((resolve, reject) => {
 			if (this._tokenService.haveRefreshToken()) {
 				const refreshTokenBody = {
-					refreshToken: this._tokenService.getRefreshToken()
+					refreshToken: this._tokenService.getRefreshToken(),
 				};
 
 				this._http
@@ -27,7 +27,7 @@ export class ApiTokenService {
 						refreshTokenBody
 					)
 					.toPromise()
-					.then(res => {
+					.then((res) => {
 						try {
 							const tokens = this.validateResponseDataTokens(
 								res["data"]

@@ -1,14 +1,9 @@
-import {TestBed, inject} from '@angular/core/testing';
+import { TestBed, inject } from "@angular/core/testing";
 
-import {UserSessionService} from './user-session.service';
+import { UserSessionService } from "./user-session.service";
 
-describe('UserSessionService', () => {
+describe("UserSessionService", () => {
 	const userSessionService = new UserSessionService();
 
-	beforeEach(() => {
-
-	});
-
-
-
+	beforeEach(() => {});
 });

@@ -1,17 +1,17 @@
-import {TestBed, inject} from '@angular/core/testing';
+import { TestBed, inject } from "@angular/core/testing";
 
-import {ApiService} from './api.service';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {ApiErrorService} from "../api-error/api-error.service";
-import {TokenService} from "../token/token.service";
-import {Observable, throwError} from "rxjs";
-import {BlApiError, BlApiNotFoundError} from "@boklisten/bl-model";
-import {ApiResponse} from "./api-response";
-import {ApiTokenService} from "./api-token.service";
-import {ApiRequestService} from "./api-request.service";
-import {UserSessionService} from "../user-session/user-session.service";
+import { ApiService } from "./api.service";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { ApiErrorService } from "../api-error/api-error.service";
+import { TokenService } from "../token/token.service";
+import { Observable, throwError } from "rxjs";
+import { BlApiError, BlApiNotFoundError } from "@boklisten/bl-model";
+import { ApiResponse } from "./api-response";
+import { ApiTokenService } from "./api-token.service";
+import { ApiRequestService } from "./api-request.service";
+import { UserSessionService } from "../user-session/user-session.service";
 
-describe('ApiService', () => {
+describe("ApiService", () => {
 	let service: ApiService;
 	const httpClientServiceMock = {
 		get: (path: string, options?: any) => {
@@ -25,8 +25,7 @@ describe('ApiService', () => {
 		},
 		delete: (path: string, option?: any) => {
 			return Observable.create();
-		}
-
+		},
 	} as HttpClient;
 
 	const tokenServiceMock = {
@@ -34,189 +33,216 @@ describe('ApiService', () => {
 			return true;
 		},
 		getAccessToken: () => {
-			return 'theAccessToken';
-		}
+			return "theAccessToken";
+		},
 	} as TokenService;
-
 
 	const apiTokenServiceMock = {} as ApiTokenService;
 	const apiRequestServiceMock = {
 		getHeaders: () => {},
-		apiPath: (url: string) => 'valid/path',
-		apiPathWithId: (url: string, id: string) => 'valid/path'
+		apiPath: (url: string) => "valid/path",
+		apiPathWithId: (url: string, id: string) => "valid/path",
 	} as ApiRequestService;
 
 	beforeEach(() => {
-		service = new ApiService(httpClientServiceMock, new ApiErrorService(new UserSessionService()),
-			apiRequestServiceMock, apiTokenServiceMock);
+		service = new ApiService(
+			httpClientServiceMock,
+			new ApiErrorService(new UserSessionService()),
+			apiRequestServiceMock,
+			apiTokenServiceMock
+		);
 	});
 
-	describe('#get', () => {
-		it('should reject with BlApiError if url is not defined', (done: DoneFn) => {
-
-			service.get('').catch((err: BlApiError) => {
-				expect(err.msg).toMatch('url is undefined');
+	describe("#get", () => {
+		it("should reject with BlApiError if url is not defined", (done: DoneFn) => {
+			service.get("").catch((err: BlApiError) => {
+				expect(err.msg).toMatch("url is undefined");
 				done();
 			});
 		});
 
-		it('should reject with BlApiNotFoundError when document is not found', (done: DoneFn) => {
-			spyOn(httpClientServiceMock, 'get').and.returnValue(
-				throwError({status: 404}));
+		it("should reject with BlApiNotFoundError when document is not found", (done: DoneFn) => {
+			spyOn(httpClientServiceMock, "get").and.returnValue(
+				throwError({ status: 404 })
+			);
 
-			service.get('a/path').catch((err: BlApiError) => {
-				expect((err instanceof BlApiNotFoundError)).toBeTruthy();
+			service.get("a/path").catch((err: BlApiError) => {
+				expect(err instanceof BlApiNotFoundError).toBeTruthy();
 				done();
 			});
 		});
 	});
 
-	describe('when the httpResponse is success and contains a valid data document', () => {
-		let httpResponseObj: {data: any[]};
+	describe("when the httpResponse is success and contains a valid data document", () => {
+		let httpResponseObj: { data: any[] };
 
 		beforeEach(() => {
 			httpResponseObj = {
 				data: [
-					{documentName: 'aDoc', data: {title: "hello there", price: 100, valid: true}},
-					{documentName: 'aDoc', data: {title: "another Title", price: 400, valid: true}}
-				]
+					{
+						documentName: "aDoc",
+						data: { title: "hello there", price: 100, valid: true },
+					},
+					{
+						documentName: "aDoc",
+						data: {
+							title: "another Title",
+							price: 400,
+							valid: true,
+						},
+					},
+				],
 			};
 
-			spyOn(httpClientServiceMock, 'get').and.returnValue(
-				Observable.create(observer => {
+			spyOn(httpClientServiceMock, "get").and.returnValue(
+				Observable.create((observer) => {
 					observer.next(httpResponseObj);
 					observer.complete();
-				}));
+				})
+			);
 
-			spyOn(httpClientServiceMock, 'patch').and.returnValue(
-				Observable.create(observer => {
+			spyOn(httpClientServiceMock, "patch").and.returnValue(
+				Observable.create((observer) => {
 					observer.next(httpResponseObj);
 					observer.complete();
-				}));
+				})
+			);
 
-			spyOn(httpClientServiceMock, 'post').and.returnValue(
-				Observable.create(observer => {
+			spyOn(httpClientServiceMock, "post").and.returnValue(
+				Observable.create((observer) => {
 					observer.next(httpResponseObj);
 					observer.complete();
-				}));
+				})
+			);
 
-			spyOn(httpClientServiceMock, 'delete').and.returnValue(
-				Observable.create(observer => {
+			spyOn(httpClientServiceMock, "delete").and.returnValue(
+				Observable.create((observer) => {
 					observer.next(httpResponseObj);
 					observer.complete();
-				}));
+				})
+			);
 		});
 
-
-		it('#get() should resolve with correct document', (done: DoneFn) => {
-			service.get('this/is/valid').then((apiRes: ApiResponse) => {
+		it("#get() should resolve with correct document", (done: DoneFn) => {
+			service.get("this/is/valid").then((apiRes: ApiResponse) => {
 				expect(apiRes.data).toEqual(httpResponseObj.data);
 				expect(apiRes.code).toEqual(200);
 				done();
 			});
 		});
 
-		it('#getById() should resolve with correct document', (done: DoneFn) => {
-			service.getById('this/is/valid', 'abc').then((apiRes: ApiResponse) => {
-				expect(apiRes.data).toEqual(httpResponseObj.data);
-				expect(apiRes.code).toEqual(200);
-				done();
-			});
+		it("#getById() should resolve with correct document", (done: DoneFn) => {
+			service
+				.getById("this/is/valid", "abc")
+				.then((apiRes: ApiResponse) => {
+					expect(apiRes.data).toEqual(httpResponseObj.data);
+					expect(apiRes.code).toEqual(200);
+					done();
+				});
 		});
 
-		it('#add() should resolve with correct document', (done: DoneFn) => {
-			service.add('this/is/valid', 'anyData').then((apiRes: ApiResponse) => {
-				expect(apiRes.data).toEqual(httpResponseObj.data);
-				expect(apiRes.code).toEqual(200);
-				done();
-			});
+		it("#add() should resolve with correct document", (done: DoneFn) => {
+			service
+				.add("this/is/valid", "anyData")
+				.then((apiRes: ApiResponse) => {
+					expect(apiRes.data).toEqual(httpResponseObj.data);
+					expect(apiRes.code).toEqual(200);
+					done();
+				});
 		});
 
-		it('#update() should resolve with correct document', (done: DoneFn) => {
-			service.update('this/is/valid', 'abc', {anyData: 'valid'}).then((apiRes: ApiResponse) => {
-				expect(apiRes.data).toEqual(httpResponseObj.data);
-				expect(apiRes.code).toEqual(200);
-				done();
-			});
+		it("#update() should resolve with correct document", (done: DoneFn) => {
+			service
+				.update("this/is/valid", "abc", { anyData: "valid" })
+				.then((apiRes: ApiResponse) => {
+					expect(apiRes.data).toEqual(httpResponseObj.data);
+					expect(apiRes.code).toEqual(200);
+					done();
+				});
 		});
 
-		it('#remove() should resolve with correct document', (done: DoneFn) => {
-			service.remove('this/is/valid', 'abc').then((apiRes: ApiResponse) => {
-				expect(apiRes.data).toEqual(httpResponseObj.data);
-				expect(apiRes.code).toEqual(200);
-				done();
-			});
+		it("#remove() should resolve with correct document", (done: DoneFn) => {
+			service
+				.remove("this/is/valid", "abc")
+				.then((apiRes: ApiResponse) => {
+					expect(apiRes.data).toEqual(httpResponseObj.data);
+					expect(apiRes.code).toEqual(200);
+					done();
+				});
 		});
-
 	});
 
-	describe('when the httpResponse is success, but response document is not valid', () => {
-		const httpResponseObj = {hello: "this is not valid", num: 456};
+	describe("when the httpResponse is success, but response document is not valid", () => {
+		const httpResponseObj = { hello: "this is not valid", num: 456 };
 		const errText = "unknown error, bad response document";
 
 		beforeEach(() => {
-
-			spyOn(httpClientServiceMock, 'get').and.returnValue(
-				Observable.create(observer => {
+			spyOn(httpClientServiceMock, "get").and.returnValue(
+				Observable.create((observer) => {
 					observer.next(httpResponseObj);
 					observer.complete();
-				}));
+				})
+			);
 
-			spyOn(httpClientServiceMock, 'patch').and.returnValue(
-				Observable.create(observer => {
+			spyOn(httpClientServiceMock, "patch").and.returnValue(
+				Observable.create((observer) => {
 					observer.next(httpResponseObj);
 					observer.complete();
-				}));
+				})
+			);
 
-			spyOn(httpClientServiceMock, 'post').and.returnValue(
-				Observable.create(observer => {
+			spyOn(httpClientServiceMock, "post").and.returnValue(
+				Observable.create((observer) => {
 					observer.next(httpResponseObj);
 					observer.complete();
-				}));
+				})
+			);
 
-			spyOn(httpClientServiceMock, 'delete').and.returnValue(
-				Observable.create(observer => {
+			spyOn(httpClientServiceMock, "delete").and.returnValue(
+				Observable.create((observer) => {
 					observer.next(httpResponseObj);
 					observer.complete();
-				}));
-
+				})
+			);
 		});
 
-		it('#get() should reject with error', (done: DoneFn) => {
-			service.get('a/valid/path').catch((err: BlApiError) => {
+		it("#get() should reject with error", (done: DoneFn) => {
+			service.get("a/valid/path").catch((err: BlApiError) => {
 				expect(err.msg).toMatch(errText);
 				done();
 			});
 		});
 
-		it('#getById() should reject with error', (done: DoneFn) => {
-			service.getById('a/valid/path', 'abc').catch((err: BlApiError) => {
+		it("#getById() should reject with error", (done: DoneFn) => {
+			service.getById("a/valid/path", "abc").catch((err: BlApiError) => {
 				expect(err.msg).toMatch(errText);
 				done();
 			});
 		});
 
-		it('#add() should reject with error', (done: DoneFn) => {
-			service.add('a/valid/path', {valid: true}).catch((err: BlApiError) => {
+		it("#add() should reject with error", (done: DoneFn) => {
+			service
+				.add("a/valid/path", { valid: true })
+				.catch((err: BlApiError) => {
+					expect(err.msg).toMatch(errText);
+					done();
+				});
+		});
+
+		it("#update() should reject with error", (done: DoneFn) => {
+			service
+				.update("a/valid/path", "abc", { valid: true })
+				.catch((err: BlApiError) => {
+					expect(err.msg).toMatch(errText);
+					done();
+				});
+		});
+
+		it("#remove() should reject with error", (done: DoneFn) => {
+			service.remove("a/valid/path", "abc").catch((err: BlApiError) => {
 				expect(err.msg).toMatch(errText);
 				done();
 			});
 		});
-
-		it('#update() should reject with error', (done: DoneFn) => {
-			service.update('a/valid/path', 'abc', {valid: true}).catch((err: BlApiError) => {
-				expect(err.msg).toMatch(errText);
-				done();
-			});
-		});
-
-		it('#remove() should reject with error', (done: DoneFn) => {
-			service.remove('a/valid/path', 'abc').catch((err: BlApiError) => {
-				expect(err.msg).toMatch(errText);
-				done();
-			});
-		});
-
-
 	});
 });
