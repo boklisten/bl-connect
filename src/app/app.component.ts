@@ -10,7 +10,7 @@ import { BranchService } from "./document-services/branch/branch.service";
 @Component({
 	selector: "app-root",
 	templateUrl: "./app.component.html",
-	styleUrls: ["./app.component.css"]
+	styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
 	title = "app";
@@ -27,10 +27,10 @@ export class AppComponent implements OnInit {
 			.then(() => {
 				this.branchItemService
 					.get()
-					.then(items => {
+					.then((items) => {
 						console.log("got!", items);
 					})
-					.catch(err => {
+					.catch((err) => {
 						console.log("err", err);
 					});
 			})

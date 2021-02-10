@@ -1,56 +1,56 @@
 export const BL_CONFIG = {
 	api: {
-		basePath: "http://localhost:1337/"
+		basePath: "http://localhost:1337/",
 	},
 	token: {
 		accessToken: "bl-access-token",
-		refreshToken: "bl-refresh-token"
+		refreshToken: "bl-refresh-token",
 	},
 	login: {
 		local: {
-			url: "auth/local/login"
+			url: "auth/local/login",
 		},
 		facebook: {
-			url: "auth/facebook"
+			url: "auth/facebook",
 		},
 		google: {
-			url: "auth/google"
+			url: "auth/google",
 		},
 		feide: {
-			url: "auth/feide"
-		}
+			url: "auth/feide",
+		},
 	},
 	register: {
 		local: {
-			url: "auth/local/register"
+			url: "auth/local/register",
 		},
 		facebook: {
-			url: "auth/facebook"
+			url: "auth/facebook",
 		},
 		google: {
-			url: "auth/google"
+			url: "auth/google",
 		},
 		feide: {
-			url: "auth/feide"
-		}
+			url: "auth/feide",
+		},
 	},
 	order: {
 		receipt: {
-			operation: "receipt"
+			operation: "receipt",
 		},
 		agreement: {
-			operation: "agreement"
-		}
+			operation: "agreement",
+		},
 	},
 	passwordReset: {
 		setNew: {
-			operation: "new"
-		}
+			operation: "new",
+		},
 	},
 	emailValidation: {
 		confirm: {
-			operation: "confirm"
-		}
+			operation: "confirm",
+		},
 	},
 	collection: {
 		item: "items",
@@ -70,6 +70,6 @@ export const BL_CONFIG = {
 		invoice: "invoices",
 		match: "matches",
 		booking: "bookings",
-		uniqueItem: "uniqueitems"
-	}
+		uniqueItem: "uniqueitems",
+	},
 };

@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {BlDocument} from "@boklisten/bl-model";
+import { Injectable } from "@angular/core";
+import { BlDocument } from "@boklisten/bl-model";
 
 interface SimpleCacheObject {
 	doc: any;
@@ -9,7 +9,7 @@ interface SimpleCacheObject {
 @Injectable()
 export class SimpleCache {
 	public refreshTimeMs: number; // a number of milliseconds before the cached object is considered old
-	private _simpleCacheStorage: {[id: string]: SimpleCacheObject};
+	private _simpleCacheStorage: { [id: string]: SimpleCacheObject };
 
 	constructor() {
 		this._simpleCacheStorage = {};
@@ -17,7 +17,10 @@ export class SimpleCache {
 	}
 
 	public add(doc: any) {
-		this._simpleCacheStorage[doc.id] = {doc: doc, time: new Date().getTime()};
+		this._simpleCacheStorage[doc.id] = {
+			doc: doc,
+			time: new Date().getTime(),
+		};
 	}
 
 	public get(id: string): any {
@@ -28,7 +31,7 @@ export class SimpleCache {
 		}
 
 		const now = new Date().getTime();
-		if (simpleCacheObj.time <= (now - this.refreshTimeMs)) {
+		if (simpleCacheObj.time <= now - this.refreshTimeMs) {
 			this._simpleCacheStorage[id] = null;
 			return undefined;
 		}
@@ -45,11 +48,11 @@ export class SimpleCache {
 	}
 
 	public size() {
-		return (Object.keys(this._simpleCacheStorage).length);
+		return Object.keys(this._simpleCacheStorage).length;
 	}
 
 	public print() {
-		for (let key in Object.keys(this._simpleCacheStorage)) {
+		for (const key in Object.keys(this._simpleCacheStorage)) {
 			if (this._simpleCacheStorage.hasOwnProperty(key)) {
 				console.log(key, this._simpleCacheStorage[key]);
 			}

@@ -46,7 +46,7 @@ export function tokenGetter() {
 		JwtModule.forRoot({
 			config: {
 				tokenGetter: tokenGetter,
-				whitelistedDomains: [
+				allowedDomains: [
 					"bladmin.test.boklisten.no",
 					"api.test.boklisten.no",
 					"web.test.boklisten.no",
@@ -55,10 +55,10 @@ export function tokenGetter() {
 					"boklisten.no",
 					"www.boklisten.no",
 					"localhost:1337",
-					"localhost:4200"
-				]
-			}
-		})
+					"localhost:4200",
+				],
+			},
+		}),
 	],
 	declarations: [],
 	providers: [
@@ -92,7 +92,7 @@ export function tokenGetter() {
 		CompanyService,
 		MatchService,
 		BookingService,
-		UniqueItemService
-	]
+		UniqueItemService,
+	],
 })
 export class BlConnectModule {}

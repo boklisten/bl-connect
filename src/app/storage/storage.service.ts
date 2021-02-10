@@ -1,11 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable()
 export class StorageService {
-
-	constructor() {
-
-	}
+	constructor() {}
 
 	public add(key: string, val: string): boolean {
 		/*
@@ -37,11 +34,12 @@ export class StorageService {
 		const storedObj = localStorage.getItem(key);
 
 		if (!storedObj) {
-			throw new Error('could not find stored object with key "' + key + '"');
+			throw new Error(
+				'could not find stored object with key "' + key + '"'
+			);
 		}
 
 		return storedObj;
-
 	}
 
 	public remove(key: string): boolean {
@@ -91,5 +89,4 @@ export class StorageService {
 		return true;
 		*/
 	}
-
 }

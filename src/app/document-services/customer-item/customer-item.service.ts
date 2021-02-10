@@ -4,7 +4,7 @@ import { ApiService } from "../../api/api.service";
 import { BL_CONFIG } from "../../bl-connect/bl-config";
 import {
 	CachedDocumentService,
-	CachedDocumentServiceOptions
+	CachedDocumentServiceOptions,
 } from "../../document/cached-document.service";
 import { BlDocumentService } from "../../document/bl-document.service";
 

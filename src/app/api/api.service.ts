@@ -3,14 +3,14 @@ import { ApiResponse } from "./api-response";
 import {
 	HttpClient,
 	HttpErrorResponse,
-	HttpHeaders
+	HttpHeaders,
 } from "@angular/common/http";
 import { BL_CONFIG } from "../bl-connect/bl-config";
 import {
 	BlapiResponse,
 	BlApiError,
 	BlApiLoginRequiredError,
-	BlApiNotFoundError
+	BlApiNotFoundError,
 } from "@boklisten/bl-model";
 import { ApiErrorService } from "../api-error/api-error.service";
 import { TokenService } from "../token/token.service";
@@ -37,7 +37,7 @@ export class ApiService {
 		return new Promise((resolve, reject) => {
 			this._http
 				.get(this._apiRequestService.apiPath(url, query), {
-					headers: this._apiRequestService.getHeaders()
+					headers: this._apiRequestService.getHeaders(),
 				})
 				.toPromise()
 				.then((res: BlapiResponse) => {
@@ -112,7 +112,7 @@ export class ApiService {
 		return new Promise((resolve, reject) => {
 			this._http
 				.get(this._apiRequestService.apiPathWithId(collection, id), {
-					headers: this._apiRequestService.getHeaders()
+					headers: this._apiRequestService.getHeaders(),
 				})
 				.toPromise()
 				.then((res: BlapiResponse) => {
@@ -150,7 +150,7 @@ export class ApiService {
 									id
 								),
 								{
-									headers: this._apiRequestService.getHeaders()
+									headers: this._apiRequestService.getHeaders(),
 								}
 							)
 							.toPromise()
@@ -174,7 +174,7 @@ export class ApiService {
 		return new Promise((resolve, reject) => {
 			this._http
 				.post(this._apiRequestService.apiPath(collection), data, {
-					headers: this._apiRequestService.getHeaders()
+					headers: this._apiRequestService.getHeaders(),
 				})
 				.toPromise()
 				.then((res: BlapiResponse) => {
@@ -209,7 +209,7 @@ export class ApiService {
 								this._apiRequestService.apiPath(collection),
 								data,
 								{
-									headers: this._apiRequestService.getHeaders()
+									headers: this._apiRequestService.getHeaders(),
 								}
 							)
 							.toPromise()
@@ -309,7 +309,7 @@ export class ApiService {
 								),
 								data,
 								{
-									headers: this._apiRequestService.getHeaders()
+									headers: this._apiRequestService.getHeaders(),
 								}
 							)
 							.toPromise()
@@ -333,7 +333,7 @@ export class ApiService {
 		return new Promise((resolve, reject) => {
 			this._http
 				.delete(this._apiRequestService.apiPathWithId(collection, id), {
-					headers: this._apiRequestService.getHeaders()
+					headers: this._apiRequestService.getHeaders(),
 				})
 				.toPromise()
 				.then((res: BlapiResponse) => {
@@ -370,7 +370,7 @@ export class ApiService {
 									id
 								),
 								{
-									headers: this._apiRequestService.getHeaders()
+									headers: this._apiRequestService.getHeaders(),
 								}
 							)
 							.toPromise()

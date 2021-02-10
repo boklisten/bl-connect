@@ -1,8 +1,6 @@
+import { StorageService } from "./storage.service";
 
-import {StorageService} from './storage.service';
-
-
-describe('StorageService', () => {
+describe("StorageService", () => {
 	let service: StorageService;
 
 	beforeEach(() => {
@@ -10,33 +8,33 @@ describe('StorageService', () => {
 		service.removeAll();
 	});
 
-	describe('#add', () => {
-		it('should return true and store the correct value when key and value are valid', () => {
-			const key = 'theKey';
-			const val = 'theVal';
+	describe("#add", () => {
+		it("should return true and store the correct value when key and value are valid", () => {
+			const key = "theKey";
+			const val = "theVal";
 			expect(service.add(key, val)).toBeTruthy();
 			expect(service.get(key)).toEqual(val);
 		});
 
-		it('should store the value with a cookie if localStorage is not supported', () => {
-			const key = 'theKey';
-			const val = 'theVal';
+		it("should store the value with a cookie if localStorage is not supported", () => {
+			const key = "theKey";
+			const val = "theVal";
 
 			expect(service.add(key, val)).toBeTruthy();
 		});
 	});
 
-	describe('#get', () => {
-		it('should return the correct value', () => {
-			const key = 'theKey';
-			const val = 'theVal';
+	describe("#get", () => {
+		it("should return the correct value", () => {
+			const key = "theKey";
+			const val = "theVal";
 
 			expect(service.add(key, val)).toBeTruthy();
 			expect(service.get(key)).toEqual(val);
 		});
 
-		it('should throw error when the key is not found', () => {
-			const key = 'notFound';
+		it("should throw error when the key is not found", () => {
+			const key = "notFound";
 
 			expect(() => {
 				service.get(key);
@@ -44,10 +42,10 @@ describe('StorageService', () => {
 		});
 	});
 
-	describe('#remove', () => {
-		it('should remove the given key', () => {
-			const key = 'superDuperKey';
-			const val = 'theVal';
+	describe("#remove", () => {
+		it("should remove the given key", () => {
+			const key = "superDuperKey";
+			const val = "theVal";
 
 			service.add(key, val);
 			service.remove(key);
@@ -57,26 +55,25 @@ describe('StorageService', () => {
 		});
 	});
 
-	describe('#removeAll', () => {
-		it('should remove all the keys in store', () => {
-			service.add('superKey', 'superVal');
-			service.add('kill', 'me');
-			service.add('some', 'value');
+	describe("#removeAll", () => {
+		it("should remove all the keys in store", () => {
+			service.add("superKey", "superVal");
+			service.add("kill", "me");
+			service.add("some", "value");
 
 			service.removeAll();
 
 			expect(() => {
-				service.get('superKey');
+				service.get("superKey");
 			}).toThrowError(/could not find/);
 
 			expect(() => {
-				service.get('kill');
+				service.get("kill");
 			}).toThrowError(/could not find/);
 
 			expect(() => {
-				service.get('some');
+				service.get("some");
 			}).toThrowError(/could not find/);
 		});
 	});
-
 });

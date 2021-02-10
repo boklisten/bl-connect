@@ -1,13 +1,11 @@
-import {Injectable} from '@angular/core';
-import { saveAs } from 'file-saver';
+import { Injectable } from "@angular/core";
+import { saveAs } from "file-saver";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class PrintPdfService {
-
-	constructor() {
-	}
+	constructor() {}
 
 	public printPdf(encodedPdfContent: string, filename: string) {
 		const byteCharacters = atob(encodedPdfContent);
@@ -16,7 +14,9 @@ export class PrintPdfService {
 			byteNumbers[i] = byteCharacters.charCodeAt(i);
 		}
 
-		const blob = new Blob([new Uint8Array(byteNumbers)], {type: 'application/pdf;charset=utf-8'})
+		const blob = new Blob([new Uint8Array(byteNumbers)], {
+			type: "application/pdf;charset=utf-8",
+		});
 		saveAs(blob, filename);
 	}
 }
