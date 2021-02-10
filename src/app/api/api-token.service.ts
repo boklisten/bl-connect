@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { TokenService } from "../token/token.service";
-import { BlApiError, BlApiLoginRequiredError } from "@wizardcoder/bl-model";
+import { BlApiError, BlApiLoginRequiredError } from "@boklisten/bl-model";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { ApiRequestService } from "./api-request.service";
 import { ApiErrorService } from "../api-error/api-error.service";

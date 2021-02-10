@@ -3,7 +3,7 @@ import {
 	BlApiError,
 	BlDocument,
 	BlApiNotFoundError
-} from "@wizardcoder/bl-model";
+} from "@boklisten/bl-model";
 import { ApiResponse } from "../api/api-response";
 import { isArray } from "util";
 import { ApiService } from "../api/api.service";

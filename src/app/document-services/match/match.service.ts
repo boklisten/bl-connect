@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Match } from "@wizardcoder/bl-model";
+import { Match } from "@boklisten/bl-model";
 import { ApiService } from "../../api/api.service";
 import { BL_CONFIG } from "../../bl-connect/bl-config";
 import {

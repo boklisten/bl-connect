@@ -1,7 +1,7 @@
 
 
 import {ApiService} from "../api/api.service";
-import {BlApiError, BlApiLoginRequiredError, BlApiNotFoundError, BlApiPermissionDeniedError, Branch} from "@wizardcoder/bl-model";
+import {BlApiError, BlApiLoginRequiredError, BlApiNotFoundError, BlApiPermissionDeniedError, Branch} from "@boklisten/bl-model";
 import {DocumentService} from "./document.service";
 describe('DocumentService', () => {
 	let service: DocumentService;

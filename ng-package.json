@@ -2,5 +2,5 @@
 	"lib": {
 		"entryFile": "public_api.ts"
 	},
-	"dest": "./dist/@wizardcoder/bl-connect"
+	"dest": "./dist/@boklisten/bl-connect"
 }

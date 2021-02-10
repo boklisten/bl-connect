@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BlApiError, UserDetail } from "@wizardcoder/bl-model";
+import { BlApiError, UserDetail } from "@boklisten/bl-model";
 import { ApiService } from "../../api/api.service";
 import { BL_CONFIG } from "../../bl-connect/bl-config";
 import {

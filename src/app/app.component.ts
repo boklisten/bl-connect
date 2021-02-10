@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MessageService } from "./document-services/message/message.service";
 import { LoginService } from "./login/login.service";
 import { UserDetailService } from "./document-services/user-detail/user-detail.service";
-import { TextBlock, Order, CustomerItem } from "@wizardcoder/bl-model";
+import { TextBlock, Order, CustomerItem } from "@boklisten/bl-model";
 import { OrderService } from "./document-services/order/order.service";
 import { CustomerItemService } from "./document-services/customer-item/customer-item.service";
 import { BranchService } from "./document-services/branch/branch.service";

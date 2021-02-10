@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { UniqueItem } from "@wizardcoder/bl-model";
+import { UniqueItem } from "@boklisten/bl-model";
 import { BL_CONFIG } from "../../bl-connect/bl-config";
 import {
 	CachedDocumentService,

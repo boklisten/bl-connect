@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AccessToken, RefreshToken} from "@wizardcoder/bl-model";
+import {AccessToken, RefreshToken} from "@boklisten/bl-model";
 import {StorageService} from "../storage/storage.service";
 import {BL_CONFIG} from "../bl-connect/bl-config";
 import {JwtHelperService} from "@auth0/angular-jwt";

@@ -5,7 +5,7 @@ import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http"
 import {TokenService} from "../token/token.service";
 import {ApiRequestService} from "./api-request.service";
 import {Observable, throwError} from "rxjs";
-import {BlApiError, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "@wizardcoder/bl-model";
+import {BlApiError, BlApiLoginRequiredError, BlApiPermissionDeniedError} from "@boklisten/bl-model";
 import {ApiResponse} from "./api-response";
 import {ApiErrorService} from "../api-error/api-error.service";
 import {UserSessionService} from "../user-session/user-session.service";

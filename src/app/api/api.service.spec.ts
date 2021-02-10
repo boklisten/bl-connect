@@ -5,7 +5,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {ApiErrorService} from "../api-error/api-error.service";
 import {TokenService} from "../token/token.service";
 import {Observable, throwError} from "rxjs";
-import {BlApiError, BlApiNotFoundError} from "@wizardcoder/bl-model";
+import {BlApiError, BlApiNotFoundError} from "@boklisten/bl-model";
 import {ApiResponse} from "./api-response";
 import {ApiTokenService} from "./api-token.service";
 import {ApiRequestService} from "./api-request.service";

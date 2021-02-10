@@ -11,7 +11,7 @@ import {
 	BlApiError,
 	BlApiLoginRequiredError,
 	BlApiNotFoundError
-} from "@wizardcoder/bl-model";
+} from "@boklisten/bl-model";
 import { ApiErrorService } from "../api-error/api-error.service";
 import { TokenService } from "../token/token.service";
 import { ApiRequestService } from "./api-request.service";

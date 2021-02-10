@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { DocumentService } from "./document.service";
-import { BlDocument } from "@wizardcoder/bl-model";
+import { BlDocument } from "@boklisten/bl-model";
 import { SimpleCache } from "../simple-cache/simple-cache.service";
 import { s } from "@angular/core/src/render3";
 

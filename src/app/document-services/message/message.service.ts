@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Message } from "@wizardcoder/bl-model";
+import { Message } from "@boklisten/bl-model";
 import { ApiService } from "../../api/api.service";
 import { BL_CONFIG } from "../../bl-connect/bl-config";
 import {

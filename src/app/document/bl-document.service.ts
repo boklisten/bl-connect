@@ -6,7 +6,7 @@ import {
 	CachedDocumentService,
 	CachedDocumentServiceOptions
 } from "../document/cached-document.service";
-import { BlDocument } from "@wizardcoder/bl-model";
+import { BlDocument } from "@boklisten/bl-model";
 
 @Injectable()
 export class BlDocumentService<T extends BlDocument> {

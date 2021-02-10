@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Booking } from "@wizardcoder/bl-model";
+import { Booking } from "@boklisten/bl-model";
 import { ApiService } from "../../api/api.service";
 import { BL_CONFIG } from "../../bl-connect/bl-config";
 import { BlDocumentService } from "../../document/bl-document.service";

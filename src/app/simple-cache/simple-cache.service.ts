@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BlDocument} from "@wizardcoder/bl-model";
+import {BlDocument} from "@boklisten/bl-model";
 
 interface SimpleCacheObject {
 	doc: any;
