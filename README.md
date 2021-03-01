@@ -4,12 +4,12 @@ A connecter module for talking to the **bl-api** from a Angular application. It
 should be viewed as a communication module only. Every HTTP request to `bl-api`
 is done through `bl-connect`.
 
-For more documentation [please read bl-doc](https://github.com/holskil/bl-doc/blob/master/README.md)
+For more documentation [please read bl-doc](https://github.com/boklisten/bl-doc/blob/master/README.md)
 
 # Requirements
 
 -   [Angular 5+](https://angular.io)
--   [bl-model](https://github.com/holskil/bl-model)
+-   [bl-model](https://github.com/boklisten/bl-model)
 -   [NPM](https://npmjs.org)
 
 # How to install
