@@ -1,11 +1,9 @@
 import { Injectable } from "@angular/core";
 import {
 	BlApiError,
-	BlDocument,
 	BlApiNotFoundError,
 } from "@boklisten/bl-model";
 import { ApiResponse } from "../api/api-response";
-import { isArray } from "util";
 import { ApiService } from "../api/api.service";
 
 @Injectable()
@@ -228,7 +226,7 @@ export class DocumentService {
 	}
 
 	private validateAndGetDocs(apiResponse: ApiResponse): any[] {
-		if (!isArray(apiResponse.data)) {
+		if (!Array.isArray(apiResponse.data)) {
 			throw new Error("response data is not an array");
 		}
 

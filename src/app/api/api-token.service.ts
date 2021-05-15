@@ -55,9 +55,10 @@ export class ApiTokenService {
 		});
 	}
 
-	private validateResponseDataTokens(
-		tokens: any[]
-	): { accessToken: string; refreshToken: string } {
+	private validateResponseDataTokens(tokens: any[]): {
+		accessToken: string;
+		refreshToken: string;
+	} {
 		let refreshToken = "";
 		let accessToken = "";
 

@@ -3,20 +3,15 @@ import { ApiResponse } from "./api-response";
 import {
 	HttpClient,
 	HttpErrorResponse,
-	HttpHeaders,
 } from "@angular/common/http";
-import { BL_CONFIG } from "../bl-connect/bl-config";
 import {
 	BlapiResponse,
 	BlApiError,
-	BlApiLoginRequiredError,
 	BlApiNotFoundError,
 } from "@boklisten/bl-model";
 import { ApiErrorService } from "../api-error/api-error.service";
-import { TokenService } from "../token/token.service";
 import { ApiRequestService } from "./api-request.service";
 import { ApiTokenService } from "./api-token.service";
-import { isArray } from "util";
 
 @Injectable()
 export class ApiService {
@@ -150,7 +145,8 @@ export class ApiService {
 									id
 								),
 								{
-									headers: this._apiRequestService.getHeaders(),
+									headers:
+										this._apiRequestService.getHeaders(),
 								}
 							)
 							.toPromise()
@@ -209,7 +205,8 @@ export class ApiService {
 								this._apiRequestService.apiPath(collection),
 								data,
 								{
-									headers: this._apiRequestService.getHeaders(),
+									headers:
+										this._apiRequestService.getHeaders(),
 								}
 							)
 							.toPromise()
@@ -309,7 +306,8 @@ export class ApiService {
 								),
 								data,
 								{
-									headers: this._apiRequestService.getHeaders(),
+									headers:
+										this._apiRequestService.getHeaders(),
 								}
 							)
 							.toPromise()
@@ -370,7 +368,8 @@ export class ApiService {
 									id
 								),
 								{
-									headers: this._apiRequestService.getHeaders(),
+									headers:
+										this._apiRequestService.getHeaders(),
 								}
 							)
 							.toPromise()
@@ -416,7 +415,7 @@ export class ApiService {
 	}
 
 	private validateResponse(res: any) {
-		if (!res.data && !isArray(res.data)) {
+		if (!res.data && !Array.isArray(res.data)) {
 			throw new Error(
 				'BlApiDocumentError: mandatory field "data" not defined or is not an array'
 			);

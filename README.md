@@ -8,7 +8,7 @@ For more documentation [please read bl-doc](https://github.com/boklisten/bl-doc/
 
 # Requirements
 
--   [Angular 5+](https://angular.io)
+-   [Angular 12+](https://angular.io)
 -   [bl-model](https://github.com/boklisten/bl-model)
 -   [NPM](https://npmjs.org)
 
@@ -17,8 +17,8 @@ For more documentation [please read bl-doc](https://github.com/boklisten/bl-doc/
 > To install **bl-connect** to your own Angular project. Do the following in a Terminal:
 
 ```bash
-cd path/to/your/own/angular-project
-npm install bl-connect
+$ cd path/to/your/own/angular-project
+$ yarn install
 ```
 
 ### Important to remember!
