@@ -3,14 +3,13 @@
 	"version": "0.19.1",
 	"license": "MIT",
 	"scripts": {
-		"ng": "ng",
-		"start": "ng serve --aot --port 4200",
-		"watch": "npm start",
-		"test": "ng test",
-		"lint": "eslint . --ignore-path .gitignore --fix",
-		"prettier": "prettier --write . --ignore-path .gitignore",
-		"e2e": "ng e2e",
+		"dev": "npm serve",
 		"build": "ng-packagr -p package.json",
+		"serve": "ng serve --aot --port 4200",
+		"prettier": "prettier --write '**/*.{html,js,ts,tsx,md,json,yml,css,scss}' --ignore-path=.gitignore",
+		"prettier:check": "prettier --check '**/*.{html,js,ts,tsx,md,json,yml,css,scss}' --ignore-path=.gitignore",
+		"lint": "eslint . --ignore-path .gitignore",
+		"test": "ng test",
 		"pub": "npm run build && npm publish ./dist/@boklisten/bl-connect"
 	},
 	"ngPackage": {
