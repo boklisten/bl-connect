@@ -60,7 +60,7 @@ export class ApiErrorService {
 				return new BlApiNotFoundError();
 			default:
 				const err = new BlApiError();
-				err.msg = "unknown error";
+				err.msg = httpError.error.msg;
 				return err;
 		}
 	}
