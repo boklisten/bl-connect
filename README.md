@@ -11,7 +11,7 @@ For more documentation [please read bl-doc](https://github.com/boklisten/bl-doc/
 -   [Angular 5+](https://angular.io)
 -   [bl-model](https://github.com/boklisten/bl-model)
 -   [NPM](https://npmjs.org)
-- Node 10
+-   Node 10
 
 # How to install
 
