@@ -10,8 +10,7 @@ For more documentation [please read bl-doc](https://github.com/boklisten/bl-doc/
 
 -   [Angular 5+](https://angular.io)
 -   [bl-model](https://github.com/boklisten/bl-model)
--   [NPM](https://npmjs.org)
--   Node 10
+-   [Yarn](https://yarnpkg.com/)
 
 # How to install
 
@@ -19,7 +18,7 @@ For more documentation [please read bl-doc](https://github.com/boklisten/bl-doc/
 
 ```bash
 cd path/to/your/own/angular-project
-npm install bl-connect
+yarn add bl-connect
 ```
 
 ### Important to remember!

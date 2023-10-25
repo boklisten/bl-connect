@@ -1,81 +1,81 @@
 {
-	"name": "@boklisten/bl-connect",
-	"version": "0.19.6",
-	"license": "MIT",
-	"scripts": {
-		"dev": "npm serve",
-		"build": "ng-packagr -p package.json",
-		"serve": "ng serve --aot --port 4200",
-		"prettier": "prettier --write '**/*.{html,js,ts,tsx,md,json,yml,css,scss}' --ignore-path=.gitignore",
-		"prettier:check": "prettier --check '**/*.{html,js,ts,tsx,md,json,yml,css,scss}' --ignore-path=.gitignore",
-		"lint": "eslint . --ignore-path .gitignore",
-		"test": "ng test",
-		"pub": "npm run build && npm publish ./dist/@boklisten/bl-connect"
-	},
-	"ngPackage": {
-		"lib": {
-			"entryFile": "public_api.ts"
-		},
-		"dest": "./dist/@boklisten/bl-connect"
-	},
-	"$schema": "../../node_modules/ng-packagr/package.schema.json",
-	"private": false,
-	"devDependencies": {
-		"@angular-devkit/build-angular": "~0.1101.4",
-		"@angular-devkit/core": "^11.1.4",
-		"@angular/cli": "^11.1.4",
-		"@angular/common": "^11.1.2",
-		"@angular/compiler": "^11.1.2",
-		"@angular/compiler-cli": "^11.1.2",
-		"@angular/core": "^11.1.2",
-		"@angular/forms": "^11.1.2",
-		"@angular/language-service": "^11.1.2",
-		"@angular/platform-browser": "^11.1.2",
-		"@angular/platform-browser-dynamic": "^11.1.2",
-		"@auth0/angular-jwt": "^5.0.2",
-		"@boklisten/bl-model": "^0.25.20",
-		"@types/jasmine": "~3.6.3",
-		"@types/jasminewd2": "~2.0.8",
-		"@types/node": "^14.14.25",
-		"@typescript-eslint/eslint-plugin": "^4.15.0",
-		"@typescript-eslint/parser": "^4.15.0",
-		"codelyzer": "^6.0.1",
-		"core-js": "^3.8.3",
-		"eslint": "^7.19.0",
-		"file-saver": "^2.0.0",
-		"jasmine-core": "~3.6.0",
-		"jasmine-spec-reporter": "~6.0.0",
-		"karma": "~6.1.0",
-		"karma-chrome-launcher": "~3.1.0",
-		"karma-cli": "~2.0.0",
-		"karma-coverage-istanbul-reporter": "~3.0.3",
-		"karma-jasmine": "~4.0.1",
-		"karma-jasmine-html-reporter": "^1.5.4",
-		"ng-packagr": "^11.2.0",
-		"prettier": "^2.2.1",
-		"protractor": "~7.0.0",
-		"rxjs": "^6.6.3",
-		"ts-node": "~9.1.1",
-		"typescript": "^4.1.4",
-		"webpack": "^4.46.0",
-		"webpack-dev-server": "^3.11.2",
-		"zone.js": "~0.11.3"
-	},
-	"peerDependencies": {
-		"file-saver": "^2.0.5"
-	},
-	"description": "A connecter module for talking to the **bl-api** from a Angular application. It should be viewed as a communication module only. Every HTTP request to `bl-api` is done through `bl-connect`.",
-	"main": "karma.conf.js",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/boklisten/bl-connect.git"
-	},
-	"author": "",
-	"bugs": {
-		"url": "https://github.com/boklisten/bl-connect/issues"
-	},
-	"homepage": "https://github.com/boklisten/bl-connect#readme",
-	"dependencies": {
-		"tslib": "^2.1.0"
-	}
+  "name": "@boklisten/bl-connect",
+  "version": "0.19.6",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn serve",
+    "build": "ng-packagr -p package.json",
+    "serve": "ng serve --aot --port 4200",
+    "prettier": "prettier --write '**/*.{html,js,ts,tsx,md,json,yml,css,scss}' --ignore-path=.gitignore",
+    "prettier:check": "prettier --check '**/*.{html,js,ts,tsx,md,json,yml,css,scss}' --ignore-path=.gitignore",
+    "lint": "eslint . --ignore-path .gitignore",
+    "test": "ng test",
+    "pub": "yarn build && npm publish ./dist/@boklisten/bl-connect"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "public_api.ts"
+    },
+    "dest": "./dist/@boklisten/bl-connect"
+  },
+  "$schema": "../../node_modules/ng-packagr/package.schema.json",
+  "private": false,
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.1102.14",
+    "@angular-devkit/core": "^11.1.4",
+    "@angular/cli": "^11.1.4",
+    "@angular/common": "^11.1.2",
+    "@angular/compiler": "^11.1.2",
+    "@angular/compiler-cli": "^11.1.2",
+    "@angular/core": "^11.1.2",
+    "@angular/forms": "^11.1.2",
+    "@angular/language-service": "^11.1.2",
+    "@angular/platform-browser": "^11.1.2",
+    "@angular/platform-browser-dynamic": "^11.1.2",
+    "@auth0/angular-jwt": "^5.0.2",
+    "@boklisten/bl-model": "^0.25.20",
+    "@types/jasmine": "~3.6.3",
+    "@types/jasminewd2": "~2.0.8",
+    "@types/node": "^14.14.25",
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "codelyzer": "^6.0.1",
+    "core-js": "^3.8.3",
+    "eslint": "^7.19.0",
+    "file-saver": "^2.0.0",
+    "jasmine-core": "~3.6.0",
+    "jasmine-spec-reporter": "~6.0.0",
+    "karma": "~6.1.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-cli": "~2.0.0",
+    "karma-coverage-istanbul-reporter": "~3.0.3",
+    "karma-jasmine": "~4.0.1",
+    "karma-jasmine-html-reporter": "^1.5.4",
+    "ng-packagr": "^11.2.0",
+    "prettier": "^2.2.1",
+    "protractor": "~7.0.0",
+    "rxjs": "^6.6.3",
+    "ts-node": "~9.1.1",
+    "typescript": "^4.1.4",
+    "webpack": "^4.46.0",
+    "webpack-dev-server": "^3.11.2",
+    "zone.js": "~0.11.3"
+  },
+  "peerDependencies": {
+    "file-saver": "^2.0.5"
+  },
+  "description": "A connecter module for talking to the **bl-api** from a Angular application. It should be viewed as a communication module only. Every HTTP request to `bl-api` is done through `bl-connect`.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boklisten/bl-connect.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/boklisten/bl-connect/issues"
+  },
+  "homepage": "https://github.com/boklisten/bl-connect#readme",
+  "dependencies": {
+    "tslib": "^2.1.0"
+  }
 }
