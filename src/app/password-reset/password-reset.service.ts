@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "../api/api.service";
 import { BL_CONFIG } from "../bl-connect/bl-config";
-import { BlApiError, PasswordResetConfirmationRequest  } from "@boklisten/bl-model";
+import {
+	BlApiError,
+	PasswordResetConfirmationRequest,
+} from "@boklisten/bl-model";
 
 @Injectable()
 export class PasswordResetService {
@@ -10,7 +13,9 @@ export class PasswordResetService {
 	public requestPasswordResetLink(email: string): Promise<boolean> {
 		return new Promise((resolve, reject) => {
 			this._apiService
-				.add(BL_CONFIG.collection.pendingPasswordReset, { email: email })
+				.add(BL_CONFIG.collection.pendingPasswordReset, {
+					email: email,
+				})
 				.then(() => {
 					resolve(true);
 				})
