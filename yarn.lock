@@ -1215,11 +1215,11 @@
     to-fast-properties "^2.0.0"
 
 "@boklisten/bl-model@^0.25.20":
-  version "0.25.20"
-  resolved "https://registry.yarnpkg.com/@boklisten/bl-model/-/bl-model-0.25.20.tgz#17d6ddaacdcd842accbcc0b249d73d8189e21a55"
-  integrity sha512-9YhGzZMt4GY4tnIyuqkrQTSSfUv0dwy9mFSt0MZEj1eMW0Ri5g0PVem1UPnCoXHUmRklBJs4xwdnUhZ92kcRwA==
+  version "0.25.24"
+  resolved "https://registry.yarnpkg.com/@boklisten/bl-model/-/bl-model-0.25.24.tgz#5f6f9a28143ce0d125d22dc9f315233c699c270a"
+  integrity sha512-Z8VWtStV4x3zdkxzqwXaSuEXsN4DKqmw7PXdl8l5DWdqzyDqOtc/zBRD8h8cw7+Pg6xg3MmW7fTJ3mt+ej+KLQ==
   dependencies:
-    typescript "^4.5.2"
+    typescript "^5.2.2"
 
 "@discoveryjs/json-ext@0.5.2":
   version "0.5.2"
@@ -9732,10 +9732,10 @@ typescript@^4.1.4:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.4.tgz#f058636e2f4f83f94ddaae07b20fd5e14598432f"
   integrity sha512-+Uru0t8qIRgjuCpiSPpfGuhHecMllk5Zsazj5LZvVsEStEjmIRRBZe+jHjGQvsgS7M1wONy2PQXd67EMyV6acg==
 
-typescript@^4.5.2:
-  version "4.9.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
-  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
+typescript@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
+  integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
 
 ua-parser-js@^0.7.23:
   version "0.7.23"
