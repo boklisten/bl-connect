@@ -25,8 +25,15 @@ export class PasswordResetService {
 		});
 	}
 
-	public setNewPassword(newPassword: string, id: string): Promise<boolean> {
-		const data: PasswordResetConfirmationRequest = { newPassword };
+	public setNewPassword(
+		newPassword: string,
+		id: string,
+		resetToken: string
+	): Promise<boolean> {
+		const data: PasswordResetConfirmationRequest = {
+			resetToken,
+			newPassword,
+		};
 		return new Promise((resolve, reject) => {
 			this._apiService
 				.updateWithOperation(
