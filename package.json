@@ -10,6 +10,7 @@
 		"prettier:check": "prettier --check '**/*.{html,js,ts,tsx,md,json,yml,css,scss}' --ignore-path=.gitignore",
 		"lint": "eslint . --ignore-path .gitignore",
 		"test": "ng test",
+		"blink": "yarn build && cd dist/@boklisten/bl-connect && yarn link",
 		"pub": "yarn build && cd dist/@boklisten/bl-connect && npm publish"
 	},
 	"ngPackage": {
