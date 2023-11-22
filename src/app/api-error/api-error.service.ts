@@ -7,8 +7,8 @@ import {
 	BlApiPermissionDeniedError,
 } from "@boklisten/bl-model";
 import { UserSessionService } from "../user-session/user-session.service";
-import { BlApiUserAlreadyExistsError } from "@boklisten/bl-model/bl-api-error/bl-api-user-already-exists-error";
-import { BlApiUsernameAndPasswordError } from "@boklisten/bl-model/bl-api-error/bl-api-username-and-password-error";
+import { BlApiUserAlreadyExistsError } from "@boklisten/bl-model";
+import { BlApiUsernameAndPasswordError } from "@boklisten/bl-model";
 
 @Injectable()
 export class ApiErrorService {

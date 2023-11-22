@@ -42,9 +42,9 @@ export const BL_CONFIG = {
 			operation: "agreement",
 		},
 	},
-	passwordReset: {
-		setNew: {
-			operation: "new",
+	pendingPasswordReset: {
+		confirm: {
+			operation: "confirm",
 		},
 	},
 	emailValidation: {
@@ -63,7 +63,7 @@ export const BL_CONFIG = {
 		orderItem: "orderItems",
 		payment: "payments",
 		delivery: "deliveries",
-		passwordReset: "passwordresets",
+		pendingPasswordReset: "pendingpasswordresets",
 		company: "companies",
 		emailValidation: "email_validations",
 		message: "messages",
