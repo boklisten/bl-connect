@@ -74,6 +74,6 @@ export const BL_CONFIG = {
 		editableTexts: "editabletexts",
 	},
 	editableTextIds: {
-		newsBanner: "63ea54d2e0f02e004839f6da",
+		newsBanner: "65a7f68e81488330ddcd6fd3",
 	},
 };
