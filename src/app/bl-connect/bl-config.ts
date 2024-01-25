@@ -71,5 +71,9 @@ export const BL_CONFIG = {
 		match: "matches",
 		booking: "bookings",
 		uniqueItem: "uniqueitems",
+		editableTexts: "editabletexts",
+	},
+	editableTextIds: {
+		newsBanner: "65a7f68e81488330ddcd6fd3",
 	},
 };
