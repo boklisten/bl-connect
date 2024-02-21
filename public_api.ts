@@ -33,3 +33,4 @@ export * from "./src/app/document-services/match/match.service";
 export * from "./src/app/document-services/unique-item/unique-item.service";
 
 export * from "./src/app/document-services/editable-text/editable-text.service";
+export * from "./src/app/document-services/signature/signature.service";
