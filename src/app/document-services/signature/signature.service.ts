@@ -19,6 +19,7 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 	public async hasValidSignature(
 		userDetail: UserDetail,
 		userDetailService: UserDetailService,
+		now: Date,
 	): Promise<boolean> {
 		if (userDetail.signatures.length === 0) {
 			return false;
@@ -27,18 +28,17 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 		const latestSignature = await this.getById(
 			userDetail.signatures[0],
 		);
-		if (this.isSignatureExpired(latestSignature)) {
+		if (this.isSignatureExpired(latestSignature, now)) {
 			return false;
 		}
 
-		return userDetailService.isUnderage(userDetail) === latestSignature.signedByGuardian;
+		return userDetailService.isUnderage(userDetail, now) === latestSignature.signedByGuardian;
 	}
 
-	public isSignatureExpired(signature: SignatureMetadata): boolean {
+	public isSignatureExpired(signature: SignatureMetadata, now: Date): boolean {
 		if (!signature.creationTime) {
 			return true;
 		}
-		const now = new Date();
 		const oldestAllowedSignatureTime = new Date(
 			now.getFullYear(),
 			now.getMonth() - SignatureMetadata.NUM_MONTHS_VALID,

@@ -12,7 +12,7 @@ export class UserDetailService extends BlDocumentService<UserDetail> {
 	}
 
 	public isValid(
-		id: string
+		id: string,
 	): Promise<{ valid: boolean; invalidFields?: string[] }> {
 		return this._cachedDocumentService
 			.getWithOperation(this._collection, id, "valid", { fresh: true })
@@ -22,19 +22,18 @@ export class UserDetailService extends BlDocumentService<UserDetail> {
 					invalidFields?: string[];
 				}) => {
 					return userDetailValidObject;
-				}
+				},
 			)
 			.catch((blApiError: BlApiError) => {
 				throw blApiError;
 			});
 	}
 
-	public isUnderage(userDetail: UserDetail): boolean {
-		const now = new Date();
+	public isUnderage(userDetail: UserDetail, now: Date): boolean {
 		const latestAdultBirthDate = new Date(
 			now.getFullYear() - 18,
 			now.getMonth(),
-			now.getDate()
+			now.getDate(),
 		);
 
 		return userDetail.dob > latestAdultBirthDate;
