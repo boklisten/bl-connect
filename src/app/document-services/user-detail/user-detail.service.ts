@@ -1,12 +1,8 @@
 import { Injectable } from "@angular/core";
 import { BlApiError, UserDetail } from "@boklisten/bl-model";
-import { ApiService } from "../../api/api.service";
 import { BL_CONFIG } from "../../bl-connect/bl-config";
-import {
-	CachedDocumentService,
-	CachedDocumentServiceOptions,
-} from "../../document/cached-document.service";
 import { BlDocumentService } from "../../document/bl-document.service";
+import { CachedDocumentService } from "../../document/cached-document.service";
 
 @Injectable()
 export class UserDetailService extends BlDocumentService<UserDetail> {
@@ -31,5 +27,16 @@ export class UserDetailService extends BlDocumentService<UserDetail> {
 			.catch((blApiError: BlApiError) => {
 				throw blApiError;
 			});
+	}
+
+	public isUnderage(userDetail: UserDetail): boolean {
+		const now = new Date();
+		const latestAdultBirthDate = new Date(
+			now.getFullYear() - 18,
+			now.getMonth(),
+			now.getDate()
+		);
+
+		return userDetail.dob > latestAdultBirthDate;
 	}
 }
