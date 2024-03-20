@@ -7,7 +7,10 @@ import { CachedDocumentService } from "../../document/cached-document.service";
 
 @Injectable()
 export class SignatureService extends BlDocumentService<SerializedSignature> {
-	constructor(private cachedDocumentService: CachedDocumentService) {
+	constructor(
+		private cachedDocumentService: CachedDocumentService,
+		private _userDetailService: UserDetailService,
+	) {
 		super(cachedDocumentService);
 		this.setCollection(BL_CONFIG.collection.signature);
 	}
@@ -18,7 +21,6 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 
 	public async hasValidSignature(
 		userDetail: UserDetail,
-		userDetailService: UserDetailService,
 		now: Date,
 	): Promise<boolean> {
 		if (userDetail.signatures.length === 0) {
@@ -32,7 +34,8 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 			return false;
 		}
 
-		return userDetailService.isUnderage(userDetail, now) === latestSignature.signedByGuardian;
+		return this._userDetailService.isUnderage(userDetail, now)
+			=== latestSignature.signedByGuardian;
 	}
 
 	public isSignatureExpired(signature: SignatureMetadata, now: Date): boolean {
