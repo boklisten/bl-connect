@@ -1214,10 +1214,10 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@boklisten/bl-model@^0.25.30":
-  version "0.25.30"
-  resolved "https://registry.yarnpkg.com/@boklisten/bl-model/-/bl-model-0.25.30.tgz#8989f5fba19d8aa5486d8488d5be7e12f3778083"
-  integrity sha512-rh250euu/zLldrFNxB9rfTATQ0e3eS6wAFiMJGQ2AUSJTkOXUe9+ozm1/Ft6xkx7Pn7LWsmnLHzuadHLYA/g0A==
+"@boklisten/bl-model@^0.25.37":
+  version "0.25.37"
+  resolved "https://registry.yarnpkg.com/@boklisten/bl-model/-/bl-model-0.25.37.tgz#53cf9ea5b38bc953ada24b3d1c353707d83496fc"
+  integrity sha512-+KgdcMqD390D9HCQ/3x5uRpSJdSdbj1s/1mjEbmo6oy48IDwnS9qJbzUFXZ4V0G+4QmrG+cE6AJ3MCC8UNiiBA==
   dependencies:
     typescript "^5.2.2"
 

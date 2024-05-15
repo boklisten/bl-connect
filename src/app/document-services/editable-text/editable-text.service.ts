@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BlApiError, EditableText } from "@boklisten/bl-model";
-import { ApiService } from "../api/api.service";
-import { BL_CONFIG } from "../bl-connect/bl-config";
+import { ApiService } from "../../api/api.service";
+import { BL_CONFIG } from "../../bl-connect/bl-config";
 
 @Injectable()
 export class EditableTextService {

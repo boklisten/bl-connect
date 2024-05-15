@@ -6,7 +6,7 @@ import { BranchService } from "../document-services/branch/branch.service";
 import { OpeningHourService } from "../document-services/opening-hour/opening-hour.service";
 import { ApiErrorService } from "../api-error/api-error.service";
 import { UserDetailService } from "../document-services/user-detail/user-detail.service";
-import { EditableTextService } from "../editable-text/editable-text.service";
+import { EditableTextService } from "../document-services/editable-text/editable-text.service";
 import { TokenService } from "../token/token.service";
 import { StorageService } from "../storage/storage.service";
 import { LoginService } from "../login/login.service";
@@ -35,6 +35,7 @@ import { CompanyService } from "../document-services/company/company.service";
 import { MatchService } from "../document-services/match/match.service";
 import { BookingService } from "../document-services/booking/booking.service";
 import { UniqueItemService } from "../document-services/unique-item/unique-item.service";
+import { SignatureService } from "../document-services/signature/signature.service";
 
 export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
@@ -95,6 +96,7 @@ export function tokenGetter() {
 		BookingService,
 		UniqueItemService,
 		EditableTextService,
+		SignatureService,
 	],
 })
 export class BlConnectModule {}
