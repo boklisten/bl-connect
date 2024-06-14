@@ -1,6 +1,6 @@
 {
 	"name": "@boklisten/bl-connect",
-	"version": "0.19.21",
+	"version": "0.20.5",
 	"license": "MIT",
 	"scripts": {
 		"dev": "yarn serve",
