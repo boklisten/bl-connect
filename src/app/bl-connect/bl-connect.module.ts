@@ -32,10 +32,10 @@ import { OrderPdfService } from "../order-pdf/order-pdf.service";
 import { MessageService } from "../document-services/message/message.service";
 import { InvoiceService } from "../document-services/invoice/invoice.service";
 import { CompanyService } from "../document-services/company/company.service";
-import { MatchService } from "../document-services/match/match.service";
 import { BookingService } from "../document-services/booking/booking.service";
 import { UniqueItemService } from "../document-services/unique-item/unique-item.service";
 import { SignatureService } from "../document-services/signature/signature.service";
+import { MatchService } from "../matches/match.service";
 
 export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
