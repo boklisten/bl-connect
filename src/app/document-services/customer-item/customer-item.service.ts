@@ -18,6 +18,8 @@ export class CustomerItemService extends BlDocumentService<CustomerItem> {
 
 	public generateCustomerItemReport(options: {
 		branchFilter?: string[];
+		createdAfter?: string;
+		createdBefore?: string;
 		returned: boolean;
 		handout: boolean;
 		buyout: boolean;
