@@ -21,7 +21,6 @@ export class CustomerItemService extends BlDocumentService<CustomerItem> {
 		createdAfter?: string;
 		createdBefore?: string;
 		returned: boolean;
-		handout: boolean;
 		buyout: boolean;
 	}): Promise<ApiResponse> {
 		return this._apiService.add(
