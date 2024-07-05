@@ -1,6 +1,6 @@
 {
 	"name": "@boklisten/bl-connect",
-	"version": "0.20.10",
+	"version": "0.20.15",
 	"license": "MIT",
 	"scripts": {
 		"dev": "yarn serve",
@@ -17,7 +17,10 @@
 		"lib": {
 			"entryFile": "public_api.ts"
 		},
-		"dest": "./dist/@boklisten/bl-connect"
+		"dest": "./dist/@boklisten/bl-connect",
+		"whitelistedNonPeerDependencies": [
+			"@auth0/angular-jwt"
+		]
 	},
 	"$schema": "../../node_modules/ng-packagr/package.schema.json",
 	"private": false,
@@ -33,7 +36,6 @@
 		"@angular/language-service": "^11.1.2",
 		"@angular/platform-browser": "^11.1.2",
 		"@angular/platform-browser-dynamic": "^11.1.2",
-		"@auth0/angular-jwt": "^5.0.2",
 		"@boklisten/bl-model": "^0.25.37",
 		"@types/jasmine": "~3.6.3",
 		"@types/jasminewd2": "~2.0.8",
@@ -77,6 +79,7 @@
 	},
 	"homepage": "https://github.com/boklisten/bl-connect#readme",
 	"dependencies": {
-		"tslib": "^2.1.0"
+		"tslib": "^2.1.0",
+		"@auth0/angular-jwt": "5.0.2"
 	}
 }
