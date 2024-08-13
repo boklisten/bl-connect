@@ -31,7 +31,9 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 			return false;
 		}
 
-		const latestSignature = await this.getById(userDetail.signatures[userDetail.signatures.length - 1]);
+		const latestSignature = await this.getById(
+			userDetail.signatures[userDetail.signatures.length - 1]
+		);
 		if (this.isSignatureExpired(latestSignature, now)) {
 			return false;
 		}
