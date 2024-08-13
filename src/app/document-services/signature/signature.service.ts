@@ -9,6 +9,10 @@ import { BL_CONFIG } from "../../bl-connect/bl-config";
 import { BlDocumentService } from "../../document/bl-document.service";
 import { CachedDocumentService } from "../../document/cached-document.service";
 import { ApiService } from "../../api/api.service";
+import {
+	GuardianSignatureInfo,
+	SerializedGuardianSignature,
+} from "@boklisten/bl-model/signature/serialized-signature";
 
 @Injectable()
 export class SignatureService extends BlDocumentService<SerializedSignature> {
@@ -62,23 +66,17 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 	}
 
 	public async addGuardianSignature(
-		customerId: string,
-		base64EncodedImage: string,
-		signingName: string
+		guardianSignature: SerializedGuardianSignature
 	): Promise<void> {
 		await this._apiService.add(
 			BL_CONFIG.collection.signature + "/guardian",
-			{ customerId, base64EncodedImage, signingName }
+			guardianSignature
 		);
 	}
 
 	public async checkGuardianSignature(
 		customerId: string
-	): Promise<{
-		message?: string;
-		customerName?: string;
-		guardianSignatureRequired: boolean;
-	}> {
+	): Promise<GuardianSignatureInfo> {
 		return (
 			await this._apiService.add(
 				BL_CONFIG.collection.signature + "/check-guardian-signature",
