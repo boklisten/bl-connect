@@ -76,7 +76,7 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 		customerId: string
 	): Promise<{
 		message?: string;
-		customerNam?: string;
+		customerName?: string;
 		guardianSignatureRequired: boolean;
 	}> {
 		return (
