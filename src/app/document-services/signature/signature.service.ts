@@ -61,21 +61,6 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 		return signature.creationTime < oldestAllowedSignatureTime;
 	}
 
-	public async generateCustomerItemReport(options: {
-		branchFilter?: string[];
-		createdAfter?: Date;
-		createdBefore?: Date;
-		returned: boolean;
-		buyout: boolean;
-	}): Promise<unknown[]> {
-		return (
-			await this._apiService.add(
-				BL_CONFIG.collection.customerItem + "/generate-report",
-				options
-			)
-		).data;
-	}
-
 	public async addGuardianSignature(
 		customerId: string,
 		base64EncodedImage: string,
@@ -87,10 +72,18 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 		);
 	}
 
-	public async checkGuardianSignature(customerId: string): Promise<void> {
-		await this._apiService.add(
-			BL_CONFIG.collection.signature + "/check-guardian-signature",
-			{ customerId }
-		);
+	public async checkGuardianSignature(
+		customerId: string
+	): Promise<{
+		message?: string;
+		customerNam?: string;
+		guardianSignatureRequired: boolean;
+	}> {
+		return (
+			await this._apiService.add(
+				BL_CONFIG.collection.signature + "/check-guardian-signature",
+				{ customerId }
+			)
+		).data[0];
 	}
 }
