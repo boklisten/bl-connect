@@ -8,12 +8,14 @@ import { UserDetailService } from "../../document-services/user-detail/user-deta
 import { BL_CONFIG } from "../../bl-connect/bl-config";
 import { BlDocumentService } from "../../document/bl-document.service";
 import { CachedDocumentService } from "../../document/cached-document.service";
+import { ApiService } from "../../api/api.service";
 
 @Injectable()
 export class SignatureService extends BlDocumentService<SerializedSignature> {
 	constructor(
 		private cachedDocumentService: CachedDocumentService,
-		private _userDetailService: UserDetailService
+		private _userDetailService: UserDetailService,
+		private _apiService: ApiService
 	) {
 		super(cachedDocumentService);
 		this.setCollection(BL_CONFIG.collection.signature);
@@ -57,5 +59,38 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 			now.getDate()
 		);
 		return signature.creationTime < oldestAllowedSignatureTime;
+	}
+
+	public async generateCustomerItemReport(options: {
+		branchFilter?: string[];
+		createdAfter?: Date;
+		createdBefore?: Date;
+		returned: boolean;
+		buyout: boolean;
+	}): Promise<unknown[]> {
+		return (
+			await this._apiService.add(
+				BL_CONFIG.collection.customerItem + "/generate-report",
+				options
+			)
+		).data;
+	}
+
+	public async addGuardianSignature(
+		customerId: string,
+		base64EncodedImage: string,
+		signingName: string
+	): Promise<void> {
+		await this._apiService.add(
+			BL_CONFIG.collection.signature + "/guardian",
+			{ customerId, base64EncodedImage, signingName }
+		);
+	}
+
+	public async checkGuardianSignature(customerId: string): Promise<void> {
+		await this._apiService.add(
+			BL_CONFIG.collection.signature + "/check-guardian-signature",
+			{ customerId }
+		);
 	}
 }
