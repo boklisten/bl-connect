@@ -8,12 +8,18 @@ import { UserDetailService } from "../../document-services/user-detail/user-deta
 import { BL_CONFIG } from "../../bl-connect/bl-config";
 import { BlDocumentService } from "../../document/bl-document.service";
 import { CachedDocumentService } from "../../document/cached-document.service";
+import { ApiService } from "../../api/api.service";
+import {
+	GuardianSignatureInfo,
+	SerializedGuardianSignature,
+} from "@boklisten/bl-model/signature/serialized-signature";
 
 @Injectable()
 export class SignatureService extends BlDocumentService<SerializedSignature> {
 	constructor(
 		private cachedDocumentService: CachedDocumentService,
-		private _userDetailService: UserDetailService
+		private _userDetailService: UserDetailService,
+		private _apiService: ApiService
 	) {
 		super(cachedDocumentService);
 		this.setCollection(BL_CONFIG.collection.signature);
@@ -31,7 +37,9 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 			return false;
 		}
 
-		const latestSignature = await this.getById(userDetail.signatures[0]);
+		const latestSignature = await this.getById(
+			userDetail.signatures[userDetail.signatures.length - 1]
+		);
 		if (this.isSignatureExpired(latestSignature, now)) {
 			return false;
 		}
@@ -55,5 +63,25 @@ export class SignatureService extends BlDocumentService<SerializedSignature> {
 			now.getDate()
 		);
 		return signature.creationTime < oldestAllowedSignatureTime;
+	}
+
+	public async addGuardianSignature(
+		guardianSignature: SerializedGuardianSignature
+	): Promise<void> {
+		await this._apiService.add(
+			BL_CONFIG.collection.signature + "/guardian",
+			guardianSignature
+		);
+	}
+
+	public async checkGuardianSignature(
+		customerId: string
+	): Promise<GuardianSignatureInfo> {
+		return (
+			await this._apiService.add(
+				BL_CONFIG.collection.signature + "/check-guardian-signature",
+				{ customerId }
+			)
+		).data[0];
 	}
 }
