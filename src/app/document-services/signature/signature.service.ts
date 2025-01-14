@@ -11,7 +11,7 @@ import { CachedDocumentService } from "../../document/cached-document.service";
 import { ApiService } from "../../api/api.service";
 import {
 	GuardianSignatureInfo,
-	SerializedGuardianSignature,
+	SerializedGuardianSignature
 } from "@boklisten/bl-model/signature/serialized-signature";
 
 @Injectable()
