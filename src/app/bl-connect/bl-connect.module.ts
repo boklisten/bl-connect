@@ -35,7 +35,7 @@ import { CompanyService } from "../document-services/company/company.service";
 import { BookingService } from "../document-services/booking/booking.service";
 import { UniqueItemService } from "../document-services/unique-item/unique-item.service";
 import { SignatureService } from "../document-services/signature/signature.service";
-import { MatchService } from "../matches/match.service";
+import { UserMatchService } from "../matches/user-match.service";
 
 export function tokenGetter() {
 	return localStorage.getItem(BL_CONFIG.token.accessToken);
@@ -92,7 +92,7 @@ export function tokenGetter() {
 		MessageService,
 		InvoiceService,
 		CompanyService,
-		MatchService,
+		UserMatchService,
 		BookingService,
 		UniqueItemService,
 		EditableTextService,

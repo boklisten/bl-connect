@@ -28,7 +28,7 @@ export * from "./src/app/document-services/user-detail/user-detail.service";
 
 export * from "./src/app/document-services/company/company.service";
 
-export * from "./src/app/matches/match.service";
+export * from "./src/app/matches/user-match.service";
 
 export * from "./src/app/document-services/unique-item/unique-item.service";
 
